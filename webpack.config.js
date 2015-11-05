@@ -1,8 +1,10 @@
+var path = require('path');
+
 module.exports = {
-    context: __dirname + "/public",
+    context: path.join(__dirname, "/public"),
     entry: "./index",
     output: {
-        path: __dirname + '/public/dist',
+        path: path.join(__dirname, "/public/dist"),
         filename: "bundle.js"
     },
     module: {
