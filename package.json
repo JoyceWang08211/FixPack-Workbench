@@ -1,6 +1,6 @@
 {
   "name": "EasyPoshi",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
@@ -12,7 +12,10 @@
     "express": "~4.13.1",
     "jade": "~1.11.0",
     "morgan": "~1.6.1",
-    "serve-favicon": "~2.3.0"
+    "pretty-data": "^0.40.0",
+    "rd": "0.0.2",
+    "serve-favicon": "~2.3.0",
+    "xml2json": "^0.9.0"
   },
   "devDependencies": {
     "babel-core": "^6.0.20",
