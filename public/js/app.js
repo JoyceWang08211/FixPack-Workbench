@@ -1,12 +1,16 @@
-window.onload=function() {
-    var ContentBox = React.createClass({
-        render: function () {
-            return (
-                <div>content</div>
-            )
-        }
-    });
+var React = require('react');
+var $ = require('jquery');
 
-    React.render(<ContentBox/>, document.getElementById('_content'));
-};
+$(document).ready(function () {
+        var ContentBox = React.createClass({
+            render: function () {
+                return (
+                    <div><a href='/editors'>Here</a></div>
+                )
+            }
+        });
+
+        React.render(<ContentBox/>, document.getElementById('_content'));
+    }
+)
 
