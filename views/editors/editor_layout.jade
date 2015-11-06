@@ -2,13 +2,16 @@ doctype html
 html
     head
         title= title
+        link(rel='stylesheet' href='../css/bootstrap.min.css')
         script(src='../js/lib/jquery-2.1.4.min.js')
         script(src='../js/lib/bootstrap.min.js')
         script(src='../js/lib/react.js')
         script(src='../dist/editor.js')
+
     body
-        div.row
-            div.col-xs-3
+        div.row.editor-container
+            div.col-xs-3.toolbar
                 block toolbar
-            div.col-xs-9
+            div.col-xs-9.panel
                 block panel
+

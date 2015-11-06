@@ -1,3 +1,5 @@
-/**
- * Created by lyon on 15-11-6.
- */
+//css
+require('../css/editor/editors.css')
+
+//js
+require('../js/editors/index');

@@ -14,11 +14,16 @@ module.exports = {
     externals: {
         'react': 'React',
         'jquery': 'jQuery'
+
+        //plugins
     },
     module: {
         loaders: [
             {
                 test: /\.css$/,
+                include: [
+                    path.resolve(__dirname, "public/css"),
+                ],
                 loader: "style!css"
             },
             {

@@ -1,0 +1,27 @@
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+body {
+    padding: 10px;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+    color: #00B7FF;
+}
+
+.editor-container {
+    height: 100%;
+}
+
+div.toolbar {
+    background-color: #FFFFCC;
+    height: 100%;
+}
+
+div.panel {
+    background-color: #EEFAFF;
+    height: 100%;
+}
