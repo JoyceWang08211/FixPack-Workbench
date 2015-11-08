@@ -11,9 +11,11 @@ html
         script(src='../dist/editor.js')
 
     body
-        div.row.editor-container
-            div.col-xs-3.toolbar
-                block toolbar
-            div.col-xs-9.panel
-                block panel
+        div.editor-container
+            div.col-xs-3.editor-toolbar
+                div.row
+                    block toolbar
+            div.col-xs-9.editor-panel
+                div.row
+                    block panel
 
