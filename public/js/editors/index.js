@@ -6,7 +6,7 @@ var ToolbarBox = require('./toolbar');
 
 $(()=> {
 
-    React.render(<ToolbarBox/>, document.getElementById('editor_toolbar'))
+    React.render(<ToolbarBox/>, document.getElementById('editor_toolbar'));
 //    JSONEditor.defaults.options.theme = 'bootstrap3';
 //
 //    let sample = {
