@@ -20,6 +20,10 @@ div.editor-toolbar {
     height: 100%;
 }
 
+div.editor-toolbar .row {
+    height: 100%;
+}
+
 div.editor-panel {
     background-color: #EEFAFF;
     height: 100%;
