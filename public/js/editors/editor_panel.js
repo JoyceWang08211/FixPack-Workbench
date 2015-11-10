@@ -8,24 +8,48 @@ var SelectSearchBox = require('react-select');
 //Editor
 let EditorBox = require('./editor');
 
-var options = [
-    {value: 'one', label: 'One'},
-    {value: 'two', label: 'Two'}
-];
-
-function logChange(val) {
+function openNewFile(val) {
     console.log("Selected: " + val);
 }
 
+const getOptions = () => {
+    return fetch('http://' + window.location.host + '/data/common/functionMenuLists.json')
+        .then((response) => {
+            return response.json();
+        }).then((json) => {
+            return {options: json.functionMenuList};
+        });
+}
+
 var EditorPanelBox = React.createClass({
+    handleChange: function (val) {
+        $.ajax({
+            type: "POST",
+            url: "/editors/update",
+            data: {name: val},
+            dataType: "json",
+            success: (result)=> {
+                this.setState({
+                    currentValue: result
+                })
+            }
+        });
+    },
+
+    getInitialState: function () {
+        return {
+            currentValue: {}
+        };
+    },
+
     render: function () {
         return (
             <div>
                 <div id='search' className='row'>
                     <SelectSearchBox
                         name="poshi-object-name"
-                        options={options}
-                        onChange={logChange}
+                        asyncOptions={getOptions}
+                        onChange={this.handleChange}
                         />
                 </div>
                 <div className='row'>
@@ -45,7 +69,7 @@ var EditorPanelBox = React.createClass({
                 </div>
                 <div className="tab-content">
                     <div role="tabpanel" className="tab-pane active" id="home">
-                        <EditorBox/>
+                        <EditorBox startValue={this.state.currentValue}/>
                     </div>
                     <div role="tabpanel" className="tab-pane" id="profile">2</div>
                     <div role="tabpanel" className="tab-pane" id="settings">3</div>

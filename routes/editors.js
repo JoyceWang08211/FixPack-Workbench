@@ -15,6 +15,24 @@ router.get('/function', function (req, res, next) {
     res.render('editors/editor_function', {title: 'Easy Poshi Editor'})
 });
 
+router.post('/update', function (req, res, next) {
+    var name = req.body.name.split('.')[0];
+
+    fs.readFile('../public/data/function/' + name + '.json', 'utf-8', function (err, data) {
+        if (err) {
+            console.log(err)
+            res.json({
+                fail: 0,
+                error: 'The Reading process failed due to ' + err + '.'
+            })
+        }
+        else {
+            res.json(data);
+        }
+    });
+
+})
+
 router.post('/save', function (req, res, next) {
     var po = req.body.page_obj;
 

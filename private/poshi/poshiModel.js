@@ -101,7 +101,7 @@ let initPaths = new Promise(
             });
     });
 
-exports.init = ()=> {
+exports.init = function () {
     return Promise.all([initFunctions, initMacros, initTestcases, initPaths]);
 };
 
