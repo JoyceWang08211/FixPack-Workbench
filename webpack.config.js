@@ -12,7 +12,7 @@ module.exports = {
         filename: '[name].js'
     },
     externals: {
-        'react': 'React',
+        //'react': 'React',
         'jquery': 'jQuery',
 
         //plugins

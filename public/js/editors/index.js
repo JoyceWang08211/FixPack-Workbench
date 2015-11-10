@@ -1,12 +1,13 @@
 var React = require('react');
+var ReactDOM = require('react-dom')
 var $ = require('jquery');
 
 var ToolbarBox = require('./toolbar');
 var EditorPanelBox = require('./editor_panel');
 
 $(()=> {
-    React.render(<ToolbarBox/>, document.getElementById('editor_toolbar'));
-    React.render(<EditorPanelBox/>, document.getElementById('editor_panel'));
+    ReactDOM.render(<ToolbarBox/>, document.getElementById('editor_toolbar'));
+    ReactDOM.render(<EditorPanelBox/>, document.getElementById('editor_panel'));
 //    JSONEditor.defaults.options.theme = 'bootstrap3';
 //
 //    let sample = {
