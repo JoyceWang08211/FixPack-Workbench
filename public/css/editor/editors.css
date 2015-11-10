@@ -25,6 +25,9 @@ div.editor-toolbar .row {
 }
 
 div.editor-panel {
-    background-color: #EEFAFF;
     height: 100%;
+}
+
+#search {
+    margin-bottom: 5px;
 }
