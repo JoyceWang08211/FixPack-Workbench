@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactDOM = require('react-dom');
 var $ = require('jquery');
 
 $(document).ready(function () {
@@ -10,7 +11,7 @@ $(document).ready(function () {
             }
         });
 
-        React.render(<ContentBox/>, document.getElementById('_content'));
+        ReactDOM.render(<ContentBox/>, document.getElementById('_content'));
     }
 )
 
