@@ -4,81 +4,12 @@ let $ = require('jquery');
 //JSON Editor plugin
 var JSONEditor = require('jsoneditor');
 
+//Function scheme
+let functionScheme = require('../../back-end/model/FunctionModel');
+
 JSONEditor.defaults.options.theme = 'bootstrap3';
 
-let starting_value = {}
-
-let sample = {
-    "type": "object",
-    "title": "Function",
-    "headerTemplate": "{{self.name}}",
-
-    "properties": {
-        "name": {
-            "type": "string"
-        },
-
-        "command": {
-            "type": "array",
-            "title": "Command",
-            "format": "tabs",
-            "items": {
-                "type": "object",
-                "title": "Command",
-                "headerTemplate": "{{self.name}}",
-                oneOf: [
-                    {
-                        "type": "object",
-                        "title": "Execute",
-                        "properties": {
-                            "name": {
-                                "type": "string"
-                            },
-                            "execute": {
-                                "type": "array",
-                                "title": "Selenium",
-                                "items": {
-                                    "type": "object",
-                                    "title": "Selenium",
-                                    "headerTemplate": "{{self.selenium}}",
-
-                                    "properties": {
-                                        "selenium": {
-                                            "type": "string",
-                                            "enum": [
-                                                'waitForVisible',
-                                                'mouseOver',
-                                                'addSelection',
-                                                'assertJavaScriptErrors',
-                                                'assertLiferayErrors'
-                                            ]
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "type": "object",
-                        "title": "If",
-                        "properties": {
-                            "contains": {
-                                "type": "object"
-                            },
-                            "then": {
-                                "type": "object"
-                            },
-                            "else": {
-                                "type": "object"
-                            }
-                        }
-                    }
-                ]
-            }
-        }
-    }
-};
-
+let sample = functionScheme.FunctionRoot;
 
 let EditorBox = React.createClass({
     editor: {},
@@ -119,7 +50,9 @@ let EditorBox = React.createClass({
     componentDidMount: function () {
         this.editor = new JSONEditor(document.getElementById('editor_json_tab'), {
             schema: sample,
-            disable_properties: true
+            disable_properties: true,
+            no_additional_properties: true,
+            required_by_default: true
         });
     },
 
@@ -135,6 +68,6 @@ let EditorBox = React.createClass({
         this.editor.setValue(po_template_function_end_user);
     }
 
-})
+});
 
 module.exports = EditorBox;
