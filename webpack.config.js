@@ -1,14 +1,14 @@
 var path = require('path');
 
 module.exports = {
-    context: path.join(__dirname, "/public"),
+    context: path.join(__dirname, "/public/js"),
     entry: {
         index: './src/index.js',
         editor: './src/editor.js'
     },
     output: {
         libraryTarget: "var",
-        path: path.join(__dirname, "/public/dist"),
+        path: path.join(__dirname, "/public/js/dist"),
         filename: '[name].js'
     },
     externals: {

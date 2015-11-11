@@ -1,7 +1,7 @@
 var React = require('react');
 var $ = require('jquery');
 //metisMenu plugin
-require('../lib/plugins/metisMenu.min');
+require('../../lib/plugins/metisMenu.min');
 
 var EditorUpdateBox = React.createClass({
     getDefaultProps: function () {

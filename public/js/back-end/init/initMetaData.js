@@ -3,7 +3,7 @@ var xmlParser = require('xml2json');
 var path = require('path');
 var pd = require('pretty-data').pd;
 var fs = require('fs');
-var po = require('../poshi/poshiModel');
+var po = require('../model/poshiModel');
 
 var options = {
     object: true,
@@ -45,7 +45,7 @@ let initSearchMenuJSON = function () {
         });
     }
 
-    fs.writeFile(path.resolve(__dirname, '../../public/data/common/functionMenuLists.json'), pd.json(menuList), function (err) {
+    fs.writeFile(path.resolve(__dirname, '../../../data/common/functionMenuLists.json'), pd.json(menuList), function (err) {
         if (err) {
             console.log(err)
         }
@@ -59,7 +59,7 @@ let initPageObjectJSON = function () {
 
         fs.readFile(functionURL, 'utf-8', function (err, data) {
             var json = xmlParser.toJson(data, options); //returns a string containing the JSON structure by default
-            fs.writeFile(path.resolve(__dirname, '../../public/data/function/' + functionName + '.json'), pd.json(json), function (err) {
+            fs.writeFile(path.resolve(__dirname, '../../../data/function/' + functionName + '.json'), pd.json(json), function (err) {
                 if (err) {
                     console.log(err)
                 }

@@ -26,33 +26,54 @@ let sample = {
                 "type": "object",
                 "title": "Command",
                 "headerTemplate": "{{self.name}}",
+                oneOf: [
+                    {
+                        "type": "object",
+                        "title": "Execute",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "execute": {
+                                "type": "array",
+                                "title": "Selenium",
+                                "items": {
+                                    "type": "object",
+                                    "title": "Selenium",
+                                    "headerTemplate": "{{self.selenium}}",
 
-                "properties": {
-                    "name": {
-                        "type": "string"
-                    },
-                    "execute": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "title": "Selenium",
-                            "headerTemplate": "{{self.selenium}}",
-
-                            "properties": {
-                                "selenium": {
-                                    "type": "string",
-                                    "enum": [
-                                        'waitForVisible',
-                                        'mouseOver',
-                                        'addSelection',
-                                        'assertJavaScriptErrors',
-                                        'assertLiferayErrors'
-                                    ]
+                                    "properties": {
+                                        "selenium": {
+                                            "type": "string",
+                                            "enum": [
+                                                'waitForVisible',
+                                                'mouseOver',
+                                                'addSelection',
+                                                'assertJavaScriptErrors',
+                                                'assertLiferayErrors'
+                                            ]
+                                        }
+                                    }
                                 }
                             }
                         }
+                    },
+                    {
+                        "type": "object",
+                        "title": "If",
+                        "properties": {
+                            "contains": {
+                                "type": "object"
+                            },
+                            "then": {
+                                "type": "object"
+                            },
+                            "else": {
+                                "type": "object"
+                            }
+                        }
                     }
-                }
+                ]
             }
         }
     }
