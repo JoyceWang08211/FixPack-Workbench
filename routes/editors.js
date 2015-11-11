@@ -15,6 +15,14 @@ router.get('/function', function (req, res, next) {
     res.render('editors/editor_function', {title: 'Easy Poshi Editor'})
 });
 
+router.get('/macro', function (req, res, next) {
+    res.render('editors/editor_function', {title: 'Easy Poshi Editor'})
+});
+
+router.get('/testcase', function (req, res, next) {
+    res.render('editors/editor_function', {title: 'Easy Poshi Editor'})
+});
+
 router.post('/update', function (req, res, next) {
     var name = req.body.name.split('.')[0];
 

@@ -35,7 +35,9 @@ po.init()
 
 let initSearchMenuJSON = function () {
     let menuList = {
-        functionMenuList: []
+        functionMenuList: [],
+        macroMenuList: [],
+        testcaseMenuList: []
     };
 
     for (let name of po.functions) {
@@ -45,11 +47,25 @@ let initSearchMenuJSON = function () {
         });
     }
 
-    fs.writeFile(path.resolve(__dirname, '../../../data/common/functionMenuLists.json'), pd.json(menuList), function (err) {
+    for (let name of po.macros) {
+        menuList.macroMenuList.push({
+            value: name,
+            label: name.split('.')[0]
+        });
+    }
+
+    for (let name of po.testcases) {
+        menuList.testcaseMenuList.push({
+            value: name,
+            label: name.split('.')[0]
+        });
+    }
+
+    fs.writeFile(path.resolve(__dirname, '../../../data/common/MenuLists.json'), pd.json(menuList), function (err) {
         if (err) {
             console.log(err)
         }
-    })
+    });
 };
 
 let initPageObjectJSON = function () {
@@ -60,6 +76,34 @@ let initPageObjectJSON = function () {
         fs.readFile(functionURL, 'utf-8', function (err, data) {
             var json = xmlParser.toJson(data, options); //returns a string containing the JSON structure by default
             fs.writeFile(path.resolve(__dirname, '../../../data/function/' + functionName + '.json'), pd.json(json), function (err) {
+                if (err) {
+                    console.log(err)
+                }
+            })
+        });
+    }
+
+    for (let item of po.macrosURL.entries()) {
+        let macroName = item[0].split('.')[0];
+        let macroURL = item[1];
+
+        fs.readFile(macroURL, 'utf-8', function (err, data) {
+            var json = xmlParser.toJson(data, options); //returns a string containing the JSON structure by default
+            fs.writeFile(path.resolve(__dirname, '../../../data/macro/' + macroName + '.json'), pd.json(json), function (err) {
+                if (err) {
+                    console.log(err)
+                }
+            })
+        });
+    }
+
+    for (let item of po.testcasesURL.entries()) {
+        let testcaseName = item[0].split('.')[0];
+        let testcaseURL = item[1];
+
+        fs.readFile(testcaseURL, 'utf-8', function (err, data) {
+            var json = xmlParser.toJson(data, options); //returns a string containing the JSON structure by default
+            fs.writeFile(path.resolve(__dirname, '../../../data/testcase/' + testcaseName + '.json'), pd.json(json), function (err) {
                 if (err) {
                     console.log(err)
                 }

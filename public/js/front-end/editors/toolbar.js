@@ -48,22 +48,22 @@ var EditorTypeBox = React.createClass({
                     Page Object Editor</a>
                 <ul aria-expanded="true">
                     <li>
-                        <a href="#">
+                        <a href="/editors/function">
                             Function Files
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="/editors/macro">
                             Macro Files
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="/editors/testcase">
                             Testcase Files
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="/editors/path">
                             Path Files
                         </a>
                     </li>

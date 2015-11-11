@@ -9,7 +9,21 @@ let functionScheme = require('../../back-end/model/FunctionModel');
 
 JSONEditor.defaults.options.theme = 'bootstrap3';
 
-let sample = functionScheme.FunctionRoot;
+let sample = {};
+
+switch (window.location.href.split('/').pop()) {
+    case 'function':
+        sample = functionScheme.FunctionRoot;
+        break;
+    case 'macro':
+        sample = functionScheme.FunctionRoot;
+        break;
+    case 'testcase':
+        sample = functionScheme.FunctionRoot;
+        break;
+    default:
+        break;
+}
 
 let EditorBox = React.createClass({
     editor: {},

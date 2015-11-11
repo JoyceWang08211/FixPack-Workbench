@@ -13,11 +13,24 @@ function openNewFile(val) {
 }
 
 const getOptions = () => {
-    return fetch('http://' + window.location.host + '/data/common/functionMenuLists.json')
+    return fetch('http://' + window.location.host + '/data/common/MenuLists.json')
         .then((response) => {
             return response.json();
         }).then((json) => {
-            return {options: json.functionMenuList};
+            switch (window.location.href.split('/').pop()) {
+                case 'function':
+                    return {options: json.functionMenuList};
+                    break;
+                case 'macro':
+                    return {options: json.macroMenuList};
+                    break;
+                case 'testcase':
+                    return {options: json.testcaseMenuList};
+                    break;
+                default:
+                    return {options: {}};
+                    break;
+            }
         });
 }
 
