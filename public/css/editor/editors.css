@@ -31,3 +31,9 @@ div.editor-panel {
 #search {
     margin-bottom: 5px;
 }
+
+.break-line > a {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

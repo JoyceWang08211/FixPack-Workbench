@@ -109,9 +109,9 @@ const Command = {
     }
 };
 
-const Function = {
+const Testcase = {
     type: "object",
-    title: "Function",
+    title: "Testcase",
     headerTemplate: "{{self.name}}",
 
     properties: {
@@ -127,5 +127,5 @@ const Function = {
     }
 };
 
-exports.FunctionRoot = Function;
+exports.TestcaseRoot = Testcase;
 

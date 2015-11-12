@@ -8,6 +8,8 @@ var SelectSearchBox = require('react-select');
 //Editor
 let EditorBox = require('./editor');
 
+let editor_type = window.location.href.split('/').pop();
+
 function openNewFile(val) {
     console.log("Selected: " + val);
 }
@@ -39,7 +41,10 @@ var EditorPanelBox = React.createClass({
         $.ajax({
             type: "POST",
             url: "/editors/update",
-            data: {name: val},
+            data: {
+                name: val,
+                type: editor_type
+            },
             dataType: "json",
             success: (result)=> {
                 this.setState({

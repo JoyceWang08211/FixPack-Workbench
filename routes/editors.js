@@ -11,22 +11,15 @@ router.get('/', function (req, res, next) {
     res.redirect('/editors/function')
 });
 
-router.get('/function', function (req, res, next) {
-    res.render('editors/editor_function', {title: 'Easy Poshi Editor'})
-});
-
-router.get('/macro', function (req, res, next) {
-    res.render('editors/editor_function', {title: 'Easy Poshi Editor'})
-});
-
-router.get('/testcase', function (req, res, next) {
-    res.render('editors/editor_function', {title: 'Easy Poshi Editor'})
+router.get(['/function', '/macro', '/testcase'], function (req, res, next) {
+    res.render('editors/editor', {title: 'Easy Poshi Editor'})
 });
 
 router.post('/update', function (req, res, next) {
     var name = req.body.name.split('.')[0];
+    var type = req.body.type;
 
-    fs.readFile('../public/data/function/' + name + '.json', 'utf-8', function (err, data) {
+    fs.readFile('../public/data/' + type + '/' + name + '.json', 'utf-8', function (err, data) {
         if (err) {
             console.log(err)
             res.json({
@@ -35,7 +28,10 @@ router.post('/update', function (req, res, next) {
             })
         }
         else {
-            res.json(data);
+            var wrapData = JSON.parse(data);
+            wrapData.definition.name = name;
+
+            res.json(JSON.stringify(wrapData));
         }
     });
 
@@ -43,6 +39,7 @@ router.post('/update', function (req, res, next) {
 
 router.post('/save', function (req, res, next) {
     var po = req.body.page_obj;
+    var type = req.body.type;
 
     if (po.command) {
         var po_template_function = {
@@ -52,9 +49,10 @@ router.post('/save', function (req, res, next) {
             }
         };
 
+        var fileName = po.name + '.' + type;
         var xml = xmlParser.toXml(po_template_function);
 
-        fs.writeFile(path.resolve(__dirname, '../private/data/Test.xml'), pd.xml(xml), function (err) {
+        fs.writeFile(path.resolve(__dirname, '../public/' + type + '/' + fileName), pd.xml(xml), function (err) {
             if (err) {
                 res.json({
                     fail: 0,

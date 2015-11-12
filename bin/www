@@ -8,6 +8,8 @@ var app = require('../app');
 var debug = require('debug')('EasyPoshi:server');
 var http = require('http');
 
+process.env.NODE_ENV = "development";
+
 /**
  * Get port from environment and store in Express.
  */

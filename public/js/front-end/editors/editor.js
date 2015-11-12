@@ -5,21 +5,25 @@ let $ = require('jquery');
 var JSONEditor = require('jsoneditor');
 
 //Function scheme
-let functionScheme = require('../../back-end/model/FunctionModel');
+//let functionScheme = require('../../back-end/model/FunctionModel');
+let functionScheme = require('../../back-end/model/function/Function');
+let macroScheme = require('../../back-end/model/MacroModel');
+let testcaseScheme = require('../../back-end/model/TestcaseModel');
 
 JSONEditor.defaults.options.theme = 'bootstrap3';
 
 let sample = {};
+let editor_type = window.location.href.split('/').pop();
 
-switch (window.location.href.split('/').pop()) {
+switch (editor_type) {
     case 'function':
         sample = functionScheme.FunctionRoot;
         break;
     case 'macro':
-        sample = functionScheme.FunctionRoot;
+        sample = macroScheme.MacroRoot;
         break;
     case 'testcase':
-        sample = functionScheme.FunctionRoot;
+        sample = testcaseScheme.TestcaseRoot;
         break;
     default:
         break;
@@ -30,6 +34,7 @@ let EditorBox = React.createClass({
 
     handleSave: function () {
         var payload = {
+            type: editor_type,
             page_obj: this.editor.getValue()
         };
 
@@ -71,15 +76,36 @@ let EditorBox = React.createClass({
     },
 
     componentDidUpdate: function () {
-        console.log(this.props.startValue);
-
         var po = JSON.parse(this.props.startValue);
+        var po_template_end_user;
 
-        var po_template_function_end_user = {
-            "name": po.definition.command.name,
-            "command": po.definition.command
-        };
-        this.editor.setValue(po_template_function_end_user);
+        switch (editor_type) {
+            case 'function':
+                po_template_end_user = {
+                    "name": po.definition.name,
+                    "default": po.definition.default,
+                    "command": po.definition.command
+                };
+                break;
+            case 'macro':
+                po_template_end_user = {
+                    "name": po.definition.name,
+                    "execute": po.definition.command
+                };
+                break;
+            case 'testcase':
+                po_template_end_user = {
+                    "name": po.definition.name,
+                    "default": po.definition.default,
+                    "command": po.definition.command
+                };
+                break;
+            default:
+                break;
+        }
+
+
+        this.editor.setValue(po_template_end_user);
     }
 
 });
