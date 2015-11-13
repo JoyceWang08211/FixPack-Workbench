@@ -13,10 +13,7 @@ module.exports = {
     },
     externals: {
         //'react': 'React',
-        'jquery': 'jQuery',
-
-        //plugins
-        'jsoneditor':'JSONEditor'
+        'jquery': 'jQuery'
     },
     module: {
         loaders: [
