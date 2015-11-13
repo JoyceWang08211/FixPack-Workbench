@@ -1,6 +1,8 @@
 let React = require('react');
 let $ = require('jquery');
 
+let editor_type = window.location.href.split('/').pop();
+
 let EditorBox = React.createClass({
     handleSave: function () {
         var payload = {
