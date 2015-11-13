@@ -10,16 +10,12 @@ let EditorBox = require('./editor');
 
 let editor_type = window.location.href.split('/').pop();
 
-function openNewFile(val) {
-    console.log("Selected: " + val);
-}
-
 const getOptions = () => {
     return fetch('http://' + window.location.host + '/data/common/MenuLists.json')
         .then((response) => {
             return response.json();
         }).then((json) => {
-            switch (window.location.href.split('/').pop()) {
+            switch (editor_type) {
                 case 'function':
                     return {options: json.functionMenuList};
                     break;
@@ -34,10 +30,10 @@ const getOptions = () => {
                     break;
             }
         });
-}
+};
 
 var EditorPanelBox = React.createClass({
-    handleChange: function (val) {
+    handleChange(val) {
         $.ajax({
             type: "POST",
             url: "/editors/update",
@@ -47,20 +43,22 @@ var EditorPanelBox = React.createClass({
             },
             dataType: "json",
             success: (result)=> {
+                let fileName = JSON.parse(result).definition.name;
+
                 this.setState({
-                    currentValue: result
+                    currentFile: fileName
                 })
             }
         });
     },
 
-    getInitialState: function () {
+    getInitialState() {
         return {
-            currentValue: {}
+            currentFile: 'No File is selected.'
         };
     },
 
-    render: function () {
+    render() {
         return (
             <div>
                 <div id='search' className='row'>
@@ -87,7 +85,8 @@ var EditorPanelBox = React.createClass({
                 </div>
                 <div className="tab-content">
                     <div role="tabpanel" className="tab-pane active" id="home">
-                        <EditorBox startValue={this.state.currentValue}/>
+                        <EditorBox
+                            fileName={this.state.currentFile}/>
                     </div>
                     <div role="tabpanel" className="tab-pane" id="profile">2</div>
                     <div role="tabpanel" className="tab-pane" id="settings">3</div>
@@ -96,8 +95,8 @@ var EditorPanelBox = React.createClass({
         )
     },
 
-    componentDidMount: function () {
-        $('#editor a').click(function (e) {
+    componentDidMount() {
+        $('#editor a').click((e)=> {
             e.preventDefault()
             $(this).tab('show')
         })
