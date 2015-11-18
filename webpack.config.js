@@ -9,7 +9,7 @@ module.exports = {
     output: {
         libraryTarget: "var",
         path: path.join(__dirname, "/public/js/dist"),
-        filename: '[name].js'
+        filename: '[name].build.js'
     },
     externals: {
         //'react': 'React',
