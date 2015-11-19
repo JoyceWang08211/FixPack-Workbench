@@ -3,7 +3,7 @@ var xmlParser = require('xml2json');
 var path = require('path');
 var pd = require('pretty-data').pd;
 var fs = require('fs');
-var po = require('../model/poshiModel');
+var po = require('../util/poshiUtil');
 
 var options = {
     object: true,

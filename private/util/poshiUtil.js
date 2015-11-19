@@ -3,7 +3,7 @@ let co = require('co');
 let rd = require('rd');
 let path = require('path');
 
-let properties = require('../util/propertiesUtil');
+let properties = require('./propertiesUtil');
 
 let liferay_home = properties.project_home;
 let portalweb_home = properties.portalweb_home;

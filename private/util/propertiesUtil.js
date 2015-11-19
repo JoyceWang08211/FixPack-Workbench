@@ -10,16 +10,23 @@ class Properties {
         }
     }
 
-    getURL() {
-        let crawler_info = this.crawler_info;
-
-        return crawler_info.url;
+    getFileURL() {
+        return this.crawler_info.filename;
     }
 
-    getURLWithAuth() {
-        let crawler_info = this.crawler_info;
+    getBuildNumber() {
+        return this.crawler_info.build;
+    }
 
-        return `${crawler_info.url.split('//')[0]}//${crawler_info.username}:${crawler_info.password}@${crawler_info.url.split('//')[1]}`
+    getURL() {
+        return this.crawler_info.url;
+    }
+
+    getURLWithAuth(url) {
+        if (!url)
+            return `${this.crawler_info.url.split('//')[0]}//${this.crawler_info.username}:${this.crawler_info.password}@${this.crawler_info.url.split('//')[1]}`
+        else
+            return `${url.split('//')[0]}//${this.crawler_info.username}:${this.crawler_info.password}@${url.split('//')[1]}`
     }
 }
 

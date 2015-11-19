@@ -1,53 +1,66 @@
 "use strict";
+//global lib
+let fs = require('fs');
 
-let fetch = require('node-fetch');
+//crawler lib
 let co = require('co');
-let cheerio = require('cheerio');
+let xlsx = require('node-xlsx');
 
+//console format lib
+let consoler = require('consoler');
+let Table = require('cli-table');
+
+//util lib
 let properties = require('../util/propertiesUtil');
 
-let result = {};
-
+//crawler segments
+let crawler_component = require('./crawler_component');
+let crawler_build = require('./crawler_build');
+let crawler_testcase = require('./crawler_testcase');
+let crawler_logs = require('./crawler_logs');
 
 co(function* () {
-    let componentURL = yield fetch(properties.getURLWithAuth())
-    let componentHTML = yield componentURL.text();
+    consoler.info(`Crawler start working..`)
 
-    var $ = cheerio.load(componentHTML);
-    var projectstatus = $('#projectstatus');
-    var components = projectstatus.find('tr');
+    let components = yield* crawler_component.run();
+    let builds = yield* crawler_build.run(components);
+    let testcases = yield* crawler_testcase.run(builds);
+    let testcasesWithCops = yield* crawler_logs.run(testcases);
 
-    for (let component of Array.from(components)) {
-        var td3 = $(component).children().eq(2);
-        var name_component = td3.children().first().text();
-        var url_component = td3.children().first().attr('href');
+    var data = [];
 
-        if (url_component) {
-            var component_obj = new Object();
-            component_obj.id = name_component;
-            component_obj.url = properties.getURL() + url_component;
-            component_obj.html = '';
-            component_obj.build = [];
-
-            var processBuild = new Promise(
-                (resolve, reject)=> {
-                    fetch(component_obj.url)
-                        .then((res)=> {
-                            return res.text();
-                        })
-                        .then((body)=> {
-                            resolve(body)
-                        })
-                }
-            )
-
-            let test = yield processBuild;
-            console.log(test);
-        }
+    for (let item of testcasesWithCops) {
+        let temp = [];
+        temp.push(item.component.match(/([^\[\]]+)/ig)[1]);
+        temp.push(item.id.split('=')[1]);
+        temp.push(item.url);
+        temp.push(item.cop);
+        data.push(temp);
     }
+
+    var buffer = xlsx.build([{name: properties.filename, data: data}]);
+
+    yield new Promise(
+        (resolve, reject)=> {
+            fs.writeFile(__dirname + '/result/' + properties.getFileURL() + '.xlsx', buffer, (err)=> {
+                if (err)
+                    reject(new Error(err));
+                else {
+                    consoler.info(`The AA Result Lists File has been generated successfully..`);
+                    consoler.info(`Crawler has closed..`)
+                    resolve(1);
+                }
+            });
+        }
+    )
+
 }).catch((err)=> {
-    console.error(err.stack);
+    consoler.error(err.stack);
 });
+
+
+
+
 
 
 
