@@ -11,11 +11,6 @@ let Table = require('cli-table');
 
 function* processBuild(components) {
     let result = [];
-    let info_table = new Table(
-        {
-            head: ['Component Name', 'Build Number']
-        }
-    );
 
     consoler.loading(`Start Build process..`);
 
@@ -48,7 +43,7 @@ function* processBuild(components) {
                 let build_obj = {};
                 build_obj.component = component.id;
                 build_obj.id = build_number;
-                build_obj.url = 'https://test.liferay.com' + url_build;
+                build_obj.url = properties.getBuildURL(url_build);
 
                 result.push(build_obj);
             }
@@ -56,17 +51,6 @@ function* processBuild(components) {
         consoler.success(`Have finished analysed Builds HTML`)
         barUtil.bar.tick(1);
     }
-
-    let build_info = `Builds Info:\n`;
-
-    for (let build of result) {
-        let temp = build.component.match(/([^\[\]]+)/ig)[1] || 'Ignored';
-        info_table.push([temp, build.id])
-    }
-
-    consoler.info(build_info + info_table.toString());
-
-    barUtil.bar = barUtil.init(result.length, 'Testcase');
 
     return result;
 }

@@ -34,7 +34,7 @@ function *processComponent() {
         if (url_component) {
             let component_obj = {};
             component_obj.id = name_component;
-            component_obj.url = properties.getURL() + url_component;
+            component_obj.url = properties.getComponentURL(url_component);
             component_obj.build = [];
 
             result.push(component_obj);
@@ -42,15 +42,6 @@ function *processComponent() {
     }
 
     consoler.success(`Have finished analysing Component HTML of URL(${properties.getURL()})`);
-
-    let info_table = new Table();
-    let info = {'ToTal Components Number': result.length};
-
-    info_table.push(info);
-
-    consoler.info(`Component Results Info:\n${info_table.toString()}`);
-
-    barUtil.bar = barUtil.init(result.length, 'Build');
 
     return result;
 }
