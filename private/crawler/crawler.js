@@ -23,7 +23,9 @@ let crawler_logs = require('./crawler_logs');
 let info_table = {};
 let info = {};
 
-co(function* () {
+exports.crawler = function* (isBaseline) {
+    let baseline_suffix = isBaseline ? '-baseline' : '';
+
     consoler.info(`Crawler start working..`);
 
     //component process
@@ -100,7 +102,7 @@ co(function* () {
 
     yield new Promise(
         (resolve, reject)=> {
-            fs.writeFile(__dirname + '/result/' + properties.getFileURL() + '.xlsx', buffer, (err)=> {
+            fs.writeFile(`${__dirname}/result/${properties.getFileName()}${baseline_suffix}.xlsx`, buffer, (err)=> {
                 if (err)
                     reject(new Error(err));
                 else {
@@ -111,10 +113,7 @@ co(function* () {
             });
         }
     )
-}).catch(
-    (err)=> {
-        consoler.error(err.stack);
-    });
+};
 
 
 

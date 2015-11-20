@@ -40,12 +40,11 @@ function* processBuild(components) {
             let url_build = td2.children().first().attr('href');
             let status_build = td1.children().first().children().first().attr('tooltip');
             if (status_build) {
-                let build_obj = {};
-                build_obj.component = component.id;
-                build_obj.id = build_number;
-                build_obj.url = properties.getBuildURL(url_build);
-
-                result.push(build_obj);
+                result.push({
+                    id: build_number,
+                    component: component.id,
+                    url: properties.getBuildURL(url_build)
+                });
             }
         }
         consoler.success(`Have finished analysed Builds HTML`)

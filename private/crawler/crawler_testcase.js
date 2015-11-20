@@ -32,14 +32,13 @@ function processTestCase(build) {
                 let name_testcase = $(testcase).text().trim();
 
                 if (name_testcase) {
-                    let testcase_obj = {};
-                    testcase_obj.component = build.component;
-                    testcase_obj.build = build.id;
-                    testcase_obj.id = name_testcase;
-                    testcase_obj.url = build.url + url_testcase;
-                    testcase_obj.status = status_testcase;
-
-                    result.push(testcase_obj);
+                    result.push({
+                        id: name_testcase,
+                        component: build.component,
+                        build: build.id,
+                        url: build.url + url_testcase,
+                        status: status_testcase
+                    });
                 }
             }
 

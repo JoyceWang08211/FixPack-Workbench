@@ -32,12 +32,10 @@ function *processComponent() {
         let url_component = td3.children().first().attr('href');
 
         if (url_component) {
-            let component_obj = {};
-            component_obj.id = name_component;
-            component_obj.url = properties.getComponentURL(url_component);
-            component_obj.build = [];
-
-            result.push(component_obj);
+            result.push({
+                id: name_component,
+                url: properties.getComponentURL(url_component)
+            });
         }
     }
 

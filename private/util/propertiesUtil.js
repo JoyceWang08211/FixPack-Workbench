@@ -10,7 +10,7 @@ class Properties {
         }
     }
 
-    getFileURL() {
+    getFileName() {
         return this.crawler_info.filename;
     }
 
