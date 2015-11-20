@@ -4,9 +4,20 @@ var $ = require('jquery');
 
 $(document).ready(function () {
         var ContentBox = React.createClass({
-            render: function () {
+            render() {
                 return (
-                    <div><a href='/editors'>Here</a></div>
+                    <div className="jumbotron">
+                        <h1>Easy POSHI
+                            <small>Welcome to Easy POSHI</small>
+                        </h1>
+                        <p>Crawler For Jenkins Server</p>
+
+                        <p><a className="btn btn-primary btn-lg" href="/crawler" role="button">Learn more</a></p>
+
+                        <p>Editor For Liferay POSHI</p>
+
+                        <p><a className="btn btn-primary btn-lg" href="/editors" role="button">Learn more</a></p>
+                    </div>
                 )
             }
         });

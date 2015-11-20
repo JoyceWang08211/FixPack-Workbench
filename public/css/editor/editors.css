@@ -37,3 +37,7 @@ div.editor-panel {
     white-space: nowrap;
     overflow: hidden;
 }
+
+#diaplay_file {
+    margin-top: 5px;
+}

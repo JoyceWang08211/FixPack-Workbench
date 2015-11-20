@@ -54,7 +54,7 @@ var EditorPanelBox = React.createClass({
 
     getInitialState() {
         return {
-            currentFile: 'No File is selected.'
+            currentFile: ''
         };
     },
 
@@ -71,10 +71,6 @@ var EditorPanelBox = React.createClass({
                 <div className='row'>
                     <ul id='editor' className="nav nav-tabs nav-justified">
                         <li role="presentation" className="active">
-                            <a href="#home" aria-controls="home" role="tab"
-                               data-toggle="tab">Home</a>
-                        </li>
-                        <li role="presentation">
                             <a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a>
                         </li>
                         <li role="presentation">
@@ -84,11 +80,9 @@ var EditorPanelBox = React.createClass({
                     </ul>
                 </div>
                 <div className="tab-content">
-                    <div role="tabpanel" className="tab-pane active" id="home">
+                    <div role="tabpanel" className="tab-pane active" id="profile">
                         <EditorBox
-                            fileName={this.state.currentFile}/>
-                    </div>
-                    <div role="tabpanel" className="tab-pane" id="profile">2</div>
+                            fileName={this.state.currentFile}/></div>
                     <div role="tabpanel" className="tab-pane" id="settings">3</div>
                 </div>
             </div>
