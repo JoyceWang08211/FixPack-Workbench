@@ -1,12 +1,13 @@
 let React = require('react');
+let createFragment = require('react-addons-create-fragment');
 let $ = require('jquery');
 let pd = require('pretty-data').pd;
 let Clipboard = require('clipboard');
 
 let editor_type = window.location.href.split('/').pop();
 
-let inputs = require('../common/inputs');
-let ProfileEntry = inputs.inputWithCopyButton;
+let profile = require('../common/profile');
+let ProfileEntry = profile.ProfileEntry;
 
 let ControlBox = React.createClass({
     handleSave() {
@@ -41,50 +42,83 @@ let ControlBox = React.createClass({
 let ProfileBox = React.createClass({
     getDefaultProps(){
         return {
-            fileName: ''
+            type: 'function',
+            profile: {}
         };
     },
 
     render(){
-        let html;
+        let profileHTML;
+        let fileName = this.props.profile.name;
+        let defaultCommand = this.props.profile.default_command;
 
-        if (this.props.fileName != '')
-            html = (
-                <div>
-                    <p>{this.props.fileName} Info</p>
-                    <dl>
-                        <dt>File Name</dt>
-                        <dd>
-                            <ProfileEntry
-                                defaultValue={this.props.fileName}
-                                />
-                        </dd>
-                    </dl>
-                </div>
-            )
+        if (fileName != '' && fileName != undefined)
+            switch (this.props.type) {
+                case 'function':
+                    profileHTML = (
+                        <div>
+                            <h3>{fileName} Info</h3>
+                            <dl>
+                                <dt>File Type</dt>
+                                <dd>
+                                    <ProfileEntry value={this.props.type}/>
+                                </dd>
+                                <dt>File Name</dt>
+                                <dd>
+                                    <ProfileEntry value={fileName}/>
+                                </dd>
+                                <dt>Default Command</dt>
+                                <dd>
+                                    <ProfileEntry value={defaultCommand}/>
+                                </dd>
+                            </dl>
+                        </div>
+                    )
+                    break;
+                case 'macro':
 
+                    break;
+                case 'testcase':
+
+                    break;
+                default:
+                    break;
+            }
         else
-            html = (
+            profileHTML = (
                 <div>
                     <p>No file is selected.</p>
                 </div>
             );
 
-        return html;
+        return profileHTML;
     }
 });
 
 var ListGroupBox = React.createClass({
         getDefaultProps(){
             return {
-                test: '123'
+                lists: [],
+                name: ''
             }
         },
 
         render(){
+            let children = [];
+            for (let item of this.props.lists) {
+                children.push(createFragment({
+                    name: item.name
+                }));
+            }
+
+
+            let list = React.Children.map(children, (child)=> {
+                return <div>{child}</div>
+            })
+
             return (
-                <div>{this.props.test}</div>
-            )
+                <div id='editor_list'>{list}</div>
+            );
         }
     }
 );
@@ -92,19 +126,38 @@ var ListGroupBox = React.createClass({
 let EditorBox = React.createClass({
     getDefaultProps() {
         return {
-            fileName: ''
+            type: 'function',
+            fileObj: {}
         };
     },
 
     render() {
+        let editorHTML;
+        let profile = this.props.fileObj.profile;
+        let list = this.props.fileObj.list;
+
+        switch (this.props.type) {
+            case 'function':
+                editorHTML = (
+                    <div className='col-xs-3'>
+                        <ControlBox/>
+                        <ProfileBox eidtorType='function' profile={profile}/>
+                        <ListGroupBox lists={list}/>
+                    </div>
+                );
+                break;
+            case 'macro':
+                break;
+            case 'testcase':
+                break;
+            default:
+                break;
+        }
+
         return (
             <div>
                 <div id='diaplay_file' className='row'>
-                    <div className='col-xs-3'>
-                        <ControlBox/>
-                        <ProfileBox fileName={this.props.fileName}/>
-                        <ListGroupBox/>
-                    </div>
+                    {editorHTML}
                     <div className='col-xs-9'>
                         <textarea className="form-control" rows="48"></textarea>
                     </div>

@@ -2,25 +2,20 @@ let React = require('react');
 let $ = require('jquery');
 let Clipboard = require('clipboard');
 
-exports.inputWithCopyButton = React.createClass({
+exports.ProfileEntry = React.createClass({
     clipboard: {},
-
-    getDefault(){
-        return {
-            defaultValue: 'defaultValue'
-        }
-    },
 
     render(){
         return (
             <div className="input-group">
-                <input type='text' ref='target' className="form-control" defaultValue={this.props.defaultValue}></input>
+                <p ref='target'>{this.props.value}</p>
                 <span className="input-group-btn">
                 <button className="btn btn-default" ref='trigger' type="button">Copy</button>
                 </span>
             </div>
         )
     },
+
     componentDidMount(){
         this.clipboard = new Clipboard(this.refs.trigger, {
             target: ()=> {

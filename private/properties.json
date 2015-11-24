@@ -5,11 +5,11 @@
     "username": "haoliang.wu",
     "password": "woaini0514",
     "filename": "portal-79-6210-build3",
-    "url": "https://test.liferay.com/8/view/test-portal-fixpack-frontend-tomcat-mysql%28ee-6.2.10_6.2.10.14%29/",
-    "url_baseline": "https://test.liferay.com/8/view/test-portal-release-ee-frontend-tomcat-mysql%28ee-6.2.10_6.2.10.14%29/",
-    "build": "#28"
+    "url": "https://test.liferay.com/8/view/test-portal-fixpack-frontend-tomcat-mysql%28ee-6.2.10_6.2.10.15%29/",
+    "url_baseline": "https://test.liferay.com/8/view/test-portal-release-ee-frontend-tomcat-mysql%28ee-6.2.10_6.2.10.15%29/",
+    "build": "#2"
   },
   "jenkins_info": {
-    "host": "test.liferay.com"
+    "host": "https://test.liferay.com"
   }
 }

@@ -2,7 +2,8 @@ var React = require('react');
 var $ = require('jquery');
 
 //JSON Search Input plugin
-require('react-dom')
+require('react-dom');
+
 var SelectSearchBox = require('react-select');
 
 //Editor
@@ -43,10 +44,10 @@ var EditorPanelBox = React.createClass({
             },
             dataType: "json",
             success: (result)=> {
-                let fileName = JSON.parse(result).definition.name;
+                let fileObject = JSON.parse(result);
 
                 this.setState({
-                    currentFile: fileName
+                    currentFile: fileObject
                 })
             }
         });
@@ -54,7 +55,7 @@ var EditorPanelBox = React.createClass({
 
     getInitialState() {
         return {
-            currentFile: ''
+            currentFile: {}
         };
     },
 
@@ -81,8 +82,8 @@ var EditorPanelBox = React.createClass({
                 </div>
                 <div className="tab-content">
                     <div role="tabpanel" className="tab-pane active" id="profile">
-                        <EditorBox
-                            fileName={this.state.currentFile}/></div>
+                        <EditorBox editorType={editor_type}
+                                   fileObj={this.state.currentFile}/></div>
                     <div role="tabpanel" className="tab-pane" id="settings">3</div>
                 </div>
             </div>
@@ -90,8 +91,8 @@ var EditorPanelBox = React.createClass({
     },
 
     componentDidMount() {
-        $('#editor a').click((e)=> {
-            e.preventDefault()
+        $('#editor').find('a').click((e)=> {
+            e.preventDefault();
             $(this).tab('show')
         })
     }

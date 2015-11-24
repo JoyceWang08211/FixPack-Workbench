@@ -1,3 +1,5 @@
+"use strict"
+
 var express = require('express');
 var fs = require('fs');
 
@@ -29,8 +31,27 @@ router.post('/update', function (req, res, next) {
         }
         else {
             var wrapData = JSON.parse(data);
-            wrapData.definition.name = name;
 
+            switch (type) {
+                case 'function':
+                    let commandObj = wrapData.definition.command;
+
+                    wrapData.profile = {
+                        name: name,
+                        default_command: wrapData.definition.default
+                    };
+
+                    commandObj.constructor == Array ? wrapData.list = commandObj : wrapData.list = [commandObj];
+
+                    //console.log(wrapData.list);
+                    break;
+                case 'macro':
+                    break;
+                case 'testcase':
+                    break;
+                default:
+                    break;
+            }
             res.json(JSON.stringify(wrapData));
         }
     });

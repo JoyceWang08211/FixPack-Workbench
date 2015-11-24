@@ -39,7 +39,7 @@ exports.crawler = function* (isBaseline) {
 
     //build process
     consoler.info(`Crawler start build process..`);
-    barUtil.bar = barUtil.init(result.length, 'Build');
+    barUtil.bar = barUtil.init(components.length, 'Build');
     let builds = yield* crawler_build.run(components);
     info_table = new Table(
         {
@@ -56,31 +56,33 @@ exports.crawler = function* (isBaseline) {
 
     //testcase process and console output process
     consoler.info(`Crawler start testcase and cop process..`);
-    barUtil.bar = barUtil.init(result.length, 'Testcase');
     let testcases_process = [];
 
     for (let build of builds) {
         testcases_process.push(crawler_testcase.run(build));
     }
 
-    let testcases = yield testcases_process;
+    barUtil.bar = barUtil.init(testcases_process.length, 'Testcase');
+    let testcase_builds = yield testcases_process;
     info_table = new Table(
         {
             head: ['Component Name', 'Build Number', 'Total Cases', 'Failed Cases']
         }
     );
 
-    barUtil.bar = barUtil.init(results.length, 'Console Output');
     let cops_process = [];
-
-    for (let testcase of testcases) {
+    for (let testcases of testcase_builds) {
         info_table.push([
-            build.component.match(/([^\[\]]+)/ig)[1] || 'Ignored',
-            build.id,
-            testcases.length,
-            result.length]);
-        cops_process.push(crawler_logs.run(testcase));
+            testcases.component.match(/([^\[\]]+)/ig)[1] || 'Ignored',
+            testcases.build,
+            testcases.total,
+            testcases.length]);
+        for (let testcase of testcases) {
+            cops_process.push(crawler_logs.run(testcase));
+        }
     }
+
+    barUtil.bar = barUtil.init(cops_process.length, 'Console Output');
 
     let cops = yield cops_process;
     consoler.info(`Crawler has finished testcase and cop process..`);

@@ -15,8 +15,6 @@ function processTestCase(build) {
             return res.text();
         })
         .then((body)=> {
-            let results = [];
-
             let $ = cheerio.load(body);
             let matrix = $('#matrix');
             let testcases = matrix.children('a');
@@ -35,18 +33,18 @@ function processTestCase(build) {
                     result.push({
                         id: name_testcase,
                         component: build.component,
-                        build: build.id,
-                        url: build.url + url_testcase,
-                        status: status_testcase
+                        url: build.url + url_testcase
                     });
                 }
             }
 
-            results = results.concat(result);
+            result.total = Array.from(testcases).length;
+            result.component = build.component;
+            result.build = build.id;
 
             barUtil.bar.tick(1);
 
-            return results;
+            return result;
         });
 
 

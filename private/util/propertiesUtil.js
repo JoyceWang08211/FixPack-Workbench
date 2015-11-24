@@ -1,5 +1,6 @@
 "use strict";
 
+let path = require('path');
 let fs = require('fs');
 
 class Properties {
@@ -19,15 +20,15 @@ class Properties {
     }
 
     getBuildURL(url) {
-        return this.jenkins.host + url;
+        return this.jenkins_info.host + url;
     }
 
     getTestCaseURL(buildUrl, url) {
-        return getBuildURL(buildUrl) + url;
+        return this.getBuildURL(buildUrl) + url;
     }
 
     getCOPURL(url) {
-        return this.jenkins.host + url;
+        return this.jenkins_info.host + url;
     }
 
     getBuildNumber() {
@@ -46,6 +47,6 @@ class Properties {
     }
 }
 
-let properties = JSON.parse(fs.readFileSync('../properties.json', 'utf-8'));
+let properties = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../properties.json'), 'utf-8'));
 
 module.exports = new Properties(properties);
