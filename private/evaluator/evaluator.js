@@ -1,29 +1,57 @@
 "use strict";
-let fs = require('fs');
-let fse = require('fs-extra');
-let path = require('path');
-let xlsx = require('node-xlsx');
-let rd = require('rd');
-let pd = require('pretty-data').pd;
+
+const fs = require('fs');
+const fse = require('fs-extra');
+const path = require('path');
+const xlsx = require('node-xlsx');
+const rd = require('rd');
+const consoler = require('consoler');
+const pd = require('pretty-data').pd;
 
 let cache_Y, cache_N;
 
-let isRelative = false;
+//relative mode
+const temp_N_fileURL = path.resolve(__dirname, `./result/temp/N.json`);
+const temp_Y_fileURL = path.resolve(__dirname, `./result/temp/Y.json`);
+const temp_setting_fileURL = path.resolve(__dirname, `./result/temp/setting.json`);
+let isRelative = true, relativeObj = [];
+
+consoler.info('Start evaluate the priority report of fix-pack jobs..');
+consoler.info(`The mode is ${isRelative ? 'Relative' : 'Absolute'}`);
+
+if (isRelative) {
+    let relatvieInfo;
+    fse.ensureFileSync(temp_setting_fileURL);
+    try {
+        relatvieInfo = fse.readJsonSync(temp_setting_fileURL);
+        consoler.info(`The relative target is generate from the report of ${relatvieInfo.list}`);
+    }
+    catch (e) {
+        if (e.name == 'SyntaxError') {
+            consoler.info(`The relative setting file is missing, so process Absolute mode..`);
+            isRelative = false;
+        }
+        else {
+            throw new Error(`Faile to start process due to ${e.name}:${e.message}`);
+        }
+    }
+}
 
 rd.eachFileFilterSync('../comparator/result', /\.xlsx$/,
     (f)=> {
-        let fixPackName = path.basename(f).split('.')[0];
-        let fixPackPackageURL = path.resolve(__dirname, `./result/${fixPackName}`);
-        let tempPackageURL = path.resolve(__dirname, `./result/temp`);
+        const fixPackName = path.basename(f).split('.')[0];
+        consoler.loading(`Start evaluating ${fixPackName}..`);
+
+        const fixPackPackageURL = path.resolve(__dirname, `./result/${fixPackName}`);
+        const tempPackageURL = path.resolve(__dirname, `./result/temp`);
 
         fse.mkdirsSync(fixPackPackageURL);
         fse.mkdirsSync(tempPackageURL);
 
-        let xlsx_fileURL = path.resolve(__dirname, `./result/${fixPackName}/result.xlsx`);
-        let N_fileURL = path.resolve(__dirname, `./result/${fixPackName}/N.json`);
-        let Y_fileURL = path.resolve(__dirname, `./result/${fixPackName}/Y.json`);
-        let temp_N_fileURL = path.resolve(__dirname, `./result/temp/N.json`);
-        let temp_Y_fileURL = path.resolve(__dirname, `./result/temp/Y.json`);
+        const xlsx_fileURL = path.resolve(__dirname, `./result/${fixPackName}/result.xlsx`);
+        const setting_fileURL = path.resolve(__dirname, `./result/${fixPackName}/setting.json`);
+        const N_fileURL = path.resolve(__dirname, `./result/${fixPackName}/N.json`);
+        const Y_fileURL = path.resolve(__dirname, `./result/${fixPackName}/Y.json`);
 
         let temp_Y, temp_N;
 
@@ -38,15 +66,14 @@ rd.eachFileFilterSync('../comparator/result', /\.xlsx$/,
 
         let result_Y = {result: {length: 0}}, result_N = {result: {length: 0}};
 
-        let excelObj = xlsx.parse(f)[0].data;
+        const excelObj = xlsx.parse(f)[0].data;
 
         let index_N = 0, index_Y = 0;
-
         for (let item of excelObj.entries()) {
-            let index = item[0];
-            let entry = item[1];
+            const index = item[0];
+            const entry = item[1];
 
-            let testcaseName = entry[1] == undefined ? 'default' : entry[1];
+            const testcaseName = entry[1] == undefined ? 'default' : entry[1];
 
             if (entry[4] == 'N') {
                 result_N[testcaseName] = index_N;
@@ -72,7 +99,7 @@ rd.eachFileFilterSync('../comparator/result', /\.xlsx$/,
             }
             else {
                 result_Y[testcaseName] = index_Y;
-                if (temp_Y.hasOwnProperty(testcaseName))
+                if (temp_Y.hasOwnProperty(testcaseName)) {
                     result_Y.result[index_Y++] =
                     {
                         index: index,
@@ -80,7 +107,8 @@ rd.eachFileFilterSync('../comparator/result', /\.xlsx$/,
                         priority: temp_Y.result[temp_Y[testcaseName]].priority + 1,
                         start: temp_Y.result[temp_Y[testcaseName]].start
                     };
-                else
+                }
+                else {
                     result_Y.result[index_Y++] =
                     {
                         index: index,
@@ -88,35 +116,39 @@ rd.eachFileFilterSync('../comparator/result', /\.xlsx$/,
                         priority: 1,
                         start: fixPackName
                     };
+                }
             }
         }
 
         result_N.result.length = index_N;
         result_Y.result.length = index_Y;
 
+        relativeObj.push(fixPackName);
         cache_Y = result_Y;
         cache_N = result_N;
 
-        let N_sheet = {name: 'N', data: objToArray(result_N)};
-        let Y_sheet = {name: 'Y', data: objToArray(result_Y)};
+        const N_sheet = {name: 'N', data: objToArray(result_N)};
+        const Y_sheet = {name: 'Y', data: objToArray(result_Y)};
 
+        consoler.loading(`Start generator ${fixPackName} report..`);
         fs.writeFileSync(xlsx_fileURL, xlsx.build([N_sheet, Y_sheet], []));
+        fs.writeFileSync(setting_fileURL, pd.json({list: relativeObj}));
         fs.writeFileSync(N_fileURL, pd.json(result_N));
         fs.writeFileSync(Y_fileURL, pd.json(result_Y));
+        consoler.loading(`The report url is ${path.resolve(__dirname, `./result/${fixPackName}`)}..`);
 
-        if (isRelative) {
-            fs.writeFileSync(temp_N_fileURL, pd.json(result_N));
-            fs.writeFileSync(temp_Y_fileURL, pd.json(result_Y));
-        }
+        fs.writeFileSync(temp_setting_fileURL, pd.json({list: relativeObj}));
+        fs.writeFileSync(temp_N_fileURL, pd.json(result_N));
+        fs.writeFileSync(temp_Y_fileURL, pd.json(result_Y));
     });
 
 function objToArray(obj) {
     let temp = [];
-    let result = Array.from(obj.result);
+    const result = Array.from(obj.result);
 
     for (let i in result) {
         if (result.hasOwnProperty(i)) {
-            let entry = result[i];
+            const entry = result[i];
             temp.push([entry.name, entry.priority, entry.start]);
         }
     }

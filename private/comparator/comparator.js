@@ -1,12 +1,12 @@
-"use strict"
+"use strict";
 
 let fs = require('fs');
 let xlsx = require('node-xlsx');
 
 let properties = require('../util/propertiesUtil');
 
-let patch = {}
-let baseline = {}
+let patch = {};
+let baseline = {};
 
 exports.compare = function () {
     try {
