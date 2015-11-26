@@ -8,12 +8,12 @@ const rd = require('rd');
 const consoler = require('consoler');
 const pd = require('pretty-data').pd;
 
-let cache_Y, cache_N;
+let cacheYes, cacheNot;
 
 //relative mode
-const temp_N_fileURL = path.resolve(__dirname, `./result/temp/N.json`);
-const temp_Y_fileURL = path.resolve(__dirname, `./result/temp/Y.json`);
-const temp_setting_fileURL = path.resolve(__dirname, `./result/temp/setting.json`);
+const tempNotFileURL = path.resolve(__dirname, `./result/temp/N.json`);
+const tempYesFileURL = path.resolve(__dirname, `./result/temp/Y.json`);
+const tempSettingFileURL = path.resolve(__dirname, `./result/temp/setting.json`);
 let isRelative = true, relativeObj = [];
 
 consoler.info('Start evaluate the priority report of fix-pack jobs..');
@@ -21,9 +21,9 @@ consoler.info(`The mode is ${isRelative ? 'Relative' : 'Absolute'}`);
 
 if (isRelative) {
     let relatvieInfo;
-    fse.ensureFileSync(temp_setting_fileURL);
+    fse.ensureFileSync(tempSettingFileURL);
     try {
-        relatvieInfo = fse.readJsonSync(temp_setting_fileURL);
+        relatvieInfo = fse.readJsonSync(tempSettingFileURL);
         consoler.info(`The relative target is generate from the report of ${relatvieInfo.list}`);
     }
     catch (e) {
@@ -48,27 +48,27 @@ rd.eachFileFilterSync('../comparator/result', /\.xlsx$/,
         fse.mkdirsSync(fixPackPackageURL);
         fse.mkdirsSync(tempPackageURL);
 
-        const xlsx_fileURL = path.resolve(__dirname, `./result/${fixPackName}/result.xlsx`);
-        const setting_fileURL = path.resolve(__dirname, `./result/${fixPackName}/setting.json`);
-        const N_fileURL = path.resolve(__dirname, `./result/${fixPackName}/N.json`);
-        const Y_fileURL = path.resolve(__dirname, `./result/${fixPackName}/Y.json`);
+        const xlsxFileURL = path.resolve(__dirname, `./result/${fixPackName}/result.xlsx`);
+        const settingFileURL = path.resolve(__dirname, `./result/${fixPackName}/setting.json`);
+        const notFileURL = path.resolve(__dirname, `./result/${fixPackName}/N.json`);
+        const yesFileURL = path.resolve(__dirname, `./result/${fixPackName}/Y.json`);
 
-        let temp_Y, temp_N;
+        let tempYes, tempNot;
 
-        if (fs.existsSync(temp_N_fileURL) && fs.existsSync(temp_Y_fileURL) && isRelative) {
-            temp_Y = cache_Y || fse.readJsonSync(temp_Y_fileURL) || {result: {length: 0}};
-            temp_N = cache_N || fse.readJsonSync(temp_N_fileURL) || {result: {length: 0}};
+        if (fs.existsSync(tempNotFileURL) && fs.existsSync(tempYesFileURL) && isRelative) {
+            tempYes = cacheYes || fse.readJsonSync(tempYesFileURL) || {result: {length: 0}};
+            tempNot = cacheNot || fse.readJsonSync(tempNotFileURL) || {result: {length: 0}};
         }
         else {
-            temp_Y = cache_Y || {result: {length: 0}};
-            temp_N = cache_N || {result: {length: 0}};
+            tempYes = cacheYes || {result: {length: 0}};
+            tempNot = cacheNot || {result: {length: 0}};
         }
 
-        let result_Y = {result: {length: 0}}, result_N = {result: {length: 0}};
+        let resultYes = {result: {length: 0}}, resultNot = {result: {length: 0}};
 
         const excelObj = xlsx.parse(f)[0].data;
 
-        let index_N = 0, index_Y = 0;
+        let indexNot = 0, indexYes = 0;
         for (let item of excelObj.entries()) {
             const index = item[0];
             const entry = item[1];
@@ -76,19 +76,19 @@ rd.eachFileFilterSync('../comparator/result', /\.xlsx$/,
             const testcaseName = entry[1] == undefined ? 'default' : entry[1];
 
             if (entry[4] == 'N') {
-                result_N[testcaseName] = index_N;
+                resultNot[testcaseName] = indexNot;
 
-                if (temp_N.hasOwnProperty(testcaseName)) {
-                    result_N.result[index_N++] =
+                if (tempNot.hasOwnProperty(testcaseName)) {
+                    resultNot.result[indexNot++] =
                     {
                         index: index,
                         name: testcaseName,
-                        priority: temp_N.result[temp_N[testcaseName]].priority + 1,
-                        start: temp_N.result[temp_N[testcaseName]].start
+                        priority: tempNot.result[tempNot[testcaseName]].priority + 1,
+                        start: tempNot.result[tempNot[testcaseName]].start
                     };
                 }
                 else {
-                    result_N.result[index_N++] =
+                    resultNot.result[indexNot++] =
                     {
                         index: index,
                         name: testcaseName,
@@ -98,18 +98,18 @@ rd.eachFileFilterSync('../comparator/result', /\.xlsx$/,
                 }
             }
             else {
-                result_Y[testcaseName] = index_Y;
-                if (temp_Y.hasOwnProperty(testcaseName)) {
-                    result_Y.result[index_Y++] =
+                resultYes[testcaseName] = indexYes;
+                if (tempYes.hasOwnProperty(testcaseName)) {
+                    resultYes.result[indexYes++] =
                     {
                         index: index,
                         name: testcaseName,
-                        priority: temp_Y.result[temp_Y[testcaseName]].priority + 1,
-                        start: temp_Y.result[temp_Y[testcaseName]].start
+                        priority: tempYes.result[tempYes[testcaseName]].priority + 1,
+                        start: tempYes.result[tempYes[testcaseName]].start
                     };
                 }
                 else {
-                    result_Y.result[index_Y++] =
+                    resultYes.result[indexYes++] =
                     {
                         index: index,
                         name: testcaseName,
@@ -120,26 +120,26 @@ rd.eachFileFilterSync('../comparator/result', /\.xlsx$/,
             }
         }
 
-        result_N.result.length = index_N;
-        result_Y.result.length = index_Y;
+        resultNot.result.length = indexNot;
+        resultYes.result.length = indexYes;
 
         relativeObj.push(fixPackName);
-        cache_Y = result_Y;
-        cache_N = result_N;
+        cacheYes = resultYes;
+        cacheNot = resultNot;
 
-        const N_sheet = {name: 'N', data: objToArray(result_N)};
-        const Y_sheet = {name: 'Y', data: objToArray(result_Y)};
+        const notSheet = {name: 'N', data: objToArray(resultNot)};
+        const yesSheet = {name: 'Y', data: objToArray(resultYes)};
 
         consoler.loading(`Start generator ${fixPackName} report..`);
-        fs.writeFileSync(xlsx_fileURL, xlsx.build([N_sheet, Y_sheet], []));
-        fs.writeFileSync(setting_fileURL, pd.json({list: relativeObj}));
-        fs.writeFileSync(N_fileURL, pd.json(result_N));
-        fs.writeFileSync(Y_fileURL, pd.json(result_Y));
+        fs.writeFileSync(xlsxFileURL, xlsx.build([notSheet, yesSheet], []));
+        fs.writeFileSync(settingFileURL, pd.json({list: relativeObj}));
+        fs.writeFileSync(notFileURL, pd.json(resultNot));
+        fs.writeFileSync(yesFileURL, pd.json(resultYes));
         consoler.loading(`The report url is ${path.resolve(__dirname, `./result/${fixPackName}`)}..`);
 
-        fs.writeFileSync(temp_setting_fileURL, pd.json({list: relativeObj}));
-        fs.writeFileSync(temp_N_fileURL, pd.json(result_N));
-        fs.writeFileSync(temp_Y_fileURL, pd.json(result_Y));
+        fs.writeFileSync(tempSettingFileURL, pd.json({list: relativeObj}));
+        fs.writeFileSync(tempNotFileURL, pd.json(resultNot));
+        fs.writeFileSync(tempYesFileURL, pd.json(resultYes));
     });
 
 function objToArray(obj) {

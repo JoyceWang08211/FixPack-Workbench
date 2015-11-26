@@ -5,7 +5,7 @@
     "es6": true
   },
   "rules": {
-    "camelcase": 0,
+    "camelcase": 1,
     "curly": 2,
     "quotes": [
       1,
