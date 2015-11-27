@@ -1,9 +1,11 @@
 {
   "project_home": "/home/lyon/liferay/portal/portal-6210",
   "portalweb_home": "/portal-web/test/functional/com/liferay/portalweb",
+  "user_info":{
+      "username": "haoliang.wu",
+      "password": "woaini0514",
+  }
   "crawler_info": {
-    "username": "haoliang.wu",
-    "password": "woaini0514",
     "filename": "portal-79-6210-build3",
     "url": "https://test.liferay.com/8/view/test-portal-fixpack-frontend-tomcat-mysql%28ee-6.2.10_6.2.10.15%29/",
     "url_baseline": "https://test.liferay.com/8/view/test-portal-release-ee-frontend-tomcat-mysql%28ee-6.2.10_6.2.10.15%29/",
