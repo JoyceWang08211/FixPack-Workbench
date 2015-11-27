@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 let path = require('path');
 let fs = require('fs');
@@ -44,6 +44,31 @@ class Properties {
             return `${this.crawler_info.url.split('//')[0]}//${this.user_info.username}:${this.user_info.password}@${this.crawler_info.url.split('//')[1]}`;
         else
             return `${url.split('//')[0]}//${this.user_info.username}:${this.user_info.password}@${url.split('//')[1]}`
+    }
+
+    //user
+    getUserInfo() {
+        return this.user_info;
+    }
+
+    //jenkins
+    getJenkinsInfo() {
+        return this.jenkins_info;
+    }
+
+    //crawler
+    getCrawlerInfo() {
+        return this.crawler_info;
+    }
+
+    //sub task
+    getSubTaskInfo() {
+        return this.sub_task_info;
+    }
+
+    //regression
+    getRegressionInfo() {
+        return this.regression_info;
     }
 }
 

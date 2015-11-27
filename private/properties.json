@@ -1,10 +1,10 @@
 {
   "project_home": "/home/lyon/liferay/portal/portal-6210",
   "portalweb_home": "/portal-web/test/functional/com/liferay/portalweb",
-  "user_info":{
-      "username": "haoliang.wu",
-      "password": "woaini0514",
-  }
+  "user_info": {
+    "username": "haoliang.wu",
+    "password": "woaini0514"
+  },
   "crawler_info": {
     "filename": "portal-79-6210-build3",
     "url": "https://test.liferay.com/8/view/test-portal-fixpack-frontend-tomcat-mysql%28ee-6.2.10_6.2.10.15%29/",
@@ -13,5 +13,14 @@
   },
   "jenkins_info": {
     "host": "https://test.liferay.com"
+  },
+  "sub_task_info": {
+    "host": "https://issues.liferay.com/browse",
+    "ticket": "LRQA-19810",
+    "fixpack": "portal-81-6210"
+  },
+  "regression_info": {
+    "host": "https://issues.liferay.com/browse",
+    "ticket": "LRQA-19810"
   }
 }

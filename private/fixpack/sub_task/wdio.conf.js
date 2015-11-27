@@ -117,6 +117,7 @@ exports.config = {
 
         chai.use(chaiAsPromised);
         expect = chai.expect;
+        assert = chai.assert;
         chai.Should();
     },
     //
@@ -124,6 +125,7 @@ exports.config = {
     // the test.
     after: function () {
         // do something
+        browser.end();
     },
     //
     // Gets executed after all workers got shut down and the process is about to exit. It is not
