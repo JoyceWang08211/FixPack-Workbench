@@ -30,34 +30,40 @@ describe('Fix Pack Build Sub Tasks', function () {
                 return e.value;
             });
         });
+        LPECache = LPECache.sort((a, b)=> {
+            let tag = parseInt(a.split('-')[1]) - parseInt(b.split('-')[1]);
+
+            return tag < 0 ? -1 : 1;
+        });
     });
 
     it('Catch LPS list..', function* () {
-        LPSCache = yield LPECache.map((c)=> {
-            return new Promise((resolve, reject)=> {
-                //console.log(properties.getURLWithAuth(`${setting.host}/${c}`));
-                fetch(properties.getURLWithAuth(`${setting.host}/${c}`))
-                    .then((res)=> {
-                        return res.text();
-                    })
-                    .then((body)=> {
-                        //resolve('test')
-                        let $ = cheerio.load(body);
-                        $('.links-list ')
-                            .find('a')
-                            .each((i, e)=> {
-                                if ($(e).text().match(/^LPS-\d+$/)) {
-                                    resolve($(e).text());
-                                }
-                                else {
-                                }
-                            });
-                    })
-                    .catch((err)=> {
-                        console.log(err);
-                    });
-            });
-        });
+        LPSCache = new Map(yield LPECache.map((c)=> {
+                return new Promise((resolve, reject)=> {
+                    //console.log(properties.getURLWithAuth(`${setting.host}/${c}`));
+                    fetch(properties.getURLWithAuth(`${setting.host}/${c}`))
+                        .then((res)=> {
+                            return res.text();
+                        })
+                        .then((body)=> {
+                            //resolve('test')
+                            let $ = cheerio.load(body);
+                            $('.links-list ')
+                                .find('a')
+                                .each((i, e)=> {
+                                    if ($(e).text().match(/^LPS-\d+$/)) {
+                                        resolve([c, $(e).text()]);
+                                    }
+                                    else {
+                                    }
+                                });
+                        })
+                        .catch((err)=> {
+                            console.log(err);
+                        });
+                });
+            })
+        );
 
         console.log(LPSCache);
     });
