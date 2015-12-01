@@ -17,6 +17,10 @@ $(document).ready(function () {
                         <p>Editor For Liferay POSHI</p>
 
                         <p><a className="btn btn-primary btn-lg" href="/editors" role="button">Learn more</a></p>
+
+                        <p>CNQA Knowledge Base</p>
+
+                        <p><a className="btn btn-primary btn-lg" href="/kb" role="button">Learn more</a></p>
                     </div>
                 )
             }
