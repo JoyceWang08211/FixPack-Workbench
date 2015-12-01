@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>reveal.js – The HTML Presentation Framework</title>
+
+    <meta name="description" content="CNQA Knowledge Base">
+    <meta name="author" content="Lyon">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link ref="stylesheet" href="../../../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../css/reveal.css">
+    <link rel="stylesheet" href="../../../css/theme/league.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="../../../lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? '../../../css/print/pdf.css' : '../../../css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="../../../lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<div class="reveal">
+
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <div class="slides">
+        <section>
+            <h1>Web功能测试</h1>
+
+            <h3>一些必知必懂的小知识</h3>
+
+            <p>
+                <small>Created by <a href="https://github.com/haoliangwu">Lyon</a> / <a
+                        href="https://github.com/haoliangwu">@haoliangwu</a></small>
+            </p>
+        </section>
+
+        <section>
+            <h3>功能测试</h3>
+
+            <p>Functional testing（功能测试），也称为behavioral testing（行为测试），根据产品特性、操作描述和用户方案，测试一个
+                产品的特性和可操作行为以确定它们满足设计需求。本地化软件的功能测试，用于验证应用程序或网站对目标用户能正确工作。
+                使用适当的平台、浏览器和测试脚本，以保证目标用户的体验将足够好，就像应用程序是专门为该市场开发的一样。
+            </p>
+
+            <p>说到底就是为了验证一个网站是否能正常工作，符合设计当初的需求，所有的测试工作都是围绕测试用例展开的，功能测试也不例外。</p>
+        </section>
+        <section>
+            <section>
+                <h3>测试用例</h3>
+
+                <p>这个概念很大，我们这里不会进行详细的讨论，因为是小知识，所以讲一些我认为实用的，和工作有关系的，并且我们这里假设所有
+                    的测试用例都是针对功能测试的。</p>
+
+                <p>也许很多人设计了很多测试用例，但却分不清各种结构的测试用例有什么区别，这牵扯到一个开发模式的问题。</p>
+            </section>
+            <section>
+                <h3>TDD开发模式</h3>
+
+                <p>TDD指的是Test Drive Development，很明显的意思是测试驱动开发，也就是说我们可以从测试的角度来检验整个项目。大概的
+                    流程是先针对每个功能点抽象出接口代码，然后编写单元测试代码，接下来实现接口，运行单元测试代码，循环此过程，直到整个
+                    单元测试都通过。这一点和敏捷开发有类似之处。</p>
+            </section>
+            <section>
+                <h3>对应TDD模式的测试用例</h3>
+                <h4>组件结构及流程控制</h4>
+
+                <p>
+                    <pre><code class="hljs" data-trim contenteditable>
+                        //结构
+                        <suite>//代表某个模块
+                            ...
+                            <test>//代表某个模块功能
+                                ...
+                            </test>
+                            ...
+                        </suite>
+                    </code></pre>
+                </p>
+                <p>
+                    <pre><code class="hljs" data-trim contenteditable>
+                        //流程
+                        BeforeSuite//测试每个模块之前的准备工作
+                        ...
+                        BeforeTest//测试每个功能之前的准备工作
+                        ...
+                        Run-test//运行
+                        ...
+                        AfterTest//结束测试每个功能之后的善后工作
+                        ...
+                        AfterSuite//结束测试每个模块之后的善后工作
+                    </code></pre>
+                </p>
+            </section>
+            <section>
+                <h3>BDD开发模式</h3>
+
+                <p>
+                    BDD指的是Behavior Drive Development，也就是行为驱动开发。这里的B并非指的是Business，实际上BDD可以看作是对TDD
+                    的一种补充，当然你也可以把它看作TDD的一个分支。因为在TDD中，我们并不能完全保证根据设计所编写的测试就是用户所期望的
+                    功能。BDD将这一部分简单和自然化，用自然语言来描述，让开发、测试、BA以及客户都能在这个基础上达成一致。
+                </p>
+            </section>
+            <section>
+                <h3>对应BDD模式的测试用例结构</h3>
+                <h4>组件结构及流程控制</h4>
+
+                <p>
+                    <pre><code class="hljs" data-trim contenteditable>
+                        //结构
+                        <describe>//代表某个功能
+                            ...
+                            <test>//代表某个功能验证
+                                ...
+                            </test>
+                            ...
+                        </describe>
+                    </code></pre>
+                </p>
+                <p>
+                    <pre><code class="hljs" data-trim contenteditable>
+                        //流程
+                        Before//测试每个功能之前的准备工作
+                        ...
+                        Set-up//运行testcase之前的准备工作
+                        ...
+                        Run-test//运行
+                        ...
+                        Tear-down//运行testcase之后的善后工作
+                        ...
+                        After//结束测试每个功能之后的善后工作
+                    </code></pre>
+                </p>
+            </section>
+            <section>
+                <h3>总结</h3>
+
+                <p>其实正如前面提到的，BDD模式其实是对TDD模式的一种补充，而且因为是以测试行为作为测试用例的驱动单位，所以很适合用来作为
+                    功能测试的测试模式，相对于TDD以模块作为测试用例的驱动单位，它更适合于单元测试的测试模式。</p>
+            </section>
+        </section>
+        <section>
+            <section>
+                <h3>BDD模式测试用例</h3>
+
+                <p>BDD中有两个大的概念：测试先行和系统设计。</p>
+
+                <p>
+                    测试先行：BDD提倡我们在开发者的编码工作开展之前，先写测试用例，然后由测试来推动着开发的工作，具体解释为：在设计如何实现一个功能前，先考虑如何测试这个功能，测试的代码完成后，再编写功能实现代码，并且使得该测试用例通过，即完成了系统的一个功能模块。</p>
+
+                <p>
+                    系统设计：在系统功能实现代码编写之前，我们需要先编写测试代码，在我们的测试代码中实现对系统行为的描述，这个描述其实就是用一种接近自然语言的方式对系统进行详细的设计。关于系统行为，举例说明：用户在一个特定的条件下对系统做请求，系统在该条件下做什么样的处理，这就是系统的一个行为。</p>
+            </section>
+            <section>
+                <h3>测试用例模板</h3>
+
+                <p>
+                    <pre><code class="hljs" data-trim contenteditable>
+                        Story: 标题（描述故事）
+                        As a [角色]
+                        I want [行为]
+                        So that [利益]
+                        Scenario 1: 标题（描述场景）
+                        Given [上下文]
+                        And [其他上下文]…
+                        When [事件]
+                        Then [结果]
+                        And [其他结果]
+                    </code></pre>
+                </p>
+                <p>
+                    <pre><code class="hljs" data-trim contenteditable>
+                        Story:增加一个User
+                        As a Test User
+                        I want 增加一个叫Test1的User
+                        So that 我可以验证增加User这个功能
+                        Scenario: Portal中没有Test1这个User
+                        Given 这个Test1 User的相关信息(邮箱、密码)
+                        When 创建
+                        Then Test1 User被创建了
+                        And 返回Test1被成功创建的消息
+                    </code></pre>
+                </p>
+            </section>
+            <section>
+                <h3>测试流程模板</h3>
+
+                <p>
+                    <pre><code class="hljs" data-trim contenteditable>
+                        //某个行为
+                        Assert: [行为环境]
+                        Process: [测试行为1]
+                        Assert: [行为结果]
+                    </code></pre>
+                </p>
+                <p>
+                    <pre><code class="hljs" data-trim contenteditable>
+                        //登陆portal
+                        Assert: 登陆框个人信息输入框是否正常显示
+                        Process: 输入用户名
+                        Process: 输入密码
+                        Assert: 用户名、密码是否正确输入
+                        Assert:　登陆按钮是否正常显示
+                        Process: 登陆
+                        Assert: 是否进入Portal的Welcome页面
+                    </code></pre>
+                </p>
+            </section>
+        </section>
+    </div>
+
+</div>
+
+<script src="../../../lib/js/head.min.js"></script>
+<script src="../../../js/reveal.js"></script>
+
+<script>
+
+    // Full list of configuration options available at:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        transition: 'fade', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+            {
+                src: '../../../lib/js/classList.js', condition: function () {
+                return !document.body.classList;
+            }
+            },
+            {
+                src: '../../../plugin/markdown/marked.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: '../../../plugin/markdown/markdown.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: '../../../plugin/highlight/highlight.js', async: true, callback: function () {
+                hljs.initHighlightingOnLoad();
+            }
+            },
+            {src: '../../../plugin/zoom-js/zoom.js', async: true},
+            {src: '../../../plugin/notes/notes.js', async: true}
+        ]
+    });
+
+</script>
+
+</body>
+</html>
