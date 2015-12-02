@@ -1,7 +1,7 @@
 # Introduce
 这个工作台是为了辅助CNQA FixPack Team更好、更快地完成日常工作的，同时提供一些关于CNQA Team整体的资源库，如KB。
 >　主要功能包括：
-  - [Crawler](#Crawler) For [Jenkins] Server
+  - [Crawler](#crawler) For [Jenkins] Server
   - [Sub Tasks Builder](#Builder) For Liferay [JIRA]
   - Job List Generator For [Regression](#Regression)/[AA Project](#Comparator)
   - [Evaluator](#Evaluator) For Duplicate Error Case
