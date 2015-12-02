@@ -38,6 +38,12 @@ $ cd fix-pack-workbench
 $ cd bin
 $ node www
 ```
+or
+```sh
+$ cd fix-pack-workbench
+$ npm start
+```
+
 访问http://localhost:8081
 
 ### Crawler

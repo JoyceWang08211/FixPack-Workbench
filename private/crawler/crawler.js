@@ -23,7 +23,8 @@ let crawler_logs = require('./crawler_logs');
 let info_table = {};
 let info = {};
 
-exports.crawler = function* (isBaseline) {
+exports.crawler = function* () {
+    const isBaseline = properties.getCrawlerInfo().is_baseline;
     let baseline_suffix = isBaseline ? '-baseline' : '';
 
     consoler.info(`Crawler start working..`);
