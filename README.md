@@ -1,13 +1,12 @@
 # Introduce
 这个工作台是为了辅助CNQA FixPack Team更好、更快地完成日常工作的，同时提供一些关于CNQA Team整体的资源库，如KB。
 >　主要功能包括：
-  - Crawler For [Jenkins] Server
-  - Sub Tasks Builder For Liferay [JIRA]
-  - Job List Generator For Regression/AA Project
-  - Evaluator For Duplicate Error Case
-  - KB For CNQA(In Progress)
-  - POSHI Watcher(In Progress)
-  - [test](#test)
+  - [Crawler](#Crawler) For [Jenkins] Server
+  - [Sub Tasks Builder](#Builder) For Liferay [JIRA]
+  - Job List Generator For [Regression](#Regression)/[AA Project](#Comparator)
+  - [Evaluator](#Evaluator) For Duplicate Error Case
+  - [KB](#KB) For CNQA(In Progress)
+  - [POSHI Watcher](#POSHI--Wacher)(In Progress)
 
 ## Version
 1.0.0
@@ -33,12 +32,49 @@ $ selenium-standalone start
 ```
 
 ## Usage
-### test
-启动控制台Server
+### 控制台
 ```sh
-$ cd fix-pack-workbench/bin
+$ cd fix-pack-workbench
+$ cd bin
 $ node www
 ```
+访问http://localhost:8081
+
+### Crawler
+启动控制台Server后，访问http://localhost:8081/crawler
+
+### Builder
+```sh
+$ selenium-standalone start
+$ cd fix-pack-workbench
+$ cd private/fixpack/sub_task
+$ wdio wdio.conf.js
+```
+
+### Regression
+```sh
+$ $ cd fix-pack-workbench
+$ cd private/fixpack/regression
+$ node catch_regression.js
+```
+运行结束后，会在result文件夹生成相应的.xlsx文件
+
+### Comparator
+启动控制台Server后，访问http://localhost:8081/crawler
+
+### Evaluator
+```sh
+$ cd fix-pack-workbench
+$ cd private/evaluator
+$ node evaluator.js
+```
+运行结束后，会在result文件夹生成相应的.xlsx文件
+
+### KB
+启动控制台Server后，访问http://localhost:8081/kb
+
+### POSHI Watcher
+启动控制台Server后，访问http://localhost:8081/editors
 
 ### Note
 各项目生成的结果存放文件夹
@@ -48,6 +84,5 @@ $ node www
    [JIRA]: <https://issues.liferay.com/secure/Dashboard.jspa>
    [git-repo-url]: <https://github.com/haoliangwu/FixPack-Workbench>
    [how to install NodeJS]:<https://nodejs.org/en/>
-
 
 
