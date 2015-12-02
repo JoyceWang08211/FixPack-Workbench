@@ -77,7 +77,7 @@ $ node evaluator.js
 启动控制台Server后，访问http://localhost:8081/editors
 
 ### Note
-各项目生成的结果存放文件夹
+各项目生成的结果存放文件夹均为子项目根目录的result文件夹
 
 
    [Jenkins]: <https://test.liferay.com/8/>
