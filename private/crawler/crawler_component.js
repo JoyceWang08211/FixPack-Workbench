@@ -9,19 +9,21 @@ let Table = require('cli-table');
 let barUtil = require('../util/processBarUtil');
 let properties = require('../util/propertiesUtil');
 
-function *processComponent() {
+function *processComponent(isBaseline) {
     let result = [];
 
+    const url = isBaseline ? properties.getCrawlerInfo().url_baseline : properties.getCrawlerInfo().url;
+
     consoler.loading(`Start Component process..`)
-    consoler.loading(`Start sending request to URL(${properties.getURL()})`);
-    let componentRES = yield fetch(properties.getURLWithAuth());
-    consoler.success(`Have received response from URL(${properties.getURL()})`);
+    consoler.loading(`Start sending request to URL(${url})`);
+    let componentRES = yield fetch(properties.getURLWithAuth(url));
+    consoler.success(`Have received response from URL(${url})`);
 
-    consoler.loading(`Start catching Components HTML of URL(${properties.getURL()})`);
+    consoler.loading(`Start catching Components HTML of URL(${url})`);
     let componentHTML = yield componentRES.text();
-    consoler.success(`Have finished catching Components HTML of URL(${properties.getURL()})`);
+    consoler.success(`Have finished catching Components HTML of URL(${url})`);
 
-    consoler.loading(`Start analyse Component HTML of URL(${properties.getURL()})`);
+    consoler.loading(`Start analyse Component HTML of URL(${url})`);
     let $ = cheerio.load(componentHTML);
     let projectstatus = $('#projectstatus');
     let components = projectstatus.find('tr');
@@ -39,7 +41,7 @@ function *processComponent() {
         }
     }
 
-    consoler.success(`Have finished analysing Component HTML of URL(${properties.getURL()})`);
+    consoler.success(`Have finished analysing Component HTML of URL(${url}`);
 
     return result;
 }

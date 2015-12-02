@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 //global lib
 let fs = require('fs');
 
@@ -30,7 +30,7 @@ exports.crawler = function* (isBaseline) {
 
     //component process
     consoler.info(`Crawler start component process..`);
-    let components = yield* crawler_component.run();
+    let components = yield* crawler_component.run(isBaseline);
     info_table = new Table();
     info = {'ToTal Components Number': components.length};
     info_table.push(info);
