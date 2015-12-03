@@ -1,0 +1,15 @@
+doctype html
+html
+    head
+        title= title
+        link(rel='stylesheet' href='../css/bootstrap.min.css')
+        script(src='js/lib/jquery-2.1.4.min.js')
+        script(src='js/lib/bootstrap.min.js')
+        script(src='js/dist/crawler.build.js')
+    body
+        div.container-fluid
+            div.row
+                div.col-xs-10.col-xs-offset-1
+                    div.row
+                        block content
+

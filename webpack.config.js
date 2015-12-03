@@ -4,7 +4,8 @@ module.exports = {
     context: path.join(__dirname, '/public/js'),
     entry: {
         index: './src/index.js',
-        editor: './src/editor.js'
+        editor: './src/editor.js',
+        crawler: './src/crawler.js'
     },
     output: {
         libraryTarget: 'var',

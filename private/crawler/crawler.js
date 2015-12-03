@@ -1,9 +1,9 @@
 'use strict';
 //global lib
 let fs = require('fs');
+let fse = require('fs-extra');
 
 //crawler lib
-let co = require('co');
 let xlsx = require('node-xlsx');
 
 //console format lib
@@ -50,7 +50,7 @@ exports.crawler = function* () {
 
     for (let build of builds) {
         let temp = build.component.match(/([^\[\]]+)/ig)[1] || 'Ignored';
-        info_table.push([temp, build.id])
+        info_table.push([temp, build.id]);
     }
     consoler.info(`Crawler has finished build process..`);
     consoler.info(`Builds Info:\n${info_table.toString()}`);
@@ -105,6 +105,7 @@ exports.crawler = function* () {
 
     yield new Promise(
         (resolve, reject)=> {
+            fse.ensureFileSync(`${__dirname}/result`);
             fs.writeFile(`${__dirname}/result/${properties.getFileName()}${baseline_suffix}.xlsx`, buffer, (err)=> {
                 if (err)
                     reject(new Error(err));
