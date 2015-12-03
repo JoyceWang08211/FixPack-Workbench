@@ -6,7 +6,7 @@
   - Job List Generator For [Regression](#regression)/[AA Project](#comparator)
   - [Evaluator](#evaluator) For Duplicate Error Case
   - [KB](#kb) For CNQA(In Progress)
-  - [POSHI Watcher](#poshi-wacher)(In Progress)
+  - [POSHI Watcher](#poshi-watcher)(In Progress)
 
 ## Version
 1.0.0
