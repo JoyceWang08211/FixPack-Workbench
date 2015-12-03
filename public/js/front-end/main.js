@@ -7,8 +7,8 @@ $(document).ready(function () {
             render() {
                 return (
                     <div className="jumbotron">
-                        <h1>Easy POSHI
-                            <small>Welcome to Easy POSHI</small>
+                        <h1>Fix Pack Workbench
+                            <small> For more accuracy and efficiency</small>
                         </h1>
                         <p>Crawler For Jenkins Server</p>
 

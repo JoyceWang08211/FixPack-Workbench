@@ -67,7 +67,7 @@ exports.compare = function () {
     let data_json = {name: 'result', data: patch};
     let buffer = xlsx.build([data_json]);
 
-    fs.writeFileSync(__dirname + '/result/result.xlsx', buffer);
+    fs.writeFileSync(__dirname + `/result/${properties.getFileName()}.xlsx`, buffer);
 
     return true;
 };

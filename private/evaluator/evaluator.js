@@ -14,7 +14,7 @@ let cacheYes, cacheNot;
 const tempNotFileURL = path.resolve(__dirname, `./result/temp/N.json`);
 const tempYesFileURL = path.resolve(__dirname, `./result/temp/Y.json`);
 const tempSettingFileURL = path.resolve(__dirname, `./result/temp/setting.json`);
-let isRelative = true, relativeObj = [];
+let isRelative = false, relativeObj = [];
 
 consoler.info('Start evaluate the priority report of fix-pack jobs..');
 consoler.info(`The mode is ${isRelative ? 'Relative' : 'Absolute'}`);

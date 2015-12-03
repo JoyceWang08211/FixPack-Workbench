@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 let cheerio = require('cheerio');
 let fetch = require('node-fetch');

@@ -12,7 +12,7 @@ class Properties {
     }
 
     getFileName() {
-        return this.crawler_info.filename;
+        return this.fixpack_info.name + '-build' + this.fixpack_info.build;
     }
 
     getComponentURL(url) {

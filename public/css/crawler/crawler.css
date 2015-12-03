@@ -2,3 +2,12 @@
     position: relative;
     top: 50%;
 }
+
+/*bootstrap custom*/
+.input-group-custom {
+    width: 100%;
+}
+
+.input-group-addon-custom {
+    width: 30%;
+}
