@@ -40,14 +40,20 @@ exports.crawler = function* () {
 
     //build process
     consoler.info(`Crawler start build process..`);
-    barUtil.bar = barUtil.init(components.length, 'Build');
-    let builds = yield* crawler_build.run(components);
+    let builds_process = [];
     info_table = new Table(
         {
             head: ['Component Name', 'Build Number']
         }
     );
 
+    for (let component of components) {
+        builds_process.push(crawler_build.run(component));
+    }
+
+    barUtil.bar = barUtil.init(components.length, 'Build');
+
+    let builds = yield builds_process;
     for (let build of builds) {
         let temp = build.component.match(/([^\[\]]+)/ig)[1] || 'Ignored';
         info_table.push([temp, build.id]);

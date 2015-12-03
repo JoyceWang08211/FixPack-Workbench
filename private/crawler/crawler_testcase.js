@@ -54,7 +54,7 @@ function processTestCase(build) {
 exports.run = function (build) {
     return new Promise(
         (resolve)=> {
-            resolve(processTestCase(build))
+            resolve(processTestCase(build));
         }
     )
 };

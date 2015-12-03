@@ -18,8 +18,12 @@ let SettingBox = React.createClass({
     },
 
     getInitialState(){
+        const setting = this.props.setting;
+
         return {
-            username: this.props.setting.username
+            username: setting.username,
+            password: setting.password
+
         };
     },
 
