@@ -6,7 +6,7 @@
   - Job List Generator For [Regression](#regression)/[AA Project](#comparator)
   - [Evaluator](#evaluator) For Duplicate Error Case
   - [KB](#kb) For CNQA(In Progress)
-  - [POSHI Watcher](#poshi-watcher)(In Progress)
+  - [Poshi Watcher](#poshi-watcher)(In Progress)
 
 ## Version
 1.0.0
@@ -79,7 +79,7 @@ $ node evaluator.js
 ### KB
 启动控制台Server后，访问http://localhost:8081/kb
 
-### POSHI Watcher
+### Poshi Watcher
 启动控制台Server后，访问http://localhost:8081/editors
 
 ### Note
