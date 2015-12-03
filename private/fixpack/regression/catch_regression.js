@@ -9,8 +9,9 @@ const fse = require('fs-extra');
 const cheerio = require('cheerio');
 
 const regressionInfo = properties.getRegressionInfo();
+const fixPackInfo = properties.getFixPackInfo();
 
-fetch(properties.getURLWithAuth(`${regressionInfo.host}/${regressionInfo.ticket}`))
+fetch(properties.getURLWithAuth(`${regressionInfo.host}/${fixPackInfo.ticket}`))
     .then((res)=> {
         return res.text();
     })
@@ -32,7 +33,7 @@ fetch(properties.getURLWithAuth(`${regressionInfo.host}/${regressionInfo.ticket}
 
         fse.mkdirs('./result');
 
-        fs.writeFile(`./result/result-${regressionInfo.ticket}.xlsx`, xlsx.build([excel]), function () {
+        fs.writeFile(`./result/result-${fixPackInfo.ticket}.xlsx`, xlsx.build([excel]), function () {
             console.log('Result has been generated.');
         });
     });

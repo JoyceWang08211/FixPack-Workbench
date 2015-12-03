@@ -5,7 +5,8 @@ const properties = require(appRoot + '/private/util/propertiesUtil.js');
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 
-const setting = properties.getSubTaskInfo();
+const subTaskInfo = properties.getSubTaskInfo();
+const fixPackInfo = properties.getFixPackInfo();
 const user = properties.getUserInfo();
 
 describe('Fix Pack Build Sub Tasks Script', function () {
@@ -21,7 +22,7 @@ describe('Fix Pack Build Sub Tasks Script', function () {
             .setValue('#login-form-password', user.password);
         let title = yield browser.click('#login-form-submit').getTitle();
 
-        return assert.eventually.equal(Promise.resolve(title), `[${setting.ticket}] Fix Pack Testing: ${setting.fixpack} - Liferay Issues`);
+        return assert.eventually.equal(Promise.resolve(title), `[${fixPackInfo.ticket}] Fix Pack Testing: ${fixPackInfo.name} - Liferay Issues`);
     });
 
 
@@ -62,9 +63,8 @@ describe('Fix Pack Build Sub Tasks Script', function () {
 
     it('Catch LPS List..', function* () {
         LPSCache = new Map(yield LPECache.map((c)=> {
-                return new Promise((resolve, reject)=> {
-                    //console.log(properties.getURLWithAuth(`${setting.host}/${c}`));
-                    fetch(properties.getURLWithAuth(`${setting.host}/${c}`))
+                return new Promise((resolve)=> {
+                    fetch(properties.getURLWithAuth(`${subTaskInfo.host}/${c}`))
                         .then((res)=> {
                             return res.text();
                         })

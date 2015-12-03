@@ -1,0 +1,3 @@
+# ignore everything in the sub task folders
+
+**/private/fixpack/sub_task

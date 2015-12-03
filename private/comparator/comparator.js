@@ -1,6 +1,6 @@
 'use strict';
 
-import fs from 'fs';
+const fs = require('fs');
 const xlsx = require('node-xlsx');
 const appRoot = require('app-root-path');
 
@@ -10,8 +10,8 @@ let patch = {};
 let baseline = {};
 
 exports.compare = function () {
-    patch = xlsx.parse(__dirname + '/result/' + properties.getFileName() + '.xlsx')[0].data;
-    baseline = xlsx.parse(__dirname + '/result/' + properties.getFileName() + '-baseline.xlsx')[0].data;
+    patch = xlsx.parse(appRoot + '/private/crawler/result/' + properties.getFileName() + '.xlsx')[0].data;
+    baseline = xlsx.parse(appRoot + '/private/crawler/result/' + properties.getFileName() + '-baseline.xlsx')[0].data;
 
     let base = patch[0][0];
     for (let e in patch) {
@@ -68,10 +68,6 @@ exports.compare = function () {
     let buffer = xlsx.build([data_json]);
 
     fs.writeFileSync(__dirname + '/result/result.xlsx', buffer);
-
-    exports.excel_json = data_json;
-    exports.baseline = baseline;
-    exports.patch = patch;
 
     return true;
 };

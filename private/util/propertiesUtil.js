@@ -16,7 +16,7 @@ class Properties {
     }
 
     getComponentURL(url) {
-        return this.getURL() + url
+        return this.getURL() + url;
     }
 
     getBuildURL(url) {
@@ -43,7 +43,7 @@ class Properties {
         if (!url)
             return `${this.crawler_info.url.split('//')[0]}//${this.user_info.username}:${this.user_info.password}@${this.crawler_info.url.split('//')[1]}`;
         else
-            return `${url.split('//')[0]}//${this.user_info.username}:${this.user_info.password}@${url.split('//')[1]}`
+            return `${url.split('//')[0]}//${this.user_info.username}:${this.user_info.password}@${url.split('//')[1]}`;
     }
 
     //user
@@ -69,6 +69,11 @@ class Properties {
     //regression
     getRegressionInfo() {
         return this.regression_info;
+    }
+
+    //fixpack info
+    getFixPackInfo() {
+        return this.fixpack_info;
     }
 }
 
