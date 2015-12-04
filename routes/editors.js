@@ -3,7 +3,6 @@
 var express = require('express');
 var fs = require('fs');
 
-var xmlParser = require('xml2json');
 var path = require('path');
 var pd = require('pretty-data').pd;
 var router = express.Router();
