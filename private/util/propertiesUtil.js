@@ -75,6 +75,10 @@ class Properties {
     getFixPackInfo() {
         return this.fixpack_info;
     }
+
+    getRawObjString() {
+        return fs.readFileSync(path.resolve(__dirname, '../properties.json'), 'utf-8');
+    }
 }
 
 let properties = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../properties.json'), 'utf-8'));
