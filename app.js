@@ -19,6 +19,20 @@ var webpackConf = require('./webpack.config');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+//webpack
+app.use(webpackDevMiddleware(webpack(webpackConf),
+    {
+        contentBase: webpackConf.output.path,
+        //http://localhost:8081/public/assets
+        publicPath: webpackConf.output.publicPath,
+        hot: true,
+        stats: {
+            colors: true
+        }
+    }
+))
+;
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -31,14 +45,6 @@ app.use('/', routes);
 app.use('/editors', editors);
 app.use('/crawler', crawler);
 app.use('/kb', kb);
-
-//webpack
-app.use(webpackDevMiddleware(webpack(webpackConf), {
-    contentBase: webpackConf.output.path,
-    publicPath: webpackConf.output.publicPath,
-    hot: true,
-    stats: webpackConf.devServer.stats
-}));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -1,5 +1,8 @@
 var path = require('path');
-var CommonsChunkPlugin = new require("webpack/lib/optimize/CommonsChunkPlugin")
+var CommonsChunkPlugin = new require("webpack/lib/optimize/CommonsChunkPlugin");
+//var OccurenceOrderPlugin = new require("webpack/lib/optimize/OccurenceOrderPlugin");
+//var HotModuleReplacementPlugin = new require("webpack/lib/HotModuleReplacementPlugin");
+//var NoErrorsPlugin = new require("webpack/lib/NoErrorsPlugin");
 
 var entries = {
     index: './js/index.js',
@@ -24,8 +27,8 @@ module.exports = {
         libraryTarget: 'var',
         filename: '[name].build.js',
         chunkFilename: '[chunkhash:8].[name].chunk.js',
-        publicPath: '/public/',
-        path: path.join(__dirname, '/public/assets/js')
+        publicPath: '/public/assets/',
+        path: path.join(__dirname, '/public/assets')
 
     },
 
@@ -57,9 +60,5 @@ module.exports = {
             chunks: chunks,
             minChunks: chunks.length // 提取所有entry共同依赖的模块
         })
-    ],
-
-    devServer: {
-        stats: { colors: true }
-    }
+    ]
 };
