@@ -6,7 +6,7 @@ let Clipboard = require('clipboard');
 
 let editor_type = window.location.href.split('/').pop();
 
-let profile = require('../common/profile');
+let profile = require('./profile');
 let ProfileEntry = profile.ProfileEntry;
 
 let ControlBox = React.createClass({

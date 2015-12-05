@@ -1,6 +1,10 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var $ = require('jquery');
+//css
+require('../css/style.css');
+
+//js
+const React = require('react');
+const ReactDOM = require('react-dom');
+const $ = require('jquery');
 
 $(document).ready(function () {
         var ContentBox = React.createClass({
@@ -28,5 +32,4 @@ $(document).ready(function () {
 
         ReactDOM.render(<ContentBox/>, document.getElementById('_content'));
     }
-)
-
+);
