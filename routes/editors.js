@@ -9,7 +9,7 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
-    res.redirect('/editors/function')
+    res.render('editors/editor', {title: 'Easy Poshi Editor'})
 });
 
 router.get(['/function', '/macro', '/testcase'], function (req, res, next) {

@@ -6,7 +6,7 @@ webpackJsonp([2],{
 	'use strict';
 
 	//css
-	__webpack_require__(187);
+	__webpack_require__(197);
 
 	//js
 	var React = __webpack_require__(2);
@@ -81,23 +81,13 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 159:
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	module.exports = __webpack_require__(4);
-
-
-/***/ },
-
-/***/ 187:
+/***/ 197:
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(188);
+	var content = __webpack_require__(198);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(164)(content, {});
@@ -118,7 +108,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 188:
+/***/ 198:
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(163)();

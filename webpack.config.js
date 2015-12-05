@@ -24,7 +24,7 @@ module.exports = {
         libraryTarget: 'var',
         filename: '[name].build.js',
         chunkFilename: '[chunkhash:8].[name].chunk.js',
-        publicPath: '/__build/',
+        publicPath: '/public/',
         path: path.join(__dirname, '/public/assets/js')
 
     },
@@ -57,5 +57,9 @@ module.exports = {
             chunks: chunks,
             minChunks: chunks.length // 提取所有entry共同依赖的模块
         })
-    ]
+    ],
+
+    devServer: {
+        stats: { colors: true }
+    }
 };

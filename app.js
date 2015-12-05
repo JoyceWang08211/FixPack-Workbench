@@ -11,6 +11,9 @@ var crawler = require('./routes/crawler');
 var kb = require('./routes/kb');
 
 var app = express();
+var webpackDevMiddleware = require('webpack-dev-middleware');
+var webpack = require('webpack');
+var webpackConf = require('./webpack.config');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,6 +31,14 @@ app.use('/', routes);
 app.use('/editors', editors);
 app.use('/crawler', crawler);
 app.use('/kb', kb);
+
+//webpack
+app.use(webpackDevMiddleware(webpack(webpackConf), {
+    contentBase: webpackConf.output.path,
+    publicPath: webpackConf.output.publicPath,
+    hot: true,
+    stats: webpackConf.devServer.stats
+}));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -1,5 +1,5 @@
 //js
-require('./js/editor');
+require('./js/index');
 
 //css
 require('./css/editors.css');
