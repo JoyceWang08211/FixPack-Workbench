@@ -1,4 +1,5 @@
 var path = require('path');
+
 var CommonsChunkPlugin = new require("webpack/lib/optimize/CommonsChunkPlugin");
 //var OccurenceOrderPlugin = new require("webpack/lib/optimize/OccurenceOrderPlugin");
 //var HotModuleReplacementPlugin = new require("webpack/lib/HotModuleReplacementPlugin");
@@ -26,7 +27,7 @@ module.exports = {
     output: {
         libraryTarget: 'var',
         filename: '[name].build.js',
-        chunkFilename: '[chunkhash:8].[name].chunk.js',
+        chunkFilename: '[chunkhash:8].[nam  e].chunk.js',
         publicPath: '/public/assets/',
         path: path.join(__dirname, '/public/assets')
 
@@ -56,9 +57,9 @@ module.exports = {
 
     plugins: [
         new CommonsChunkPlugin({
-            name: 'vendors', // 将公共模块提取，生成名为`vendors`的chunk
+            name: 'vendors',
             chunks: chunks,
-            minChunks: chunks.length // 提取所有entry共同依赖的模块
+            minChunks: chunks.length
         })
     ]
 };

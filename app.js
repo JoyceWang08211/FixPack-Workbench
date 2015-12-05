@@ -20,6 +20,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 //webpack
+app.set('viewDir', app.get('env') !== 'production' ? 'src' : 'assets');
+console.log(app.get('env'));
+
 app.use(webpackDevMiddleware(webpack(webpackConf),
     {
         contentBase: webpackConf.output.path,
@@ -30,8 +33,7 @@ app.use(webpackDevMiddleware(webpack(webpackConf),
             colors: true
         }
     }
-))
-;
+));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -56,6 +58,7 @@ app.use(function (req, res, next) {
 // error handlers
 // development error handler
 // will print stacktrace
+
 if (app.get('env') === 'development') {
     app.use(function (err, req, res, next) {
         res.status(err.status || 500);
