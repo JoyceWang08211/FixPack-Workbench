@@ -20,20 +20,19 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 //webpack
-app.set('viewDir', app.get('env') !== 'production' ? 'src' : 'assets');
-console.log(app.get('env'));
-
-app.use(webpackDevMiddleware(webpack(webpackConf),
-    {
-        contentBase: webpackConf.output.path,
-        //http://localhost:8081/public/assets
-        publicPath: webpackConf.output.publicPath,
-        hot: true,
-        stats: {
-            colors: true
+if (app.get('env') !== 'production') {
+    app.use(webpackDevMiddleware(webpack(webpackConf),
+        {
+            contentBase: webpackConf.output.path,
+            //http://localhost:8081/public/assets
+            publicPath: webpackConf.output.publicPath,
+            hot: true,
+            stats: {
+                colors: true
+            }
         }
-    }
-));
+    ));
+}
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

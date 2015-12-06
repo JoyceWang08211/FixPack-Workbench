@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "build": "webpack",
-    "dev": "webpack-dev-server --devtool eval --progress --colors --hot --content-base public/assets",
-    "start": "node bin/www"
+    "start": "node bin/www",
+    "deploy": "npm run build && npm start --production"
   },
   "dependencies": {
     "app-root-path": "^1.0.0",

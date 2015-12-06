@@ -28,9 +28,8 @@ module.exports = {
         libraryTarget: 'var',
         filename: '[name].build.js',
         chunkFilename: '[chunkhash:8].[nam  e].chunk.js',
-        publicPath: '/public/assets/',
-        path: path.join(__dirname, '/public/assets')
-
+        publicPath: '/assets/js/',
+        path: path.join(__dirname, '/public/assets/js')
     },
 
     externals: {
