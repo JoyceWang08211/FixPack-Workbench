@@ -21,7 +21,36 @@ let InputEntry = React.createClass({
                       id={this.props.id}>{this.props.spanName}</span>
                 <input type="text" className="form-control" placeholder={this.props.placeholder}
                        aria-describedby={this.props.id}
-                       onChange={this.props.onChange} value={this.props.value}/>
+                       onChange={this.props.onChange} defaultValue={this.props.value}/>
+            </div>
+        );
+    }
+});
+
+let RadioEntry = React.createClass({
+    getDefaultProps(){
+        return {
+            title: 'Title',
+            isChecked: true
+        }
+    },
+
+    render(){
+        return (
+            <div className="input-group input-group-custom">
+                <div className="radio">
+                    <p>{this.props.title}</p>
+                    <label>
+                        <input type="radio" name="isBaseline" value="yes" defaultChecked={this.props.isChecked}
+                               onChange={this.props.onChange}/>
+                        Patch Level
+                    </label>
+                    <label>
+                        <input type="radio" name="isBaseline" value="no" defaultChecked={!this.props.isChecked}
+                               onChange={this.props.onChange}/>
+                        Baseline Level
+                    </label>
+                </div>
             </div>
         );
     }
@@ -37,7 +66,11 @@ let SettingBox = React.createClass({
     },
 
     handleRadioChange(e){
+        let state = this.state;
 
+        state[$(e.target).attr('name')] = e.target.value;
+
+        this.setState(state);
     },
 
     handleSaveAction(){
@@ -109,10 +142,11 @@ let SettingBox = React.createClass({
                                 <InputEntry id='baselineURL' spanName='Baseline URL' value={this.state.baselineURL}
                                             placeholder='the Baseline URL of Jenkins Server'
                                             onChange={this.handleInputChange}/>
-                                <InputEntry id='crawlerBuild' spanName='Crawler Build' value={this.state.patchURL}
+                                <InputEntry id='crawlerBuild' spanName='Crawler Build' value={this.state.crawlerBuild}
                                             placeholder='the Patch URL of Jenkins Server'
                                             onChange={this.handleInputChange}/>
-                                //TODO 实现radio
+                                <RadioEntry isChecked={this.state.isBaseline} title="Crawler Level"
+                                            onChange={this.handleRadioChange}/>
                             </dd>
                             <dt><h3>Jenkins Info</h3></dt>
                             <dd>

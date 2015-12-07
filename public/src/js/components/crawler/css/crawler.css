@@ -6,3 +6,11 @@
 .input-group-addon-custom {
     width: 30%;
 }
+
+.radio > label {
+    margin: 1%;
+}
+
+.radio > p {
+    background-color: #eee;
+}
