@@ -56,7 +56,6 @@ $ cd fix-pack-workbench
 $ cd private/fixpack/sub_task
 $ wdio wdio.conf.js
 ```
-
 ### Regression
 ```sh
 $ $ cd fix-pack-workbench
@@ -85,6 +84,63 @@ $ node evaluator.js
 ### Note
 各项目生成的结果存放文件夹均为子项目根目录的result文件夹
 
+Setting文件的注释
+```sh
+{
+  //liferay源码根目录
+  "project_home": "/home/lyon/liferay/portal/portal-6210",
+  //portal-web源码根目录
+  "portalweb_home": "/portal-web/test/functional/com/liferay/portalweb",
+  
+  //user setting
+  "user_info": {
+    //用户名
+    "username": "haoliang.wu",
+    //密码
+    "password": "woaini0514"
+  },
+  
+  //fixpack setting
+  "fixpack_info": {
+    //fixpack的ticket number
+    "ticket": "LRQA-20022",
+    //fixpack的名字
+    "name": "portal-56-6130",
+    //fixpack在mirror的build number
+    "build": "1"
+  },
+  
+  //crawler setting
+  "crawler_info": {
+    //jenkins fixpack URL
+    "url": "https://test.liferay.com/8/view/test-portal-fixpack-frontend-tomcat-mysql%28ee-6.2.10_6.2.10.15%29/",
+    //jenkins baseline URL
+    "url_baseline": "https://test.liferay.com/8/view/test-portal-release-ee-frontend-tomcat-mysql%28ee-6.2.10_6.2.10.15%29/",
+    //jenkins build number
+    "build": "#5",
+    //crawler的模式
+    "is_baseline": true
+  },
+  
+  //jenkins setting
+  "jenkins_info": {
+    //jenkins的host地址
+    "host": "https://test.liferay.com"
+  },
+  
+  //sub task setting
+  "sub_task_info": {
+    //sub task目标网站的host地址
+    "host": "https://issues.liferay.com/browse"
+  },
+  
+  //regression setting
+  "regression_info": {
+    //regression目标网站的host地址
+    "host": "https://issues.liferay.com/browse"
+  }
+}
+```
 
    [Jenkins]: <https://test.liferay.com/8/>
    [JIRA]: <https://issues.liferay.com/secure/Dashboard.jspa>
