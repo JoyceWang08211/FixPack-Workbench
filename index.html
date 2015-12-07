@@ -11,7 +11,7 @@
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script type="text/javascript" src="javascripts/script.js"></script>
 
-  <title>Fixpack-workbench</title>
+  <title>Fixpack Workbench</title>
   <meta name="description" content="The workbench for CNQA fixpack team">
 
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -22,7 +22,7 @@
 
   <div class="wrapper">
     <header>
-      <h1 class="title">Fixpack-workbench</h1>
+      <h1 class="title">Fixpack Workbench</h1>
     </header>
     <div id="container">
       <p class="tagline">The workbench for CNQA fixpack team</p>
@@ -31,7 +31,7 @@
         <div class="inner">
           <a href="https://github.com/haoliangwu/FixPack-Workbench/tarball/master" class="download-button tar"><span>Download</span></a>
           <a href="https://github.com/haoliangwu/FixPack-Workbench/zipball/master" class="download-button zip"><span>Download</span></a>
-          <a href="https://github.com/haoliangwu/FixPack-Workbench" class="code">View Fixpack-workbench on GitHub</a>
+          <a href="https://github.com/haoliangwu/FixPack-Workbench" class="code">View Fixpack Workbench on GitHub</a>
         </div>
         <span class="blc"></span><span class="trc"></span>
         </div>
@@ -153,12 +153,69 @@ $ node evaluator.js</pre></div>
 <a id="note" class="anchor" href="#note" aria-hidden="true"><span class="octicon octicon-link"></span></a>Note</h3>
 
 <p>各项目生成的结果存放文件夹均为子项目根目录的result文件夹</p>
+
+<p>Setting文件的注释</p>
+
+<div class="highlight highlight-source-shell"><pre>{
+  //liferay源码根目录
+  <span class="pl-s"><span class="pl-pds">"</span>project_home<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>/home/lyon/liferay/portal/portal-6210<span class="pl-pds">"</span></span>,
+  //portal-web源码根目录
+  <span class="pl-s"><span class="pl-pds">"</span>portalweb_home<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>/portal-web/test/functional/com/liferay/portalweb<span class="pl-pds">"</span></span>,
+
+  //user setting
+  <span class="pl-s"><span class="pl-pds">"</span>user_info<span class="pl-pds">"</span></span>: {
+    //用户名
+    <span class="pl-s"><span class="pl-pds">"</span>username<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>haoliang.wu<span class="pl-pds">"</span></span>,
+    //密码
+    <span class="pl-s"><span class="pl-pds">"</span>password<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>woaini0514<span class="pl-pds">"</span></span>
+  },
+
+  //fixpack setting
+  <span class="pl-s"><span class="pl-pds">"</span>fixpack_info<span class="pl-pds">"</span></span>: {
+    //fixpack的ticket number
+    <span class="pl-s"><span class="pl-pds">"</span>ticket<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>LRQA-20022<span class="pl-pds">"</span></span>,
+    //fixpack的名字
+    <span class="pl-s"><span class="pl-pds">"</span>name<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>portal-56-6130<span class="pl-pds">"</span></span>,
+    //fixpack在mirror的build number
+    <span class="pl-s"><span class="pl-pds">"</span>build<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>1<span class="pl-pds">"</span></span>
+  },
+
+  //crawler setting
+  <span class="pl-s"><span class="pl-pds">"</span>crawler_info<span class="pl-pds">"</span></span>: {
+    //jenkins fixpack URL
+    <span class="pl-s"><span class="pl-pds">"</span>url<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>https://test.liferay.com/8/view/test-portal-fixpack-frontend-tomcat-mysql%28ee-6.2.10_6.2.10.15%29/<span class="pl-pds">"</span></span>,
+    //jenkins baseline URL
+    <span class="pl-s"><span class="pl-pds">"</span>url_baseline<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>https://test.liferay.com/8/view/test-portal-release-ee-frontend-tomcat-mysql%28ee-6.2.10_6.2.10.15%29/<span class="pl-pds">"</span></span>,
+    //jenkins build number
+    <span class="pl-s"><span class="pl-pds">"</span>build<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>#5<span class="pl-pds">"</span></span>,
+    //crawler的模式
+    <span class="pl-s"><span class="pl-pds">"</span>is_baseline<span class="pl-pds">"</span></span>: <span class="pl-c1">true</span>
+  },
+
+  //jenkins setting
+  <span class="pl-s"><span class="pl-pds">"</span>jenkins_info<span class="pl-pds">"</span></span>: {
+    //jenkins的host地址
+    <span class="pl-s"><span class="pl-pds">"</span>host<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>https://test.liferay.com<span class="pl-pds">"</span></span>
+  },
+
+  //sub task setting
+  <span class="pl-s"><span class="pl-pds">"</span>sub_task_info<span class="pl-pds">"</span></span>: {
+    //sub task目标网站的host地址
+    <span class="pl-s"><span class="pl-pds">"</span>host<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>https://issues.liferay.com/browse<span class="pl-pds">"</span></span>
+  },
+
+  //regression setting
+  <span class="pl-s"><span class="pl-pds">"</span>regression_info<span class="pl-pds">"</span></span>: {
+    //regression目标网站的host地址
+    <span class="pl-s"><span class="pl-pds">"</span>host<span class="pl-pds">"</span></span>: <span class="pl-s"><span class="pl-pds">"</span>https://issues.liferay.com/browse<span class="pl-pds">"</span></span>
+  }
+}</pre></div>
         </article>
       </div>
     </div>
     <footer>
       <div class="owner">
-      <p><a href="https://github.com/haoliangwu" class="avatar"><img src="https://avatars1.githubusercontent.com/u/6328186?v=3&amp;s=60" width="48" height="48"></a> <a href="https://github.com/haoliangwu">haoliangwu</a> maintains <a href="https://github.com/haoliangwu/FixPack-Workbench">Fixpack-workbench</a></p>
+      <p><a href="https://github.com/haoliangwu" class="avatar"><img src="https://avatars1.githubusercontent.com/u/6328186?v=3&amp;s=60" width="48" height="48"></a> <a href="https://github.com/haoliangwu">haoliangwu</a> maintains <a href="https://github.com/haoliangwu/FixPack-Workbench">Fixpack Workbench</a></p>
 
 
       </div>
