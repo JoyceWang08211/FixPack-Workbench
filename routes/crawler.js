@@ -47,8 +47,8 @@ router.post('/save_setting', updatePropertiesObj, (req, res)=> {
     res.redirect('/crawler');
 });
 
-router.get('/start_job', (req, res)=> {
-
+router.post('/start_job', (req, res)=> {
+    console.log(req.body)
 });
 
 module.exports = router;

@@ -2,6 +2,8 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const $ = require('jquery');
 
+const ProcessBar = require('react-progressbar.js').Circle;
+
 let InputEntry = React.createClass({
     getDefaultProps(){
         return {
@@ -71,10 +73,6 @@ let SettingBox = React.createClass({
         state[$(e.target).attr('name')] = e.target.value;
 
         this.setState(state);
-    },
-
-    handleStartAction(){
-        console.log(this.state);
     },
 
     getDefaultProps(){
@@ -166,7 +164,7 @@ let SettingBox = React.createClass({
                             <div className="btn-group" role="group" aria-label="start">
                                 <button type="submit" className="btn btn-default">Save
                                 </button>
-                                <button type="button" className="btn btn-default" onClick={this.handleStartAction}>Start
+                                <button type="button" className="btn btn-default" onClick={this.props.handleStart}>Start
                                 </button>
                             </div>
                         </div>
@@ -179,11 +177,31 @@ let SettingBox = React.createClass({
 
 let LogBox = React.createClass({
     render() {
+        let options = {
+            color: '#FCB03C',
+            strokeWidth: 3,
+            trailWidth: 1,
+            duration: 3000,
+            text: {
+                value: '0'
+            },
+            step: function (state, bar) {
+                bar.setText((bar.value() * 100).toFixed(0));
+            }
+        };
+
         return (
             <div className='col-xs-7'>
                 <div className='row'>
                     <div className='col-xs-12'>
-
+                        <button onClick={this.handleRun}>Test</button>
+                        <ProcessBar
+                            progress={this.props.progress}
+                            text={'progressbar'}
+                            options={options}
+                            initialAnimate={true}
+                            containerClassName={'.progressbar'}
+                            />
                     </div>
                 </div>
             </div>
@@ -192,6 +210,30 @@ let LogBox = React.createClass({
 });
 
 let CrawlerBox = React.createClass({
+    getInitialState(){
+        return {
+            progress: 0
+        };
+    },
+
+    handleStart(){
+        fetch("/crawler/start_job", {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                test: 'Hubot',
+                login: 'hubot'
+            })
+        })
+
+        this.setState({
+            progress: this.state.progress += 0.01
+        })
+    },
+
     getDefaultProps(){
         return {
             setting: {}
@@ -207,8 +249,8 @@ let CrawlerBox = React.createClass({
                     </div>
                 </div>
                 <hr/>
-                <SettingBox setting={this.props.setting}/>
-                <LogBox/>
+                <SettingBox setting={this.props.setting} handleStart={this.handleStart}/>
+                <LogBox progress={this.state.progress}/>
             </div>
         );
     }
