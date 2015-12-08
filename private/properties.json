@@ -7,14 +7,14 @@
   },
   "fixpack_info": {
     "ticket": "LRQA-20022",
-    "name": "portal-56-6130",
+    "name": "portal-82-6210",
     "build": "1"
   },
   "crawler_info": {
     "url": "https://test.liferay.com/8/view/test-portal-fixpack-frontend-tomcat-mysql%28ee-6.2.10_6.2.10.15%29/",
     "url_baseline": "https://test.liferay.com/8/view/test-portal-release-ee-frontend-tomcat-mysql%28ee-6.2.10_6.2.10.15%29/",
     "build": "#5",
-    "is_baseline": true
+    "isBaseline": "yes"
   },
   "jenkins_info": {
     "host": "https://test.liferay.com"

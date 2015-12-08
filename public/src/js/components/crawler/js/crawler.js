@@ -19,9 +19,9 @@ let InputEntry = React.createClass({
             <div className="input-group input-group-custom">
                 <span className="input-group-addon input-group-addon-custom"
                       id={this.props.id}>{this.props.spanName}</span>
-                <input type="text" className="form-control" placeholder={this.props.placeholder}
+                <input type="text" className="form-control" name={this.props.id} placeholder={this.props.placeholder}
                        aria-describedby={this.props.id}
-                       onChange={this.props.onChange} defaultValue={this.props.value}/>
+                       onChange={this.props.onChange} value={this.props.value}/>
             </div>
         );
     }
@@ -73,7 +73,7 @@ let SettingBox = React.createClass({
         this.setState(state);
     },
 
-    handleSaveAction(){
+    handleStartAction(){
         console.log(this.state);
     },
 
@@ -111,60 +111,67 @@ let SettingBox = React.createClass({
     render() {
         return (
             <div className='col-xs-5'>
-                <div className='row'>
-                    <div className='col-xs-12'>
-                        <h2>Crawler Setting</h2>
-                        <dl>
-                            <dt><h3>User Info</h3></dt>
-                            <dd>
-                                <InputEntry id='username' spanName='Username' value={this.state.username}
-                                            placeholder='@liferay.com' onChange={this.handleInputChange}/>
-                                <InputEntry id='password' spanName='Password' value={this.state.password}
-                                            placeholder='your password' onChange={this.handleInputChange}/>
-                            </dd>
-                            <dt><h3>FixPack Info</h3></dt>
-                            <dd>
-                                <InputEntry id='fpName' spanName='Name' value={this.state.fpName}
-                                            placeholder='the fipack name, as portal-**-6210'
-                                            onChange={this.handleInputChange}/>
-                                <InputEntry id='fpTicket' spanName='Ticket' value={this.state.fpTicket}
-                                            placeholder='the ticket number of this fixpack, as LRQA-*****'
-                                            onChange={this.handleInputChange}/>
-                                <InputEntry id='fpBuild' spanName='Build' value={this.state.fpBuild}
-                                            placeholder='the build number of this fixpack'
-                                            onChange={this.handleInputChange}/>
-                            </dd>
-                            <dt><h3>Crawler Info</h3></dt>
-                            <dd>
-                                <InputEntry id='patchURL' spanName='Patch URL' value={this.state.patchURL}
-                                            placeholder='the Patch URL of Jenkins Server'
-                                            onChange={this.handleInputChange}/>
-                                <InputEntry id='baselineURL' spanName='Baseline URL' value={this.state.baselineURL}
-                                            placeholder='the Baseline URL of Jenkins Server'
-                                            onChange={this.handleInputChange}/>
-                                <InputEntry id='crawlerBuild' spanName='Crawler Build' value={this.state.crawlerBuild}
-                                            placeholder='the Patch URL of Jenkins Server'
-                                            onChange={this.handleInputChange}/>
-                                <RadioEntry isChecked={this.state.isBaseline} title="Crawler Level"
-                                            onChange={this.handleRadioChange}/>
-                            </dd>
-                            <dt><h3>Jenkins Info</h3></dt>
-                            <dd>
-                                <InputEntry id='jenkinsHost' spanName='Jenkins Host' value={this.state.jenkinsHost}
-                                            placeholder='the base host of Jenkins Server, as test.liferay.com'
-                                            onChange={this.handleInputChange}/>
-                            </dd>
-                        </dl>
-                    </div>
-                </div>
-                <div className='row'>
-                    <div className='col-xs-3'>
-                        <div className="btn-group" role="group" aria-label="start">
-                            <button type="button" className="btn btn-group" onClick={this.handleSaveAction}>Start
-                            </button>
+                <form action='/crawler/save_setting' method='post'>
+
+                    <div className='row'>
+                        <div className='col-xs-12'>
+                            <h2>Crawler Setting</h2>
+
+                            <dl>
+                                <dt><h3>User Info</h3></dt>
+                                <dd>
+                                    <InputEntry id='username' spanName='Username' value={this.state.username}
+                                                placeholder='@liferay.com' onChange={this.handleInputChange}/>
+                                    <InputEntry id='password' spanName='Password' value={this.state.password}
+                                                placeholder='your password' onChange={this.handleInputChange}/>
+                                </dd>
+                                <dt><h3>FixPack Info</h3></dt>
+                                <dd>
+                                    <InputEntry id='fpName' spanName='Name' value={this.state.fpName}
+                                                placeholder='the fipack name, as portal-**-6210'
+                                                onChange={this.handleInputChange}/>
+                                    <InputEntry id='fpTicket' spanName='Ticket' value={this.state.fpTicket}
+                                                placeholder='the ticket number of this fixpack, as LRQA-*****'
+                                                onChange={this.handleInputChange}/>
+                                    <InputEntry id='fpBuild' spanName='Build' value={this.state.fpBuild}
+                                                placeholder='the build number of this fixpack'
+                                                onChange={this.handleInputChange}/>
+                                </dd>
+                                <dt><h3>Crawler Info</h3></dt>
+                                <dd>
+                                    <InputEntry id='patchURL' spanName='Patch URL' value={this.state.patchURL}
+                                                placeholder='the Patch URL of Jenkins Server'
+                                                onChange={this.handleInputChange}/>
+                                    <InputEntry id='baselineURL' spanName='Baseline URL' value={this.state.baselineURL}
+                                                placeholder='the Baseline URL of Jenkins Server'
+                                                onChange={this.handleInputChange}/>
+                                    <InputEntry id='crawlerBuild' spanName='Crawler Build'
+                                                value={this.state.crawlerBuild}
+                                                placeholder='the Patch URL of Jenkins Server'
+                                                onChange={this.handleInputChange}/>
+                                    <RadioEntry isChecked={this.state.isBaseline} title="Crawler Level"
+                                                onChange={this.handleRadioChange}/>
+                                </dd>
+                                <dt><h3>Jenkins Info</h3></dt>
+                                <dd>
+                                    <InputEntry id='jenkinsHost' spanName='Jenkins Host' value={this.state.jenkinsHost}
+                                                placeholder='the base host of Jenkins Server, as test.liferay.com'
+                                                onChange={this.handleInputChange}/>
+                                </dd>
+                            </dl>
                         </div>
                     </div>
-                </div>
+                    <div className='row'>
+                        <div className='col-xs-12'>
+                            <div className="btn-group" role="group" aria-label="start">
+                                <button type="submit" className="btn btn-default">Save
+                                </button>
+                                <button type="button" className="btn btn-default" onClick={this.handleStartAction}>Start
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         );
     }

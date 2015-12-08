@@ -2,13 +2,19 @@
 
 let path = require('path');
 let fs = require('fs');
+const fse = require('fs-extra');
 
 class Properties {
-    constructor(properties) {
-        for (let item in properties) {
-            if (properties.hasOwnProperty(item))
-                this[item] = properties[item];
+    constructor(path) {
+        this.path = path;
+        this.rawObj = fse.readJsonSync(path);
+        for (let item in this.rawObj) {
+            this[item] = this.rawObj[item];
         }
+    }
+
+    setProperties(obj) {
+        fse.writeJsonSync(this.path, obj);
     }
 
     getFileName() {
@@ -76,11 +82,13 @@ class Properties {
         return this.fixpack_info;
     }
 
+    getRawObj() {
+        return this.rawObj;
+    }
+
     getRawObjString() {
-        return fs.readFileSync(path.resolve(__dirname, '../properties.json'), 'utf-8');
+        return JSON.stringify(this.rawObj, 4);
     }
 }
 
-let properties = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../properties.json'), 'utf-8'));
-
-module.exports = new Properties(properties);
+module.exports = new Properties(path.resolve(__dirname, '../properties.json'));
