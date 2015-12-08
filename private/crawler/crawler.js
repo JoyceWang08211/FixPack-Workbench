@@ -6,9 +6,12 @@ let fse = require('fs-extra');
 //crawler lib
 let xlsx = require('node-xlsx');
 
+//log4js logger
+const loggerUtil = require('../util/log4jsLoggerUtil');
+
 //console format lib
 let consoler = require('consoler');
-let Table = require('cli-table');
+let Table = require('cli-table2');
 
 //util lib
 let properties = require('../util/propertiesUtil');
@@ -24,6 +27,8 @@ let info_table = {};
 let info = {};
 
 exports.crawler = function* () {
+    const logger = loggerUtil.getLogger('crawler', 'log4js_cfg.json');
+
     const isBaseline = properties.getCrawlerInfo().is_baseline;
     let baseline_suffix = isBaseline ? '-baseline' : '';
 
@@ -32,18 +37,28 @@ exports.crawler = function* () {
     //component process
     consoler.info(`Crawler start component process..`);
     let components = yield* crawler_component.run(isBaseline);
-    info_table = new Table();
+    info_table = new Table({
+        style: {
+            head: []
+            , border: []
+        }
+    });
     info = {'ToTal Components Number': components.length};
     info_table.push(info);
     consoler.info(`Crawler has finished component process..`);
     consoler.info(`Component Results Info:\n${info_table.toString()}`);
+    logger.info(`Component Results Info:\n${info_table.toString()}`);
 
     //build process
     consoler.info(`Crawler start build process..`);
     let builds_process = [];
     info_table = new Table(
         {
-            head: ['Component Name', 'Build Number']
+            head: ['Component Name', 'Build Number'],
+            style: {
+                head: []
+                , border: []
+            }
         }
     );
 
@@ -60,6 +75,7 @@ exports.crawler = function* () {
     }
     consoler.info(`Crawler has finished build process..`);
     consoler.info(`Builds Info:\n${info_table.toString()}`);
+    logger.info(`Builds Info:\n${info_table.toString()}`);
 
     //testcase process and console output process
     consoler.info(`Crawler start testcase and cop process..`);
@@ -73,7 +89,11 @@ exports.crawler = function* () {
     let testcase_builds = yield testcases_process;
     info_table = new Table(
         {
-            head: ['Component Name', 'Build Number', 'Total Cases', 'Failed Cases']
+            head: ['Component Name', 'Build Number', 'Total Cases', 'Failed Cases'],
+            style: {
+                head: []
+                , border: []
+            }
         }
     );
 
@@ -94,6 +114,7 @@ exports.crawler = function* () {
     let cops = yield cops_process;
     consoler.info(`Crawler has finished testcase and cop process..`);
     consoler.info(`Testcases Info:\n${info_table.toString()}`);
+    logger.info(`Testcases Info:\n${info_table.toString()}`);
 
     consoler.info(`Crawler start generating AA Result Lists File..`);
     var data = [];
@@ -111,7 +132,7 @@ exports.crawler = function* () {
 
     yield new Promise(
         (resolve, reject)=> {
-            fse.ensureFileSync(`${__dirname}/result`);
+            fse.ensureDirSync(`${__dirname}/result`);
             fs.writeFile(`${__dirname}/result/${properties.getFileName()}${baseline_suffix}.xlsx`, buffer, (err)=> {
                 if (err)
                     reject(new Error(err));

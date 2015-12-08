@@ -1,0 +1,16 @@
+{
+  "appenders": [
+    {
+      "type": "dateFile",
+      "filename": "../crawler/logs/crawler.log",
+      "maxLogSize": 20480,
+      "backups": 3,
+      "category": "crawler",
+      "pattern": "-yyyy-MM-dd.log",
+      "alwaysIncludePattern": false
+    }
+  ],
+  "levels": {
+    "[all]": "INFO"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "appenders": [
+    {
+      "type": "dateFile",
+      "filename": "test.log",
+      "maxLogSize": 20480,
+      "backups": 3,
+      "category": "test",
+      "pattern": "-yyyy-MM-dd.log",
+      "alwaysIncludePattern": false
+    }
+  ],
+  "levels": {
+    "[all]": "INFO"
+  }
+}
