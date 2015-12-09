@@ -4,6 +4,8 @@ import React from 'react';
 import SettingBox from './crawler_setting.js';
 import LogBox from './crawler_logs.js';
 
+let timer;
+
 let CrawlerBox = React.createClass({
     getInitialState(){
         return {
@@ -11,22 +13,43 @@ let CrawlerBox = React.createClass({
         };
     },
 
-    handleStart(){
-        fetch("/crawler/start_job", {
+    handleProgressQuery(){
+        fetch("/crawler//progress_query", {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                test: 'Hubot',
-                login: 'hubot'
+                progress: this.state.progress
             })
-        })
+        }).then((res)=> {
+            return res.json();
+        }).then((json)=> {
+            this.setState({progress: json.progress})
 
-        this.setState({
-            progress: this.state.progress += 0.01
+            if (this.state.progress.toFixed(2) == 0.1)
+                clearInterval(timer);
         })
+    },
+
+    handleStart(){
+        //fetch("/crawler/start_job", {
+        //    method: "POST",
+        //    headers: {
+        //        'Accept': 'application/json',
+        //        'Content-Type': 'application/json'
+        //    },
+        //    body: JSON.stringify({
+        //        progress: this.state.progress
+        //    })
+        //}).then((res)=> {
+        //    return res.json();
+        //}).then((json)=> {
+        //    if (json.status) {
+        timer = setInterval(this.handleProgressQuery, 1000);
+        //}
+        //})
     },
 
     getDefaultProps(){

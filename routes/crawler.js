@@ -1,8 +1,12 @@
 'use strict';
+const co = require('co');
 
 var express = require('express');
 var router = express.Router();
 const properties = require('../private/util/propertiesUtil');
+
+//crawler
+const crawler = require(require('app-root-path') + '/private/crawler/crawler');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -48,7 +52,18 @@ router.post('/save_setting', updatePropertiesObj, (req, res)=> {
 });
 
 router.post('/start_job', (req, res)=> {
-    console.log(req.body)
+    co(crawler.crawler())
+        .catch((err)=> {
+            console.error(err.stack);
+        });
+
+    res.json({status: 1});
 });
+
+router.post('/progress_query', (req, res)=> {
+    req.body.progress += 0.01;
+
+    res.json({progress: req.body.progress});
+})
 
 module.exports = router;
