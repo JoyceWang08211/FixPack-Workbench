@@ -14,7 +14,7 @@ let LogBox = React.createClass({
                 value: '0'
             },
             step: function (state, bar) {
-                bar.setText((bar.value() * 100).toFixed(0));
+                bar.setText(`${(bar.value() * 100).toFixed(0)}%`);
             }
         };
 
@@ -24,7 +24,6 @@ let LogBox = React.createClass({
                     <div className='col-xs-12'>
                         <Circle
                             progress={this.props.progress}
-                            text={'progressbar'}
                             options={options}
                             initialAnimate={true}
                             containerClassName={'.progressbar'}
