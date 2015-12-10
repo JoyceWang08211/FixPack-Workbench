@@ -36,7 +36,7 @@ function processBuild(component) {
                 }
             }
 
-            barUtil.bar.tick(1);
+            barUtil.getCliBar().tick(1);
 
             return result;
         });

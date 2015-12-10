@@ -42,7 +42,7 @@ function processTestCase(build) {
             result.component = build.component;
             result.build = build.id;
 
-            barUtil.bar.tick(1);
+            barUtil.getCliBar().tick(1);
 
             return result;
         });

@@ -49,7 +49,7 @@ function processConsoleOutput(testcase) {
                         testcase.cop = "The COP should be double checked in this testcase.";
                     }
 
-                    barUtil.bar.tick(1);
+                    barUtil.getCliBar().tick(1);
                     return testcase;
                 }
             );

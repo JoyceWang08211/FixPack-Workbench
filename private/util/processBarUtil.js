@@ -2,8 +2,19 @@
 let ProgressBar = require('progress');
 
 class Bar {
-    constructor(length) {
-        this.length = length;
+    constructor() {
+        this.cliBar = {};
+        this.crawlerBuildBar = {};
+        this.crawlerTestcaseBar = {};
+        this.crawlerCopBar = {};
+    }
+
+    getCliBar() {
+        return this.cliBar;
+    }
+
+    setCliBar(bar) {
+        this.cliBar = bar;
     }
 
     init(length, title) {
