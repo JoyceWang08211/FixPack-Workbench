@@ -3,59 +3,83 @@ import React from 'react';
 
 import SettingBox from './crawler_setting.js';
 import LogBox from './crawler_logs.js';
+import PureRenderMixin from 'react-addons-pure-render-mixin';
 
 let timer;
 
 let CrawlerBox = React.createClass({
+    mixins: [PureRenderMixin],
+
+    getDefaultProps(){
+        return {
+            setting: {},
+            filePath: ''
+        }
+    },
+
     getInitialState(){
         return {
-            progress: 0
+            buildProgress: 0,
+            testcaseProgress: 0,
+            copProgress: 0,
+            isGenerated: false
         };
     },
 
     handleProgressQuery(){
-        fetch("/crawler//progress_query", {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                progress: this.state.progress
-            })
+        fetch("/crawler/progress_query", {
+            method: "POST"
         }).then((res)=> {
             return res.json();
         }).then((json)=> {
-            this.setState({progress: json.progress})
 
-            if (this.state.progress.toFixed(2) == 0.1)
+            let {buildProgress,testcaseProgress,copProgress} = json;
+
+            this.setState({
+                buildProgress: buildProgress,
+                testcaseProgress: testcaseProgress,
+                copProgress: copProgress,
+                isGenerated: false
+            });
+
+            if (json.status) {
                 clearInterval(timer);
+                this.setState({
+                    buildProgress: buildProgress,
+                    testcaseProgress: testcaseProgress,
+                    copProgress: copProgress,
+                    isGenerated: true
+                });
+            }
         })
     },
 
     handleStart(){
-        //fetch("/crawler/start_job", {
-        //    method: "POST",
-        //    headers: {
-        //        'Accept': 'application/json',
-        //        'Content-Type': 'application/json'
-        //    },
-        //    body: JSON.stringify({
-        //        progress: this.state.progress
-        //    })
-        //}).then((res)=> {
-        //    return res.json();
-        //}).then((json)=> {
-        //    if (json.status) {
-        timer = setInterval(this.handleProgressQuery, 1000);
-        //}
-        //})
-    },
+        fetch("/crawler/start_job", {
+            method: "POST"
+        }).then((res)=> {
+            return res.json();
+        }).then((json)=> {
+            if (json.status) {
+                //TODO　实现crawler成功运行后的后续过程
+                console.log('success')
+            }
+            else {
+                if (json.message) {
+                    alert(json.message);
+                }
+                clearInterval(timer)
+            }
+        });
 
-    getDefaultProps(){
-        return {
-            setting: {}
-        }
+        this.setState({
+            buildProgress: 0,
+            testcaseProgress: 0,
+            copProgress: 0,
+            isGenerated: false
+        });
+
+        timer = setInterval(this.handleProgressQuery, 2000);
     },
 
     render() {
@@ -68,7 +92,11 @@ let CrawlerBox = React.createClass({
                 </div>
                 <hr/>
                 <SettingBox setting={this.props.setting} handleStart={this.handleStart}/>
-                <LogBox progress={this.state.progress}/>
+                <LogBox buildProgress={this.state.buildProgress}
+                        testcaseProgress={this.state.testcaseProgress}
+                        copProgress={this.state.copProgress}
+                        isGenerated={this.state.isGenerated}
+                        filePath={this.props.filePath}/>
             </div>
         );
     }

@@ -11,10 +11,13 @@ $(()=> {
         })
         .then((json)=> {
             const setting = JSON.parse(json);
-            ReactDOM.render(<CrawlerBox setting={setting}/>, document.getElementById('crawler'));
+            const filePath = `${setting.fixpack_info.name}-build${setting.fixpack_info.build}.xlsx`;
+
+            ReactDOM.render(<CrawlerBox setting={setting} filePath={filePath}/>, document.getElementById('crawler'));
         });
 
 });
 
 //css
 require('./css/crawler.css');
+require('./css/crawler_logs.css');

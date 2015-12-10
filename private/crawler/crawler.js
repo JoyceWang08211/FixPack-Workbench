@@ -26,8 +26,11 @@ let crawler_logs = require('./crawler_logs');
 let info_table = {};
 let info = {};
 
+//app root
+const appRoot = require('app-root-path');
+
 exports.crawler = function* () {
-    const logger = loggerUtil.getLogger('crawler', 'log4js_cfg.json');
+    const logger = loggerUtil.getLogger('crawler', `${appRoot}/private/crawler/log4js_cfg.json`);
 
     const isBaseline = properties.getCrawlerInfo().is_baseline;
     let baseline_suffix = isBaseline ? '-baseline' : '';
@@ -67,6 +70,7 @@ exports.crawler = function* () {
     }
 
     barUtil.setCliBar(barUtil.initCliBar(components.length, 'Build'));
+    barUtil.setCrawlerBuildBar(components.length);
 
     let builds = yield builds_process;
     for (let build of builds) {
@@ -86,6 +90,8 @@ exports.crawler = function* () {
     }
 
     barUtil.setCliBar(barUtil.initCliBar(testcases_process.length, 'Testcase'));
+    barUtil.setCrawlerTestcaseBar(testcases_process.length);
+
     let testcase_builds = yield testcases_process;
     info_table = new Table(
         {
@@ -110,6 +116,7 @@ exports.crawler = function* () {
     }
 
     barUtil.setCliBar(barUtil.initCliBar(cops_process.length, 'Console Output'));
+    barUtil.setCrawlerCopBar(cops_process.length);
 
     let cops = yield cops_process;
     consoler.info(`Crawler has finished testcase and cop process..`);
@@ -132,16 +139,27 @@ exports.crawler = function* () {
 
     yield new Promise(
         (resolve, reject)=> {
-            fse.ensureDirSync(`${__dirname}/result`);
-            fs.writeFile(`${__dirname}/result/${properties.getFileName()}${baseline_suffix}.xlsx`, buffer, (err)=> {
+            //public folder
+            fse.ensureDirSync(`${appRoot}/public/data`);
+            fs.writeFile(`${appRoot}/public/data/${properties.getFileName()}${baseline_suffix}.xlsx`, buffer, (err)=> {
                 if (err)
                     reject(new Error(err));
                 else {
-                    consoler.info(`The AA Result Lists File has been generated successfully..`);
-                    consoler.info(`Crawler has closed..`);
-                    resolve(1);
+                    //back up
+                    fse.ensureDirSync(`${__dirname}/result`);
+                    fs.writeFile(`${__dirname}/result/${properties.getFileName()}${baseline_suffix}.xlsx`, buffer, (err)=> {
+                        if (err)
+                            reject(new Error(err));
+                        else {
+                            consoler.info(`The AA Result Lists File has been generated successfully..`);
+                            consoler.info(`Crawler has closed..`);
+                            resolve(1);
+                        }
+                    });
                 }
             });
+
+
         }
     )
 };

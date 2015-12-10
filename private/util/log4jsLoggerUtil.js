@@ -10,6 +10,8 @@ class Logger {
     }
 
     getLogger(category, config) {
+        console.log(config);
+
         if (!instance) {
             const configObj = config.constructor == Object ? config : fse.readJsonSync(config);
 

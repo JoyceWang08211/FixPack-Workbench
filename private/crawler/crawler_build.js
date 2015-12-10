@@ -36,6 +36,7 @@ function processBuild(component) {
                 }
             }
 
+            barUtil.tickCrawlerBar(barUtil.getCrawlerBuildBar(), 1);
             barUtil.getCliBar().tick(1);
 
             return result;

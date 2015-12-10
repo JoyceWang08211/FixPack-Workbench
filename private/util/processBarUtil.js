@@ -4,9 +4,9 @@ let ProgressBar = require('progress');
 class Bar {
     constructor() {
         this.cliBar = {};
-        this.crawlerBuildBar = {};
-        this.crawlerTestcaseBar = {};
-        this.crawlerCopBar = {};
+        this.crawlerBuildBar = {current: 0, total: 1};
+        this.crawlerTestcaseBar = {current: 0, total: 1};
+        this.crawlerCopBar = {current: 0, total: 1};
     }
 
     getCliBar() {
@@ -21,24 +21,40 @@ class Bar {
         return this.crawlerBuildBar;
     }
 
-    setCrawlerBuildBar(bar) {
-        this.crawlerBuildBar = bar;
+    setCrawlerBuildBar(length) {
+        this.crawlerBuildBar = {current: 0, total: length};
+    }
+
+    getCrawlerBuildBarProcess() {
+        return (this.crawlerBuildBar.current / this.crawlerBuildBar.total).toFixed(2);
     }
 
     getCrawlerTestcaseBar() {
         return this.crawlerTestcaseBar;
     }
 
-    setCrawlerTestcaseBar(bar) {
-        this.crawlerTestcaseBar = bar;
+    setCrawlerTestcaseBar(length) {
+        this.crawlerTestcaseBar = {current: 0, total: length};
+    }
+
+    getCrawlerTestcaseBarProcess() {
+        return (this.crawlerTestcaseBar.current / this.crawlerTestcaseBar.total).toFixed(2);
     }
 
     getCrawlerCopBar() {
         return this.crawlerCopBar;
     }
 
-    setCrawlerCopBar(bar) {
-        this.crawlerCopBar = bar;
+    setCrawlerCopBar(length) {
+        this.crawlerCopBar = {current: 0, total: length};
+    }
+
+    getCrawlerCopBarProcess() {
+        return (this.crawlerCopBar.current / this.crawlerCopBar.total).toFixed(2);
+    }
+
+    tickCrawlerBar(bar, step) {
+        bar.current += step;
     }
 
     initCliBar(length, title) {
@@ -48,6 +64,12 @@ class Bar {
             width: 20,
             total: length || this.length
         });
+    }
+
+    initCrawlerBar() {
+        this.crawlerBuildBar = {current: 0, total: 1};
+        this.crawlerTestcaseBar = {current: 0, total: 1};
+        this.crawlerCopBar = {current: 0, total: 1};
     }
 }
 

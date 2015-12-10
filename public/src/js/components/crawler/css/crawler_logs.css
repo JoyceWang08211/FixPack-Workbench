@@ -1,0 +1,8 @@
+div.success-hide > p {
+    display: none;
+    opacity: 0;
+}
+
+div.success-show > p {
+    opacity: 1;
+}

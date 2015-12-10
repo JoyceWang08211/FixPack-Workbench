@@ -4,9 +4,12 @@ const co = require('co');
 var express = require('express');
 var router = express.Router();
 const properties = require('../private/util/propertiesUtil');
+const barUtil = require('../private/util/processBarUtil');
 
 //crawler
 const crawler = require(require('app-root-path') + '/private/crawler/crawler');
+
+let locked = false;
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -52,18 +55,38 @@ router.post('/save_setting', updatePropertiesObj, (req, res)=> {
 });
 
 router.post('/start_job', (req, res)=> {
-    co(crawler.crawler())
-        .catch((err)=> {
-            console.error(err.stack);
-        });
+    if (!locked) {
+        locked = true;
+        barUtil.initCrawlerBar();
+        co(crawler.crawler())
+            .then(()=> {
+                locked = false;
+                res.json({status: 1});
+            })
+            .catch((err)=> {
+                locked = false;
+                res.json({status: 0, message: err.stack});
+            });
+    }
+    else {
+        res.json({status: 0, message: 'The current crawler is running..'})
+    }
 
-    res.json({status: 1});
 });
 
 router.post('/progress_query', (req, res)=> {
-    req.body.progress += 0.01;
+    let state = {
+        buildProgress: barUtil.getCrawlerBuildBarProcess(),
+        testcaseProgress: barUtil.getCrawlerTestcaseBarProcess(),
+        copProgress: barUtil.getCrawlerCopBarProcess()
+    }
 
-    res.json({progress: req.body.progress});
-})
+    if (state.buildProgress * state.testcaseProgress * state.copProgress < 1)
+        state.status = 0;
+    else
+        state.status = 1;
+
+    res.json(state);
+});
 
 module.exports = router;
