@@ -17,7 +17,31 @@ class Bar {
         this.cliBar = bar;
     }
 
-    init(length, title) {
+    getCrawlerBuildBar() {
+        return this.crawlerBuildBar;
+    }
+
+    setCrawlerBuildBar(bar) {
+        this.crawlerBuildBar = bar;
+    }
+
+    getCrawlerTestcaseBar() {
+        return this.crawlerTestcaseBar;
+    }
+
+    setCrawlerTestcaseBar(bar) {
+        this.crawlerTestcaseBar = bar;
+    }
+
+    getCrawlerCopBar() {
+        return this.crawlerCopBar;
+    }
+
+    setCrawlerCopBar(bar) {
+        this.crawlerCopBar = bar;
+    }
+
+    initCliBar(length, title) {
         return new ProgressBar('  Catching ' + title + ' Data [:bar] :percent :etas', {
             complete: '=',
             incomplete: ' ',
@@ -27,5 +51,4 @@ class Bar {
     }
 }
 
-exports.bar = {};
 module.exports = new Bar();

@@ -66,7 +66,7 @@ exports.crawler = function* () {
         builds_process.push(crawler_build.run(component));
     }
 
-    barUtil.setCliBar(barUtil.init(components.length, 'Build'));
+    barUtil.setCliBar(barUtil.initCliBar(components.length, 'Build'));
 
     let builds = yield builds_process;
     for (let build of builds) {
@@ -85,7 +85,7 @@ exports.crawler = function* () {
         testcases_process.push(crawler_testcase.run(build));
     }
 
-    barUtil.setCliBar(barUtil.init(testcases_process.length, 'Testcase'));
+    barUtil.setCliBar(barUtil.initCliBar(testcases_process.length, 'Testcase'));
     let testcase_builds = yield testcases_process;
     info_table = new Table(
         {
@@ -109,7 +109,7 @@ exports.crawler = function* () {
         }
     }
 
-    barUtil.setCliBar(barUtil.init(cops_process.length, 'Console Output'));
+    barUtil.setCliBar(barUtil.initCliBar(cops_process.length, 'Console Output'));
 
     let cops = yield cops_process;
     consoler.info(`Crawler has finished testcase and cop process..`);
