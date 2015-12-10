@@ -2,6 +2,7 @@
 
 const log4js = require('log4js');
 const fse = require('fs-extra');
+const appRoot = require('app-root-path');
 
 let instance;
 
@@ -10,15 +11,12 @@ class Logger {
     }
 
     getLogger(category, config) {
-        console.log(config);
-
         if (!instance) {
             const configObj = config.constructor == Object ? config : fse.readJsonSync(config);
 
-            for (let appender of configObj.appenders) {
-                fse.removeSync(appender.filename);
-                fse.ensureFileSync(appender.filename);
-            }
+            //TODO 路径需要调整
+            fse.removeSync(`${appRoot}/private/crawler/logs/crawler.log`);
+            fse.ensureFileSync(`${appRoot}/private/crawler/logs/crawler.log`);
 
             log4js.configure(configObj);
 

@@ -71,9 +71,9 @@ let LogBox = React.createClass({
                             </div>
                         </div>
                         <div className='row'>
-                            <h3>Logs</h3>
+                            <h3>Crawler Logs</h3>
 
-                            <div className='col-xs-'>
+                            <div className='col-xs-12'>
                                 <p>{this.props.logContent}</p>
                             </div>
                         </div>

@@ -1,20 +1,21 @@
 "use strict";
 
 let fs = require('fs');
+let fse = require('fs-extra');
+const appRoot = require('app-root-path');
 
 class Logs {
-    constructor(path) {
-        this.path = path;
+    constructor() {
     }
 
-    createLogsFile() {
-        fs.writeFileSync(this.path, '##the log file');
+    readLogs(path) {
+        return fs.readFileSync(path);
     }
 
-    appendFile(data) {
-        fs.appendFileSync(this.path, data);
+    getCrawlerLogs() {
+        fse.ensureFileSync(`${appRoot}/private/crawler/logs/crawler.log`);
+        return this.readLogs(`${appRoot}/private/crawler/logs/crawler.log`).toString();
     }
-
 }
 
-module.exports = new Logs('../crawler/logs/log.txt');
+module.exports = new Logs();

@@ -30,7 +30,9 @@ let info = {};
 const appRoot = require('app-root-path');
 
 exports.crawler = function* () {
-    const logger = loggerUtil.getLogger('crawler', `${appRoot}/private/crawler/log4js_cfg.json`);
+    const crawler_logger = loggerUtil.getLogger('crawler', `${appRoot}/private/crawler/log4js_cfg.json`);
+
+    console.log(crawler_logger);
 
     const isBaseline = properties.getCrawlerInfo().is_baseline;
     let baseline_suffix = isBaseline ? '-baseline' : '';
@@ -50,7 +52,7 @@ exports.crawler = function* () {
     info_table.push(info);
     consoler.info(`Crawler has finished component process..`);
     consoler.info(`Component Results Info:\n${info_table.toString()}`);
-    logger.info(`Component Results Info:\n${info_table.toString()}`);
+    crawler_logger.info(`Component Results Info:\n${info_table.toString()}`);
 
     //build process
     consoler.info(`Crawler start build process..`);
@@ -79,7 +81,7 @@ exports.crawler = function* () {
     }
     consoler.info(`Crawler has finished build process..`);
     consoler.info(`Builds Info:\n${info_table.toString()}`);
-    logger.info(`Builds Info:\n${info_table.toString()}`);
+    crawler_logger.info(`Builds Info:\n${info_table.toString()}`);
 
     //testcase process and console output process
     consoler.info(`Crawler start testcase and cop process..`);
@@ -121,7 +123,7 @@ exports.crawler = function* () {
     let cops = yield cops_process;
     consoler.info(`Crawler has finished testcase and cop process..`);
     consoler.info(`Testcases Info:\n${info_table.toString()}`);
-    logger.info(`Testcases Info:\n${info_table.toString()}`);
+    crawler_logger.info(`Testcases Info:\n${info_table.toString()}`);
 
     consoler.info(`Crawler start generating AA Result Lists File..`);
     var data = [];
@@ -158,8 +160,6 @@ exports.crawler = function* () {
                     });
                 }
             });
-
-
         }
     )
 };

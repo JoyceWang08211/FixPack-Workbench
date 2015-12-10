@@ -5,9 +5,11 @@ var express = require('express');
 var router = express.Router();
 const properties = require('../private/util/propertiesUtil');
 const barUtil = require('../private/util/processBarUtil');
+const logUtil = require('../private/util/logsUtil');
 
 //crawler
-const crawler = require(require('app-root-path') + '/private/crawler/crawler');
+const appRoot = require('app-root-path');
+const crawler = require(appRoot + '/private/crawler/crawler');
 
 let locked = false;
 
@@ -56,7 +58,7 @@ router.post('/save_setting', updatePropertiesObj, (req, res)=> {
 
 router.post('/start_job', (req, res)=> {
     if (!locked) {
-        locked = true;
+        //TODO locked = true;
         barUtil.initCrawlerBar();
         co(crawler.crawler())
             .then(()=> {
@@ -78,8 +80,9 @@ router.post('/progress_query', (req, res)=> {
     let state = {
         buildProgress: barUtil.getCrawlerBuildBarProcess(),
         testcaseProgress: barUtil.getCrawlerTestcaseBarProcess(),
-        copProgress: barUtil.getCrawlerCopBarProcess()
-    }
+        copProgress: barUtil.getCrawlerCopBarProcess(),
+        logContent: logUtil.getCrawlerLogs()
+    };
 
     if (state.buildProgress * state.testcaseProgress * state.copProgress < 1)
         state.status = 0;

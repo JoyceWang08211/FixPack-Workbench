@@ -22,7 +22,8 @@ let CrawlerBox = React.createClass({
             buildProgress: 0,
             testcaseProgress: 0,
             copProgress: 0,
-            isGenerated: false
+            isGenerated: false,
+            logContent: ''
         };
     },
 
@@ -33,24 +34,18 @@ let CrawlerBox = React.createClass({
             return res.json();
         }).then((json)=> {
 
-            let {buildProgress,testcaseProgress,copProgress} = json;
+            let {buildProgress,testcaseProgress,copProgress,logContent} = json;
+
+            if (json.status)
+                clearInterval(timer);
 
             this.setState({
                 buildProgress: buildProgress,
                 testcaseProgress: testcaseProgress,
                 copProgress: copProgress,
-                isGenerated: false
+                isGenerated: json.status ? true : false,
+                logContent: logContent
             });
-
-            if (json.status) {
-                clearInterval(timer);
-                this.setState({
-                    buildProgress: buildProgress,
-                    testcaseProgress: testcaseProgress,
-                    copProgress: copProgress,
-                    isGenerated: true
-                });
-            }
         })
     },
 
@@ -66,7 +61,7 @@ let CrawlerBox = React.createClass({
             }
             else {
                 if (json.message) {
-                    alert(json.message);
+                    console.log(json.message);
                 }
                 clearInterval(timer)
             }
@@ -96,7 +91,8 @@ let CrawlerBox = React.createClass({
                         testcaseProgress={this.state.testcaseProgress}
                         copProgress={this.state.copProgress}
                         isGenerated={this.state.isGenerated}
-                        filePath={this.props.filePath}/>
+                        filePath={this.props.filePath}
+                        logContent={this.state.logContent}/>
             </div>
         );
     }
