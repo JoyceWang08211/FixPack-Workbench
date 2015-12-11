@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import CrawlerBox from './js/crawler';
+import HistoryBox from './js/crawler_history';
 
 $(()=> {
     fetch('/crawler/get_setting')
@@ -14,6 +15,14 @@ $(()=> {
             const filePath = `${setting.fixpack_info.name}-build${setting.fixpack_info.build}.xlsx`;
 
             ReactDOM.render(<CrawlerBox setting={setting} filePath={filePath}/>, document.getElementById('crawler'));
+        });
+
+    fetch('/crawler/get_history')
+        .then((res)=> {
+            return res.json();
+        })
+        .then((json)=> {
+            ReactDOM.render(<HistoryBox fileList={json.fileList}/>, document.getElementById('crawler-history'));
         });
 
 });

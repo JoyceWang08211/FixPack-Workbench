@@ -22,6 +22,10 @@ router.get('/get_setting', (req, res)=> {
     res.json(properties.getRawObjString());
 });
 
+router.get('/get_history', (req, res)=> {
+    res.json({fileList: ['test1', 'test2', 'test3']});
+});
+
 function updatePropertiesObj(req, res, next) {
     let obj = properties.getRawObj();
 

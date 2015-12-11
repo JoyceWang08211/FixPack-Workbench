@@ -80,12 +80,6 @@ let CrawlerBox = React.createClass({
     render() {
         return (
             <div>
-                <div className='row'>
-                    <div className='col-xs-8'>
-                        <h1>Crawler For Jenkins Server</h1>
-                    </div>
-                </div>
-                <hr/>
                 <SettingBox setting={this.props.setting} handleStart={this.handleStart}/>
                 <LogBox buildProgress={this.state.buildProgress}
                         testcaseProgress={this.state.testcaseProgress}
