@@ -158,10 +158,11 @@ let SettingBox = React.createClass({
                     </div>
                     <div className='row'>
                         <div className='col-xs-12'>
-                            <div className="btn-group" role="group" aria-label="start">
-                                <button type="submit" className="btn btn-default">Save
+                            <div className="btn-group btn-block" role="group" aria-label="start">
+                                <button type="submit" className="btn btn-default col-xs-6">Save
                                 </button>
-                                <button type="button" className="btn btn-default" onClick={this.props.handleStart}>Start
+                                <button type="button" className="btn btn-primary col-xs-6"
+                                        onClick={this.props.handleStart}>Start
                                 </button>
                             </div>
                         </div>

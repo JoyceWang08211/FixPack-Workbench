@@ -33,7 +33,7 @@ let CrawlerHistoryBox = React.createClass({
                 <ul>
                     {children}
                 </ul>
-                <button className='btn btn-primary btn-block' onClick={this.handleSyncAction}>Sync</button>
+                <button className='btn btn-default btn-block' onClick={this.handleSyncAction}>Sync</button>
             </div>)
     }
 });
