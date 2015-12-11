@@ -114,7 +114,7 @@ var ListGroupBox = React.createClass({
 
             let list = React.Children.map(children, (child)=> {
                 return <div>{child}</div>
-            })
+            });
 
             return (
                 <div id='editor_list'>{list}</div>

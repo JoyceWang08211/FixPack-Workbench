@@ -23,7 +23,7 @@ let CrawlerBox = React.createClass({
             testcaseProgress: 0,
             copProgress: 0,
             isGenerated: false,
-            logContent: ''
+            logContent: []
         };
     },
 

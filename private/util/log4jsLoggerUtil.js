@@ -3,6 +3,7 @@
 const log4js = require('log4js');
 const fse = require('fs-extra');
 const appRoot = require('app-root-path');
+const path = require('path');
 
 let instance;
 
@@ -14,9 +15,14 @@ class Logger {
         if (!instance) {
             const configObj = config.constructor == Object ? config : fse.readJsonSync(config);
 
-            //TODO 路径需要调整
-            fse.removeSync(`${appRoot}/private/crawler/logs/crawler.log`);
-            fse.ensureFileSync(`${appRoot}/private/crawler/logs/crawler.log`);
+            for (let appender of configObj.appenders) {
+                let absoluteFilePath = path.resolve(appRoot.toString(), appender.filename);
+                console.log(absoluteFilePath);
+                fse.removeSync(absoluteFilePath);
+                fse.ensureFileSync(absoluteFilePath);
+
+                appender.filename = absoluteFilePath;
+            }
 
             log4js.configure(configObj);
 

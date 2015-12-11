@@ -2,7 +2,7 @@
   "appenders": [
     {
       "type": "dateFile",
-      "filename": "../crawler/logs/crawler.log",
+      "filename": "private/crawler/logs/crawler.log",
       "maxLogSize": 20480,
       "backups": 3,
       "category": "crawler",

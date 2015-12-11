@@ -16,6 +16,7 @@ let Table = require('cli-table2');
 //util lib
 let properties = require('../util/propertiesUtil');
 let barUtil = require('../util/processBarUtil');
+let logUtil = require('../util/logsUtil');
 
 //crawler segments
 let crawler_component = require('./crawler_component');
@@ -31,8 +32,6 @@ const appRoot = require('app-root-path');
 
 exports.crawler = function* () {
     const crawler_logger = loggerUtil.getLogger('crawler', `${appRoot}/private/crawler/log4js_cfg.json`);
-
-    console.log(crawler_logger);
 
     const isBaseline = properties.getCrawlerInfo().is_baseline;
     let baseline_suffix = isBaseline ? '-baseline' : '';
@@ -107,11 +106,15 @@ exports.crawler = function* () {
 
     let cops_process = [];
     for (let testcases of testcase_builds) {
-        info_table.push([
+        let testcase_info_obj = [
             testcases.component.match(/([^\[\]]+)/ig)[1] || 'Ignored',
             testcases.build,
             testcases.total,
-            testcases.length]);
+            testcases.length];
+
+        logUtil.appendCrawlerLogObj(testcase_info_obj);
+        info_table.push(testcase_info_obj);
+
         for (let testcase of testcases) {
             cops_process.push(crawler_logs.run(testcase));
         }

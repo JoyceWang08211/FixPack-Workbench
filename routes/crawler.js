@@ -60,6 +60,8 @@ router.post('/start_job', (req, res)=> {
     if (!locked) {
         //TODO locked = true;
         barUtil.initCrawlerBar();
+        logUtil.initCrawlerLogs();
+
         co(crawler.crawler())
             .then(()=> {
                 locked = false;
@@ -81,7 +83,7 @@ router.post('/progress_query', (req, res)=> {
         buildProgress: barUtil.getCrawlerBuildBarProcess(),
         testcaseProgress: barUtil.getCrawlerTestcaseBarProcess(),
         copProgress: barUtil.getCrawlerCopBarProcess(),
-        logContent: logUtil.getCrawlerLogs()
+        logContent: logUtil.getCrawlerLogObj()
     };
 
     if (state.buildProgress * state.testcaseProgress * state.copProgress < 1)

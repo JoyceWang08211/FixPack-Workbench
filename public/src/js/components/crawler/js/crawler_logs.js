@@ -2,6 +2,7 @@ const $ = require('jquery');
 import React from 'react';
 
 import {Circle} from 'react-progressbar.js';
+import createFragment from 'react-addons-create-fragment';
 
 let LogBox = React.createClass({
     getDefaultProps(){
@@ -11,7 +12,7 @@ let LogBox = React.createClass({
             testcaseProgress: 0,
             copProgress: 0,
             filePath: '',
-            logContent: ''
+            logContent: []
         };
     },
 
@@ -28,6 +29,22 @@ let LogBox = React.createClass({
                 bar.setText(`${(bar.value() * 100).toFixed(0)}%`);
             }
         };
+
+        let logTableList = [];
+
+        for (let log of this.props.logContent) {
+            let _html = createFragment({
+                logEntry: (
+                    <tr>
+                        <td>{log[0]}</td>
+                        <td>{log[1]}</td>
+                        <td>{log[2]}</td>
+                        <td>{log[3]}</td>
+                    </tr>)
+            });
+
+            logTableList.push(_html);
+        }
 
         return (
             <div className='col-xs-7'>
@@ -74,7 +91,19 @@ let LogBox = React.createClass({
                             <h3>Crawler Logs</h3>
 
                             <div className='col-xs-12'>
-                                <p>{this.props.logContent}</p>
+                                <table className='table table-striped'>
+                                    <thead>
+                                    <tr>
+                                        <th>Component Name</th>
+                                        <th>Build Num</th>
+                                        <th>Total</th>
+                                        <th>Failure</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {logTableList}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
