@@ -89,17 +89,18 @@ let LogBox = React.createClass({
                         </div>
                         <div className='row'>
                             <h3>Crawler Logs</h3>
-
-                            <div className='col-xs-12'>
+                            <table className='col-xs-12 table table-striped'>
+                                <thead>
+                                <tr>
+                                    <th>Component Name</th>
+                                    <th>Build Num</th>
+                                    <th>Total</th>
+                                    <th>Failure</th>
+                                </tr>
+                                </thead>
+                            </table>
+                            <div className='col-xs-12 log-panel'>
                                 <table className='table table-striped'>
-                                    <thead>
-                                    <tr>
-                                        <th>Component Name</th>
-                                        <th>Build Num</th>
-                                        <th>Total</th>
-                                        <th>Failure</th>
-                                    </tr>
-                                    </thead>
                                     <tbody>
                                     {logTableList}
                                     </tbody>

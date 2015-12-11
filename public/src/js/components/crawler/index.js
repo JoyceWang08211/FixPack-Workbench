@@ -30,3 +30,4 @@ $(()=> {
 //css
 require('./css/crawler.css');
 require('./css/crawler_logs.css');
+require('./css/crawler_history.css');

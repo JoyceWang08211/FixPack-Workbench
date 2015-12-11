@@ -6,3 +6,9 @@ div.success-hide > p {
 div.success-show > p {
     opacity: 1;
 }
+
+.log-panel {
+    height: 400px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
