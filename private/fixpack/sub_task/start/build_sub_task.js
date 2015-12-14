@@ -139,8 +139,8 @@ describe('Fix Pack Build Sub Tasks Script', function () {
             const isExisted = yield browser.url(`https://issues.liferay.com/browse/${st}`)
                 .isExisting('#linkingmodule_heading').then((isExisted)=> {
                     return isExisted;
-                })
-            console.log(isExisted);
+                });
+
             if (isExisted)
                 continue;
             else {
