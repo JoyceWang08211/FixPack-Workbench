@@ -63,7 +63,7 @@ describe('Fix Pack Build Sub Tasks Script', function () {
 
     it('Catch LPS List..', function* () {
         LPSCache = new Map(yield LPECache.map((c)=> {
-                return new Promise((resolve)=> {
+                return new Promise((resolve, reject)=> {
                     fetch(properties.getURLWithAuth(`${subTaskInfo.host}/${c}`))
                         .then((res)=> {
                             return res.text();
@@ -74,10 +74,11 @@ describe('Fix Pack Build Sub Tasks Script', function () {
                             $('.links-list ')
                                 .find('a')
                                 .each((i, e)=> {
-                                    if ($(e).text().match(/^LPS-\d+$/)) {
+                                    if ($(e).text().match(/^LPS-\d+$/) || $(e).text().match(/^PT-\d+$/)) {
                                         resolve([c, $(e).text()]);
                                     }
                                     else {
+                                        reject([c, $(e).text()]);
                                     }
                                 });
                         })
@@ -106,15 +107,18 @@ describe('Fix Pack Build Sub Tasks Script', function () {
                 .setValue('#issuetype-field', 'Sub-Task')
                 .pause(3000)
                 .keys('\uE007')
+                .pause(3000)
 
                 .setValue('#summary', `${fixPackInfo.name}: ${LPE}(${LPS})`)
 
                 .setValue('#components-textarea', 'Fix Pack Testing')
                 .pause(3000)
                 .keys('\uE007')
+                .pause(3000)
 
                 .click('#create-issue-submit')
-                .pause(3000);
+                .pause(5000)
+                .refresh();
         }
     });
 
