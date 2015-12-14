@@ -1,5 +1,3 @@
-//js
-require('../js/lib/theme/jquery.easing.min');
 //const React = require('react');
 //const ReactDOM = require('react-dom');
 //const $ = require('jquery');

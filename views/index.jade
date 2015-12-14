@@ -8,9 +8,11 @@ block content
                 button.navbar-toggle(type='button', data-toggle='collapse', data-target='.navbar-main-collapse')
                     i.fa.fa-bars
                 a.navbar-brand.page-scroll(href='#page-top')
-                    i.fa.fa-play-circle
-                    span.light Start
-                    |  Bootstrap
+                    i.fa.fa-arrow-up.fa-lg
+                    span.light  Go Top
+                a.navbar-brand(href='https://github.com/haoliangwu/FixPack-Workbench')
+                    i.fa.fa-github.fa-lg
+                    span.light  Fork On Github
             // Collect the nav links, forms, and other content for toggling
             .collapse.navbar-collapse.navbar-right.navbar-main-collapse
                 ul.nav.navbar-nav
@@ -18,11 +20,11 @@ block content
                     li.hidden
                         a(href='#page-top')
                     li
-                        a.page-scroll(href='#about') About
+                        a.page-scroll(href='#crawler') Crawler
                     li
-                        a.page-scroll(href='#download') Download
+                        a.page-scroll(href='#editor') POSHI Editor
                     li
-                        a.page-scroll(href='#contact') Contact
+                        a.page-scroll(href='#kb') CNQA KB
             // /.navbar-collapse
         // /.container
     // Intro Header
@@ -31,32 +33,26 @@ block content
             .container
                 .row
                     .col-md-8.col-md-offset-2
-                        h1.brand-heading Grayscale
+                        h1.brand-heading FixPack Workbench
                         p.intro-text
-                            | A free, responsive, one page Bootstrap theme.
+                            | For more accuracy and efficiency.
                             br
-                            | Created by Start Bootstrap.
-                        a.btn.btn-circle.page-scroll(href='#about')
+                            | Created by Lyon Wu.
+                        a.btn.btn-circle.page-scroll(href='#crawler')
                             i.fa.fa-angle-double-down.animated
     // About Section
-    section#about.container.content-section.text-center
+    section#crawler.container.content-section.text-center
         .row
             .col-lg-8.col-lg-offset-2
-                h2 About Grayscale
+                h2
+                    a(href='/crawler') Crawler
                 p
-                    | Grayscale is a free Bootstrap 3 theme created by Start Bootstrap. It can be yours right now, simply download the template on
-                    a(href='http://startbootstrap.com/template-overviews/grayscale/') the preview page
-                    | . The theme is open source, and you can use it for any purpose, personal or commercial.
-                p
-                    | This theme features stock photos by
-                    a(href='http://gratisography.com/') Gratisography
-                    |  along with a custom Google Maps skin courtesy of
-                    a(href='http://snazzymaps.com/') Snazzy Maps
-                    | .
-                p
-                    | Grayscale includes full HTML, CSS, and custom JavaScript files along with LESS files for easy customization.
+                    | Crawler is the convenient tool for fix pack AA workflow. It can catch all testcases
+                    | failed on
+                    a(href='https://test.liferay.com/8/')  Jenkins Server
+                    |  and then generate the Excel Lists for you.
     // Download Section
-    section#download.content-section.text-center
+    section#editor.content-section.text-center
         .download-section
             .container
                 .col-lg-8.col-lg-offset-2
@@ -64,7 +60,7 @@ block content
                     p You can download Grayscale for free on the preview page at Start Bootstrap.
                     a.btn.btn-default.btn-lg(href='http://startbootstrap.com/template-overviews/grayscale/') Visit Download Page
     // Contact Section
-    section#contact.container.content-section.text-center
+    section#kb.container.content-section.text-center
         .row
             .col-lg-8.col-lg-offset-2
                 h2 Contact Start Bootstrap
@@ -88,5 +84,5 @@ block content
     // Footer
     footer
         .container.text-center
-            p Copyright © Your Website 2014
+            p Copyright © github.com/haoliangwu 2015
 
