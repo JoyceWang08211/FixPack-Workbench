@@ -141,9 +141,7 @@ describe('Fix Pack Build Sub Tasks Script', function () {
                     return isExisted;
                 });
 
-            if (isExisted)
-                continue;
-            else {
+            if (!isExisted) {
                 let text = yield browser.getText('#summary-val');
 
                 LPEResult = text.match(/LPE-\d*/ig);
