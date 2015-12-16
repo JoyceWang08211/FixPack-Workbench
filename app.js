@@ -12,6 +12,7 @@ var kb = require('./routes/kb');
 
 var app = express();
 var webpackDevMiddleware = require('webpack-dev-middleware');
+var webpackHotMiddleware = require('webpack-hot-middleware');
 var webpack = require('webpack');
 var webpackConf = require('./webpack.config');
 
@@ -24,15 +25,18 @@ if (app.get('env') !== 'production') {
     app.use(webpackDevMiddleware(webpack(webpackConf),
         {
             contentBase: webpackConf.output.path,
-            //http://localhost:8081/public/assets
             publicPath: webpackConf.output.publicPath,
             hot: true,
+            historyApiFallback: true,
             stats: {
                 colors: true
             }
         }
     ));
+
+    app.use(webpackHotMiddleware(webpack(webpackConf)));
 }
+
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', '/src/img/favicon.ico')));

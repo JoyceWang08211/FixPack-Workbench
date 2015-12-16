@@ -1,5 +1,4 @@
-const $ = require('jquery');
-import React from 'react';
+const $ = require('jquery'), React = require('react'), ReactDOM = require('react-dom');
 
 import SettingBox from './crawler_setting.js';
 import LogBox from './crawler_logs.js';

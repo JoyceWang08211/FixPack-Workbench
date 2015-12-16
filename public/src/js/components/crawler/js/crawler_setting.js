@@ -1,5 +1,4 @@
-const $ = require('jquery');
-import React from 'react';
+const $ = require('jquery'), React = require('react'), ReactDOM = require('react-dom');
 
 let InputEntry = React.createClass({
     getDefaultProps(){
@@ -40,12 +39,12 @@ let RadioEntry = React.createClass({
                 <div className="radio">
                     <p>{this.props.title}</p>
                     <label>
-                        <input type="radio" name="isBaseline" value="yes" defaultChecked={this.props.isChecked}
+                        <input type="radio" name="isBaseline" value="no" defaultChecked={!this.props.isChecked}
                                onChange={this.props.onChange}/>
                         Patch Level
                     </label>
                     <label>
-                        <input type="radio" name="isBaseline" value="no" defaultChecked={!this.props.isChecked}
+                        <input type="radio" name="isBaseline" value="yes" defaultChecked={this.props.isChecked}
                                onChange={this.props.onChange}/>
                         Baseline Level
                     </label>
@@ -98,7 +97,7 @@ let SettingBox = React.createClass({
             patchURL: crawlerInfo.url,
             baselineURL: crawlerInfo.url_baseline,
             crawlerBuild: crawlerInfo.build,
-            isBaseline: crawlerInfo.is_baseline,
+            isBaseline: crawlerInfo.isBaseline,
             jenkinsHost: jenkinsInfo.host
         };
     },
@@ -144,7 +143,7 @@ let SettingBox = React.createClass({
                                                 value={this.state.crawlerBuild}
                                                 placeholder='the Patch URL of Jenkins Server'
                                                 onChange={this.handleInputChange}/>
-                                    <RadioEntry isChecked={this.state.isBaseline} title="Crawler Level"
+                                    <RadioEntry isChecked={this.state.isBaseline!='no'} title="Crawler Level"
                                                 onChange={this.handleRadioChange}/>
                                 </dd>
                                 <dt><h3>Jenkins Info</h3></dt>

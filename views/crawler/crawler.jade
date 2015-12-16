@@ -1,11 +1,23 @@
 extends crawler_layout
 
 block content
-    div.col-xs-12
-        h1 Crawler For Jenkins Server
-        hr
-    div.row
-        div#crawler
-    div.row.history-panel
-        h2 Crawler History File
-        div.col-xs-5#crawler-history
+    .row
+        .col-xs-12
+            h1 Crawler For Jenkins Server
+            ul.nav.nav-tabs#crawler_nav
+                li.active(role='tabInterval')
+                    a(href='#home') Home
+                li(role='presentation')
+                    a(href='#comparator') Comparator
+                li(role='presentation')
+                    a(href='#evaluator') Evaluator
+    .row
+        .tab-content
+            #home.tab-pane.fade.in.active(role='tabpanel')
+                div#crawler
+            #comparator.fade.tab-pane(role='tabpanel')
+                div#comparator
+            #evaluator.fade.tab-pane(role='tabpanel')
+                div#evaluator
+
+

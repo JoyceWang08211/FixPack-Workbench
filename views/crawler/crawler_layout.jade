@@ -5,12 +5,17 @@ html
         link(rel='stylesheet' href='src/css/bootstrap.min.css')
         script(src='src/js/lib/jquery-2.1.4.min.js')
         script(src='src/js/lib/bootstrap.min.js')
-        script(src='http://localhost:8081/assets/js/vendors.build.js')
-        script(src='http://localhost:8081/assets/js/crawler.build.js')
+        script(src='src/js/lib/react.js')
+        script(src='src/js/lib/react-dom.js')
+        script(src='src/js/lib/qwest.min.js')
+
+        script(src='assets/js/vendors.build.js')
+        script(src='assets/js/crawler.build.js')
+        //script(src='src/js/lib/ReactUI.js')
+
     body
         div.container-fluid
             div.row
                 div.col-xs-10.col-xs-offset-1
-                    div.row
-                        block content
+                    block content
 

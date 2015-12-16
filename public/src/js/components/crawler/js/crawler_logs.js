@@ -1,5 +1,4 @@
-const $ = require('jquery');
-import React from 'react';
+const $ = require('jquery'), React = require('react'), ReactDOM = require('react-dom');
 
 import {Circle} from 'react-progressbar.js';
 import createFragment from 'react-addons-create-fragment';

@@ -14,7 +14,7 @@
     "url": "https://test.liferay.com/8/view/test-portal-fixpack-frontend-tomcat-mysql%28ee-6.2.10_6.2.10.15%29/",
     "url_baseline": "https://test.liferay.com/8/view/test-portal-release-ee-frontend-tomcat-mysql%28ee-6.2.10_6.2.10.15%29/",
     "build": "#5",
-    "isBaseline": "yes"
+    "isBaseline": "no"
   },
   "jenkins_info": {
     "host": "https://test.liferay.com"

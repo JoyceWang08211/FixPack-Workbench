@@ -1,5 +1,5 @@
 var path = require('path');
-
+var webpack = require('webpack');
 var CommonsChunkPlugin = new require("webpack/lib/optimize/CommonsChunkPlugin");
 //var OccurenceOrderPlugin = new require("webpack/lib/optimize/OccurenceOrderPlugin");
 //var HotModuleReplacementPlugin = new require("webpack/lib/HotModuleReplacementPlugin");
@@ -10,6 +10,12 @@ var entries = {
     editor: './js/components/editor/index.js',
     crawler: './js/components/crawler/index.js'
 };
+
+var entriesDev = [
+    'webpack-hot-middleware/client',
+    './js/index.js',
+    './js/components/editor/index.js',
+    './js/components/crawler/index.js'];
 
 var chunks = Object.keys(entries);
 
@@ -23,6 +29,9 @@ module.exports = {
     },
 
     entry: entries,
+    //entry: entriesDev,
+
+    hotComponents: true,
 
     output: {
         libraryTarget: 'var',
@@ -34,7 +43,10 @@ module.exports = {
 
     externals: {
         //'react': 'React',
-        'jquery': 'jQuery'
+        'jquery': 'jQuery',
+        'react': 'React',
+        'react-dom': 'ReactDOM',
+        'reactUI': 'ReactUI'
     },
 
     module: {
@@ -47,7 +59,7 @@ module.exports = {
                 test: /\.js[x]?$/,
                 loader: 'babel',
                 query: {
-                    presets: ['es2015', 'react']
+                    presets: ['react', 'es2015']
                 }
             }
         ]
@@ -58,6 +70,8 @@ module.exports = {
             name: 'vendors',
             chunks: chunks,
             minChunks: chunks.length
-        })
+        }),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoErrorsPlugin()
     ]
 };

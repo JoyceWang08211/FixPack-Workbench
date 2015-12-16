@@ -1,11 +1,15 @@
-const $ = require('jquery');
-import React from 'react';
-import ReactDOM from 'react-dom';
+const $ = require('jquery'), React = require('react'), ReactDOM = require('react-dom');
 
 import CrawlerBox from './js/crawler';
-import HistoryBox from './js/crawler_history';
+import ComparatorBox from './js/comparator.js';
+import Evaluator from './js/evaluator.js';
 
 $(()=> {
+    $('#crawler_nav').find('a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show')
+    });
+
     fetch('/crawler/get_setting')
         .then((res)=> {
             return res.json();
@@ -22,12 +26,10 @@ $(()=> {
             return res.json();
         })
         .then((json)=> {
-            ReactDOM.render(<HistoryBox fileList={json.fileList}/>, document.getElementById('crawler-history'));
+            ReactDOM.render(<ComparatorBox/>, document.getElementById('comparator'));
         });
-
 });
 
 //css
 require('./css/crawler.css');
 require('./css/crawler_logs.css');
-require('./css/crawler_history.css');
