@@ -33,7 +33,7 @@ const appRoot = require('app-root-path');
 exports.crawler = function* () {
     const crawler_logger = loggerUtil.getLogger('crawler', `${appRoot}/private/crawler/log4js_cfg.json`);
 
-    const isBaseline = properties.getCrawlerInfo().is_baseline;
+    const isBaseline = properties.getCrawlerInfo().isBaseline == 'yes';
     let baseline_suffix = isBaseline ? '-baseline' : '';
 
     consoler.info(`Crawler start working..`);
@@ -47,6 +47,7 @@ exports.crawler = function* () {
             , border: []
         }
     });
+
     info = {'ToTal Components Number': components.length};
     info_table.push(info);
     consoler.info(`Crawler has finished component process..`);

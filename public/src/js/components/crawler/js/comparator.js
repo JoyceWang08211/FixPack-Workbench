@@ -4,6 +4,7 @@ let Comparator = React.createClass({
     render(){
         return (
             <div>
+                asdfasdffasdfasfdfsadf
             </div>)
     }
 });

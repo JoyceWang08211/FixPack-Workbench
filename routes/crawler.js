@@ -6,6 +6,7 @@ var router = express.Router();
 const properties = require('../private/util/propertiesUtil');
 const barUtil = require('../private/util/processBarUtil');
 const logUtil = require('../private/util/logsUtil');
+const fs = require('fs');
 
 //crawler
 const appRoot = require('app-root-path');
@@ -28,6 +29,10 @@ router.get('/get_history', (req, res)=> {
 
 function updatePropertiesObj(req, res, next) {
     let obj = properties.getRawObj();
+
+    fs.watchFile(properties.getPath(), (curr, prev)=> {
+        setTimeout(next, 2000);
+    });
 
     obj.user_info = {
         username: req.body.username,
@@ -52,8 +57,6 @@ function updatePropertiesObj(req, res, next) {
     };
 
     properties.setProperties(obj);
-
-    next();
 }
 
 router.post('/save_setting', updatePropertiesObj, (req, res)=> {

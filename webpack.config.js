@@ -8,13 +8,13 @@ var CommonsChunkPlugin = new require("webpack/lib/optimize/CommonsChunkPlugin");
 var entries = {
     index: './js/index.js',
     editor: './js/components/editor/index.js',
-    crawler: './js/components/crawler/index.js'
+    crawler: ['./js/components/crawler/index.js', 'webpack-hot-middleware/client']
 };
 
 var entriesDev = [
     'webpack-hot-middleware/client',
     './js/index.js',
-    './js/components/editor/index.js',
+    //'./js/components/editor/index.js',
     './js/components/crawler/index.js'];
 
 var chunks = Object.keys(entries);
@@ -28,15 +28,15 @@ module.exports = {
         extensions: ['', '.js', '.css', '.scss', '.png', '.jpg']
     },
 
+    //entry: entries,
     entry: entries,
-    //entry: entriesDev,
 
     hotComponents: true,
 
     output: {
         libraryTarget: 'var',
         filename: '[name].build.js',
-        chunkFilename: '[chunkhash:8].[nam  e].chunk.js',
+        chunkFilename: '[chunkhash:8].[name].chunk.js',
         publicPath: '/assets/js/',
         path: path.join(__dirname, '/public/assets/js')
     },
@@ -57,10 +57,7 @@ module.exports = {
             },
             {
                 test: /\.js[x]?$/,
-                loader: 'babel',
-                query: {
-                    presets: ['react', 'es2015']
-                }
+                loaders: ['babel?presets[]=react,presets[]=es2015']
             }
         ]
     },
@@ -71,6 +68,7 @@ module.exports = {
             chunks: chunks,
             minChunks: chunks.length
         }),
+        new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin()
     ]

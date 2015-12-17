@@ -1,8 +1,8 @@
-const $ = require('jquery'), React = require('react'), ReactDOM = require('react-dom');
-
 import CrawlerBox from './js/crawler';
 import ComparatorBox from './js/comparator.js';
 import Evaluator from './js/evaluator.js';
+
+const $ = require('jquery'), React = require('react'), ReactDOM = require('react-dom');
 
 $(()=> {
     $('#crawler_nav').find('a').click(function (e) {

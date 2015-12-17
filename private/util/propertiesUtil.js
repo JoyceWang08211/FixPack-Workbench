@@ -6,11 +6,25 @@ const fse = require('fs-extra');
 
 class Properties {
     constructor(path) {
+        this.mtime = 0;
         this.path = path;
         this.rawObj = fse.readJsonSync(path);
         for (let item in this.rawObj) {
             this[item] = this.rawObj[item];
         }
+
+        //watcher
+        fs.watchFile(path, (curr, prev)=> {
+            console.log('the previous mtime was: ' + prev.mtime);
+
+            this.rawObj = fse.readJsonSync(path);
+            for (let item in this.rawObj) {
+                this[item] = this.rawObj[item];
+            }
+
+            this.mtime = curr.mtime;
+            console.log('the current mtime is: ' + curr.mtime);
+        });
     }
 
     setProperties(obj) {
@@ -88,6 +102,14 @@ class Properties {
 
     getRawObjString() {
         return JSON.stringify(this.rawObj, 4);
+    }
+
+    getPropMtime() {
+        return this.mtime;
+    }
+
+    getPath() {
+        return this.path;
     }
 }
 
