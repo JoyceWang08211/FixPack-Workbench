@@ -7,7 +7,7 @@ const $ = require('jquery'), React = require('react'), ReactDOM = require('react
 $(()=> {
     $('#crawler_nav').find('a').click(function (e) {
         e.preventDefault();
-        $(this).tab('show')
+        $(this).tab('show');
     });
 
     fetch('/crawler/get_setting')
@@ -29,6 +29,10 @@ $(()=> {
             ReactDOM.render(<ComparatorBox/>, document.getElementById('comparator'));
         });
 });
+
+if (module.hot) {
+    module.hot.accept();
+}
 
 //css
 require('./css/crawler.css');

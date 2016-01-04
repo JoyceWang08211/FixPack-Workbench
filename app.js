@@ -11,32 +11,28 @@ var crawler = require('./routes/crawler');
 var kb = require('./routes/kb');
 
 var app = express();
-var webpackDevMiddleware = require('webpack-dev-middleware');
-var webpackHotMiddleware = require('webpack-hot-middleware');
-var webpack = require('webpack');
-var webpackConf = require('./webpack.config');
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 //webpack
-if (app.get('env') !== 'production') {
-    app.use(webpackDevMiddleware(webpack(webpackConf),
-        {
-            contentBase: webpackConf.output.path,
-            publicPath: webpackConf.output.publicPath,
-            hot: true,
-            historyApiFallback: true,
-            stats: {
-                colors: true
-            }
-        }
-    ));
+(function() {
 
-    app.use(webpackHotMiddleware(webpack(webpackConf)));
-}
+    // Step 1: Create & configure a webpack compiler
+    var webpack = require('webpack');
+    var webpackConfig = require(process.env.WEBPACK_CONFIG ? process.env.WEBPACK_CONFIG : './webpack.config');
+    var compiler = webpack(webpackConfig);
 
+    // Step 2: Attach the dev middleware to the compiler & the server
+    app.use(require("webpack-dev-middleware")(compiler, {
+        noInfo: true, publicPath: webpackConfig.output.publicPath
+    }));
+
+    // Step 3: Attach the hot middleware to the compiler & the server
+    app.use(require("webpack-hot-middleware")(compiler, {
+        log: console.log, path: '/__webpack_hmr', heartbeat: 10 * 1000
+    }));
+})();
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', '/src/img/favicon.ico')));

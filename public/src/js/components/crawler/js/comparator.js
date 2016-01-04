@@ -4,7 +4,7 @@ let Comparator = React.createClass({
     render(){
         return (
             <div>
-                asdfasdffasdfasfdfsadf
+                lyon12
             </div>)
     }
 });

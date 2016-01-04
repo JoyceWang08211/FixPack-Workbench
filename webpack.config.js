@@ -1,21 +1,13 @@
 var path = require('path');
 var webpack = require('webpack');
 var CommonsChunkPlugin = new require("webpack/lib/optimize/CommonsChunkPlugin");
-//var OccurenceOrderPlugin = new require("webpack/lib/optimize/OccurenceOrderPlugin");
-//var HotModuleReplacementPlugin = new require("webpack/lib/HotModuleReplacementPlugin");
-//var NoErrorsPlugin = new require("webpack/lib/NoErrorsPlugin");
 
 var entries = {
     index: './js/index.js',
     editor: './js/components/editor/index.js',
-    crawler: ['./js/components/crawler/index.js', 'webpack-hot-middleware/client']
+    crawler: ['./js/components/crawler/index.js',
+        'webpack-hot-middleware/client']
 };
-
-var entriesDev = [
-    'webpack-hot-middleware/client',
-    './js/index.js',
-    //'./js/components/editor/index.js',
-    './js/components/crawler/index.js'];
 
 var chunks = Object.keys(entries);
 
@@ -37,8 +29,8 @@ module.exports = {
         libraryTarget: 'var',
         filename: '[name].build.js',
         chunkFilename: '[chunkhash:8].[name].chunk.js',
-        publicPath: '/assets/js/',
-        path: path.join(__dirname, '/public/assets/js')
+        publicPath: '/',
+        path: '/public/build'
     },
 
     externals: {
