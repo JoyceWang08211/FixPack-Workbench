@@ -9,13 +9,6 @@ let timer;
 let CrawlerBox = React.createClass({
     mixins: [PureRenderMixin],
 
-    getDefaultProps(){
-        return {
-            setting: {},
-            filePath: ''
-        }
-    },
-
     getInitialState(){
         return {
             buildProgress: 0,

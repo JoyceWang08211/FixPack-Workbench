@@ -6,10 +6,12 @@ var entries = {
     index: './js/index.js',
     editor: './js/components/editor/index.js',
     crawler: ['./js/components/crawler/index.js',
+        'webpack-hot-middleware/client'],
+    recorder: ['./js/components/recorder/index.js',
         'webpack-hot-middleware/client']
 };
 
-var chunks = Object.keys(entries);
+//var chunks = Object.keys(entries);
 
 module.exports = {
     context: path.join(__dirname, '/public/src'),
@@ -38,7 +40,7 @@ module.exports = {
         'jquery': 'jQuery',
         'react': 'React',
         'react-dom': 'ReactDOM',
-        'reactUI': 'ReactUI'
+        'react-bootstrap': 'ReactBootstrap'
     },
 
     module: {
@@ -55,11 +57,11 @@ module.exports = {
     },
 
     plugins: [
-        new CommonsChunkPlugin({
-            name: 'vendors',
-            chunks: chunks,
-            minChunks: chunks.length
-        }),
+        //new CommonsChunkPlugin({
+        //    name: 'vendors',
+        //    chunks: chunks,
+        //    minChunks: chunks.length
+        //}),
         new webpack.optimize.OccurenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NoErrorsPlugin()

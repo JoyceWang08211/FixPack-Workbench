@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var editors = require('./routes/editors');
 var crawler = require('./routes/crawler');
+var recorder = require('./routes/recorder');
 var kb = require('./routes/kb');
 
 var app = express();
@@ -45,6 +46,7 @@ app.use(express.static(path.join(__dirname, 'public/')));
 app.use('/', routes);
 app.use('/editors', editors);
 app.use('/crawler', crawler);
+app.use('/recorder', recorder);
 app.use('/kb', kb);
 
 // catch 404 and forward to error handler

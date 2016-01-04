@@ -1,34 +1,50 @@
-import CrawlerBox from './js/crawler';
-import ComparatorBox from './js/comparator.js';
-import Evaluator from './js/evaluator.js';
+import CrawlerBox from './js/crawler'
+import ComparatorBox from './js/comparator.js'
+import Evaluator from './js/evaluator.js'
+import {Tabs, Tab} from 'react-bootstrap'
 
 const $ = require('jquery'), React = require('react'), ReactDOM = require('react-dom');
 
-$(()=> {
-    $('#crawler_nav').find('a').click(function (e) {
-        e.preventDefault();
-        $(this).tab('show');
+let p1 = fetch('/crawler/get_setting')
+    .then((res)=> {
+        return res.json();
+    })
+    .then((json)=> {
+        let obj = JSON.parse(json);
+
+        return {
+            setting: obj,
+            filePath: `${obj.fixpack_info.name}-build${obj.fixpack_info.build}.xlsx`
+        }
     });
 
-    fetch('/crawler/get_setting')
-        .then((res)=> {
-            return res.json();
-        })
-        .then((json)=> {
-            const setting = JSON.parse(json);
-            const filePath = `${setting.fixpack_info.name}-build${setting.fixpack_info.build}.xlsx`;
+let p2 = fetch('/crawler/get_history')
+    .then((res)=> {
+        return res.json();
+    })
+    .then((json)=> {
 
-            ReactDOM.render(<CrawlerBox setting={setting} filePath={filePath}/>, document.getElementById('crawler'));
-        });
+        return {history: json}
+    });
 
-    fetch('/crawler/get_history')
-        .then((res)=> {
-            return res.json();
-        })
-        .then((json)=> {
-            ReactDOM.render(<ComparatorBox/>, document.getElementById('comparator'));
-        });
-});
+Promise.all([p1, p2])
+    .then(results=> {
+        const [{setting,filePath}, {history}]=results;
+
+        const TabsInstance = (
+            <Tabs defaultActiveKey={1}>
+                <Tab eventKey={1} title="Crawler">
+                    <CrawlerBox setting={setting} filePath={filePath}/>
+                </Tab>
+                <Tab eventKey={2} title="Comparator">
+                    <ComparatorBox/>
+                </Tab>
+                <Tab eventKey={3} title="Evaluator">Tab 3 content</Tab>
+            </Tabs>
+        );
+
+        ReactDOM.render(TabsInstance, document.querySelector('#app'));
+    });
 
 if (module.hot) {
     module.hot.accept();
