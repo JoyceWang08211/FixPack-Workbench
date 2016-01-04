@@ -35,8 +35,8 @@ exports.compare = function () {
 
             let c1 = patch[e];
             let c2 = baseline[e1];
-            let c1_testcase = c1[1] != null ? c1[1].split('#')[1] : '#';
-            let c2_testcase = c2[1] != null ? 'test' + c2[1].split('#')[1] : '#';
+            let c1_testcase = c1[1] != null ? c1[1] : '#';
+            let c2_testcase = c2[1] != null ? c2[1].split('#')[0] + 'TestCase#test' + c2[1].split('#')[1] : '#';
             let c1_cop = c1[3];
             let c2_cop = c2[3];
 
@@ -67,7 +67,10 @@ exports.compare = function () {
     let data_json = {name: 'result', data: patch};
     let buffer = xlsx.build([data_json]);
 
-    fs.writeFileSync(__dirname + `/result/${properties.getFileName()}.xlsx`, buffer);
-
-    return true;
+    fs.writeFile(__dirname + `/result/${properties.getFileName()}.xlsx`, buffer, (err)=>{
+        if(err)
+            console.error(err.stack);
+        else
+            console.log('finished !!')
+    });
 };
