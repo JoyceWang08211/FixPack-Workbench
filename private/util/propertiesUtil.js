@@ -27,8 +27,11 @@ class Properties {
         });
     }
 
-    setProperties(obj) {
+    setProperties(obj,fn) {
         fse.writeJsonSync(this.path, obj);
+
+        //to wait the setting sync prcess
+        setTimeout(fn, 3000);
     }
 
     getFileName() {

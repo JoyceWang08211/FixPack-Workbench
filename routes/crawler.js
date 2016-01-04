@@ -30,10 +30,6 @@ router.get('/get_history', (req, res)=> {
 function updatePropertiesObj(req, res, next) {
     let obj = properties.getRawObj();
 
-    fs.watchFile(properties.getPath(), (curr, prev)=> {
-        setTimeout(next, 2000);
-    });
-
     obj.user_info = {
         username: req.body.username,
         password: req.body.password
@@ -56,7 +52,7 @@ function updatePropertiesObj(req, res, next) {
         host: req.body.jenkinsHost
     };
 
-    properties.setProperties(obj);
+    properties.setProperties(obj, next);
 }
 
 router.post('/save_setting', updatePropertiesObj, (req, res)=> {
