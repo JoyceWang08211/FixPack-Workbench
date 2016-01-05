@@ -2,7 +2,7 @@ const $ = require('jquery'), React = require('react'), ReactDOM = require('react
 
 import { Provider } from 'react-redux';
 import App from './containers/App';
-import configureStore from './configureStore';
+import configureStore from './store/configureStore';
 
 const store = configureStore();
 
@@ -14,6 +14,3 @@ ReactDOM.render((
     </div>
 ), document.querySelector('#app'));
 
-if (module.hot) {
-    module.hot.accept();
-}

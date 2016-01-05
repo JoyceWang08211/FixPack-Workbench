@@ -14,6 +14,7 @@ var entries = {
 //var chunks = Object.keys(entries);
 
 module.exports = {
+    devtool:'cheap-source-map',
     context: path.join(__dirname, '/public/src'),
 
     resolve: {

@@ -2,19 +2,19 @@ const $ = require('jquery'), React = require('react'), ReactDOM = require('react
 
 import createFragment from 'react-addons-create-fragment';
 import {Col, Row, Button, Modal, Input, PanelGroup, Panel} from 'react-bootstrap'
+import {OPEN_MODAL,CLOSE_MODAL} from '../../constants/modalActionType';
 
 const ManualBox = React.createClass({
     validateLPSInput(){
         let str = this.state.lpsModal;
         let reg = /^(LPS-)?\d+$/i;
 
-        if (str.match(reg)) return true;
-        else return false;
+        return str.match(reg)
     },
 
     getInitialState() {
         return {
-            showModal: false,
+            //showModal: false,
             lpsModal: '',
             lpsList: this.props.lpsList ? this.props.lpsList : []
         };
@@ -35,14 +35,14 @@ const ManualBox = React.createClass({
     },
 
     save(){
-        if(this.validateLPSInput()){
+        if (this.validateLPSInput()) {
             this.state.lpsList.push(this.refs.lps.getValue())
 
             this.setState({lpsList: this.state.lpsList})
 
             this.close();
         }
-        else{
+        else {
             //todo 增加提示类信息
             alert('the input value is invalid')
         }
