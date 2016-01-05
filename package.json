@@ -40,7 +40,9 @@
     "react-bootstrap": "^0.28.1",
     "react-dom": "^0.14.3",
     "react-progressbar.js": "^0.1.2",
+    "react-redux": "^4.0.6",
     "react-select": "^0.9.1",
+    "redux": "^3.0.5",
     "serve-favicon": "~2.3.0",
     "webdriverio": "^3.3.0"
   },
