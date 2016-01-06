@@ -2,11 +2,24 @@ const $ = require('jquery'), React = require('react'), ReactDOM = require('react
 
 import createFragment from 'react-addons-create-fragment';
 import {Col, Row, Button, Modal, Input, PanelGroup, Panel} from 'react-bootstrap'
-import {OPEN_MODAL,CLOSE_MODAL} from '../../constants/modalActionType';
+
 
 const ManualBox = React.createClass({
+    shortCutForSave(e) {
+        if (e.keyCode == '13')
+            this.save();
+    },
+
+    bindPressKeyEvent() {
+        document.addEventListener('keydown', this.shortCutForSave)
+    },
+
+    unbindPressKeyEvent(){
+        document.removeEventListener('keydown', this.shortCutForSave)
+    },
+
     validateLPSInput(){
-        let str = this.state.lpsModal;
+        let str = this.state.currentValue;
         let reg = /^(LPS-)?\d+$/i;
 
         return str.match(reg)
@@ -14,32 +27,35 @@ const ManualBox = React.createClass({
 
     getInitialState() {
         return {
-            //showModal: false,
-            lpsModal: '',
-            lpsList: this.props.lpsList ? this.props.lpsList : []
+            showModal: false,
+            currentValue: ''
         };
     },
 
     handleChange() {
         this.setState({
-            lpsModal: this.refs.lps.getValue()
+            currentValue: this.refs.lps.getValue()
         });
     },
 
     close() {
-        this.setState({showModal: false, lpsModal: ''});
+        this.setState({showModal: false});
+        this.unbindPressKeyEvent();
     },
 
     open() {
-        this.setState({showModal: true, lps: ''});
+        this.setState({showModal: true},()=> {
+            this.refs.lps.getInputDOMNode().focus();
+        });
+
+        this.bindPressKeyEvent();
     },
 
     save(){
+        let {action}=this.props;
+
         if (this.validateLPSInput()) {
-            this.state.lpsList.push(this.refs.lps.getValue())
-
-            this.setState({lpsList: this.state.lpsList})
-
+            action.addSubTask(this.refs.lps.getValue())
             this.close();
         }
         else {
@@ -49,13 +65,17 @@ const ManualBox = React.createClass({
     },
 
     render(){
-        let lpsListHtml = React.Children.map(this.state.lpsList, (child, i)=> {
+        let children = [];
 
-            return (
-                <Panel header={`LPS-${child}`} eventKey={i}>
-                    This is LPS-{child}
-                </Panel>
-            )
+        for (let st of this.props.subTaskList) {
+            children.push(createFragment({
+                st: (<Panel header={`${st.name}`} eventKey={st.id}>
+                    This is {st.name}</Panel>)
+            }))
+        }
+
+        let _subTaskListHtml = React.Children.map(children, (child)=> {
+            return child
         })
 
         return (
@@ -67,7 +87,7 @@ const ManualBox = React.createClass({
 
                 <Col xs={12}>
                     <PanelGroup defaultActiveKey='1' accordion>
-                        {lpsListHtml}
+                        {_subTaskListHtml}
                     </PanelGroup>
                 </Col>
 
@@ -78,7 +98,7 @@ const ManualBox = React.createClass({
                     <Modal.Body>
                         <Input
                             type="text"
-                            value={this.state.lpsModal}
+                            value={this.state.currentValue}
                             placeholder="LPS-12345 or 12345.."
                             label="LPS Number"
                             help="some help information"

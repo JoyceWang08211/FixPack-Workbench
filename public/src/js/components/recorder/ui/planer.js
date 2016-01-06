@@ -7,7 +7,8 @@ require('./css/react-select.min.css')
 
 var options = [
     {value: 'one', label: 'One'},
-    {value: 'two', label: 'Two'}
+    {value: 'two', label: 'Two'},
+    {value: 'three', label: 'Three'}
 ];
 
 let Planer = React.createClass({

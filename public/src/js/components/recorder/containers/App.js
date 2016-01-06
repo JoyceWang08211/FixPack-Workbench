@@ -4,10 +4,10 @@ import {bindActionCreators} from 'redux'
 import { connect } from 'react-redux'
 import {Tabs, Tab, Row, Col} from 'react-bootstrap'
 
-import PlanerBox from '../planer/planer.js'
-import ManualBox from '../manual/manual.js'
+import PlanerBox from '../ui/planer.js'
+import ManualBox from '../ui/manual.js'
 
-import * as ModalAction from '../actions/modalAction.js'
+import * as subTasksAction from '../actions/subTasksAction.js'
 import ImmutableRenderMixin from 'react-immutable-render-mixin'
 
 const App = React.createClass({
@@ -23,7 +23,10 @@ const App = React.createClass({
                         <Col xs={12} className='fp-panel'>
                             <PlanerBox/>
                         </Col>
-                        <Col xs={3}><ManualBox/></Col>
+                        <Col xs={3}><ManualBox
+                            subTaskList={this.props.subTaskList}
+                            action={this.props.subTasksAction}/>
+                        </Col>
                         <Col xs={3}>Automation Testing</Col>
                         <Col xs={3}>Verify Tickets</Col>
                         <Col xs={3}>Others</Col>
@@ -37,13 +40,13 @@ const App = React.createClass({
 
 function mapStateToProps(state) {
     return {
-        showModal: state.showModal
+        subTaskList: state.subTasks
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        modalActions: bindActionCreators(ModalAction, dispatch)
+        subTasksAction: bindActionCreators(subTasksAction, dispatch)
     }
 }
 
@@ -55,3 +58,4 @@ export default connect(
 if (module.hot) {
     module.hot.accept();
 }
+

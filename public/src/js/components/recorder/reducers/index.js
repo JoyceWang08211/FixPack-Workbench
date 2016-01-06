@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import showModal from './modalReducer.js'
+import subTasks from './subTasksReducer'
 
 const rootReducer = combineReducers({
-    showModal
+    subTasks
 });
 
 export default rootReducer;
