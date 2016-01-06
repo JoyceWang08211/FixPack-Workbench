@@ -4,13 +4,17 @@ import { Provider } from 'react-redux';
 import App from './containers/App';
 import configureStore from './store/configureStore';
 
+if (module.hot) {
+    module.hot.accept();
+}
+
 const store = configureStore();
 
-ReactDOM.render((
-    <div>
-        <Provider store={store}>
-            <App />
-        </Provider>
-    </div>
-), document.querySelector('#app'));
+require('./ui/css/recorder.css')
+
+ReactDOM.render(
+    <Provider store={store}>
+        <App />
+    </Provider>
+    , document.querySelector('#app'));
 

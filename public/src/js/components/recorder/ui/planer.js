@@ -2,7 +2,6 @@ const $ = require('jquery'), React = require('react'), ReactDOM = require('react
 
 import Select from 'react-select'
 
-require('./css/recorder.css')
 require('./css/react-select.min.css')
 
 var options = [
