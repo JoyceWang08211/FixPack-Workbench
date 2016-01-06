@@ -21,3 +21,12 @@ export function editSubTask(id, name){
         name
     }
 }
+
+export function setList(list) {
+    return {
+        type:types.SET_LIST,
+        list
+    }
+
+
+}

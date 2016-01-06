@@ -11,7 +11,7 @@ const App = React.createClass({
                 <Tab eventKey={1} title="Record">
                     <Row className="show-grid">
                         <Col xs={12} className='fp-panel'>
-                            <PlanerBox/>
+                            <PlanerBox setList={this.props.subTasksAction.setList}/>
                         </Col>
                         <Col xs={3}><ManualBox
                             subTaskList={this.props.subTaskList}
