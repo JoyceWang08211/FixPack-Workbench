@@ -6,12 +6,16 @@ import ManualBox from '../ui/manual.js'
 
 const App = React.createClass({
     render() {
+        const {dispatch}=this.props;
+
         return (
             <Tabs defaultActiveKey={1}>
                 <Tab eventKey={1} title="Record">
                     <Row className="show-grid">
                         <Col xs={12} className='fp-panel'>
-                            <PlanerBox setList={this.props.subTasksAction.setList}/>
+                            <PlanerBox planner={this.props.planner}
+                                       action={this.props.plannerAction}
+                                       dispatch={dispatch}/>
                         </Col>
                         <Col xs={3}><ManualBox
                             subTaskList={this.props.subTaskList}
@@ -27,5 +31,9 @@ const App = React.createClass({
         );
     }
 })
+
+App.propTypes = {
+    dispatch: React.PropTypes.func.isRequired
+}
 
 export default App

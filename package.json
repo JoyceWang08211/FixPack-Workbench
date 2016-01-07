@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "app-root-path": "^1.0.0",
+    "babel-polyfill": "^6.3.14",
     "body-parser": "~1.13.2",
     "chai": "^3.4.1",
     "chai-as-promised": "^5.1.0",
@@ -48,6 +49,7 @@
     "react-redux": "^4.0.6",
     "react-select": "^0.9.1",
     "redux": "^3.0.5",
+    "redux-logger": "^2.3.1",
     "redux-thunk": "^1.0.3",
     "serve-favicon": "~2.3.0",
     "webdriverio": "^3.3.0"

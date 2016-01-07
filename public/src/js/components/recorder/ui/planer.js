@@ -17,6 +17,17 @@ let options1 = [
 ];
 
 let Planer = React.createClass({
+    getDefaultProps(){
+      return {
+          isFetching: false,
+          month: '',
+          list: {
+              "subTaskList": []
+          },
+          receivedAt:0
+      }
+    },
+
     getInitialState(){
         return {
             val:'Jan'
@@ -26,16 +37,20 @@ let Planer = React.createClass({
     selectMonth(val){
         this.setState({val:options[val]});
 
-        fetch(`/data/recorder/${options[val].label}.json`)
-            .then((response)=> {
-                if (response.status >= 400) {
-                    throw new Error("Bad response from server");
-                }
-                return response.json();
-            })
-            .then((json)=> {
-                this.props.setList(json.SubTaskList);
-            });
+        const {action} = this.props;
+
+        action.fetchLists(options[val].label);
+
+        //fetch(`/data/recorder/${options[val].label}.json`)
+        //    .then((response)=> {
+        //        if (response.status >= 400) {
+        //            throw new Error("Bad response from server");
+        //        }
+        //        return response.json();
+        //    })
+        //    .then((json)=> {
+        //        this.props.setList(json.subTaskList);
+        //    });
     },
 
     render(){

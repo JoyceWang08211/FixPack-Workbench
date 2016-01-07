@@ -69,8 +69,8 @@ const ManualBox = React.createClass({
 
         for (let st of this.props.subTaskList) {
             children.push(createFragment({
-                st: (<Panel header={`${st.name}`} eventKey={st.id}>
-                    This is {st.name}</Panel>)
+                st: (<Panel header={`${st.name}-${st.id}`} eventKey={st.id}>
+                    This is {`${st.name}-${st.id}`}</Panel>)
             }))
         }
 
@@ -86,7 +86,7 @@ const ManualBox = React.createClass({
                 </Col>
 
                 <Col xs={12}>
-                    <PanelGroup defaultActiveKey='1' accordion>
+                    <PanelGroup defaultActiveKey='' accordion>
                         {_subTaskListHtml}
                     </PanelGroup>
                 </Col>

@@ -1,21 +1,21 @@
-import {ADD, DELETE, EDIT, SET_LIST} from '../constants/subTasksActionType.js'
+import {GET, ADD, DELETE, EDIT, SET_LIST} from '../constants/subTasksActionType.js'
 
 const initialState = [
     {
-        id: 1,
-        name: 'LPS-12345'
+        id: '12345',
+        name: 'LPS'
     }
 ];
 
 export default function subTasks(state = initialState, action = {}) {
     switch (action.type) {
-        case ADD:
-            let temp = [{
-                id: state.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1,
-                name: action.name.match(/^LPS-/i) ? action.name : `LPS-${action.name}`
-            }];
+        case GET:
+            //let temp = [{
+            //    id: state.reduce((maxId, todo) => Math.max(todo.id, maxId), -1) + 1,
+            //    name: action.name.match(/^LPS-/i) ? action.name : `LPS-${action.name}`
+            //}];
 
-            return temp.concat(state);
+            return state.concat(action.list);
         case DELETE:
             return state;
         case EDIT:

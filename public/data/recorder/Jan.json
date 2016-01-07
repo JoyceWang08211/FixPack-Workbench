@@ -1,12 +1,12 @@
 {
-  "SubTaskList": [
+  "subTaskList": [
     {
-      "id": "1",
-      "name": "LPS-12345"
+      "id": "12345",
+      "name": "LPS"
     },
     {
-      "id": "2",
-      "name": "LPS-45678"
+      "id": "56789",
+      "name": "LPS"
     }
   ]
 }

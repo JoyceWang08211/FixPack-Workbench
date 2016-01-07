@@ -6,17 +6,19 @@ import { connect } from 'react-redux'
 import App from '../ui/index.js'
 
 import * as subTasksAction from '../actions/subTasksAction.js'
-import ImmutableRenderMixin from 'react-immutable-render-mixin'
+import * as plannerAction from '../actions/plannerAction.js'
 
 function mapStateToProps(state) {
     return {
-        subTaskList: state.subTasks
+        subTaskList: state.subTasks,
+        planner: state.planner
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        subTasksAction: bindActionCreators(subTasksAction, dispatch)
+        subTasksAction: bindActionCreators(subTasksAction, dispatch),
+        plannerAction: bindActionCreators(plannerAction, dispatch)
     }
 }
 
