@@ -1,60 +1,27 @@
 const $ = require('jquery'), React = require('react'), ReactDOM = require('react-dom');
 
+import BaseTask from './baseTask.js'
 import createFragment from 'react-addons-create-fragment';
 import {Col, Row, Button, Modal, Input, PanelGroup, Panel} from 'react-bootstrap'
 
 
-const ManualBox = React.createClass({
-    shortCutForSave(e) {
-        if (e.keyCode == '13')
-            this.save();
-    },
-
-    bindPressKeyEvent() {
-        document.addEventListener('keydown', this.shortCutForSave)
-    },
-
-    unbindPressKeyEvent(){
-        document.removeEventListener('keydown', this.shortCutForSave)
-    },
-
-    validateLPSInput(){
-        let str = this.state.currentValue;
+export default class ManualBox extends BaseTask {
+    validate() {
+        let str = this.state.currentValue ? this.state.currentValue : '';
         let reg = /^(LPS-)?\d+$/i;
 
         return str.match(reg)
-    },
+    }
 
-    getInitialState() {
-        return {
-            showModal: false,
-            currentValue: ''
-        };
-    },
+    //todo auto focus
+    //focus() {
+    //    this.refs.lps.getInputDOMNode().focus();
+    //}
 
-    handleChange() {
-        this.setState({
-            currentValue: this.refs.lps.getValue()
-        });
-    },
-
-    close() {
-        this.setState({showModal: false});
-        this.unbindPressKeyEvent();
-    },
-
-    open() {
-        this.setState({showModal: true},()=> {
-            this.refs.lps.getInputDOMNode().focus();
-        });
-
-        this.bindPressKeyEvent();
-    },
-
-    save(){
+    save() {
         let {action}=this.props;
 
-        if (this.validateLPSInput()) {
+        if (this.validate()) {
             action.addSubTask(this.refs.lps.getValue())
             this.close();
         }
@@ -62,61 +29,51 @@ const ManualBox = React.createClass({
             //todo 增加提示类信息
             alert('the input value is invalid')
         }
-    },
+    }
 
-    render(){
+    handleChange() {
+        this.setState({
+            currentValue: this.refs.lps.getValue()
+        });
+    }
+
+    getPanelList(list) {
         let children = [];
 
-        for (let st of this.props.subTaskList) {
+        for (let st of list) {
             children.push(createFragment({
                 st: (<Panel header={`${st.name}-${st.id}`} eventKey={st.id}>
                     This is {`${st.name}-${st.id}`}</Panel>)
             }))
         }
 
-        let _subTaskListHtml = React.Children.map(children, (child)=> {
+        return React.Children.map(children, (child)=> {
             return child
         })
-
-        return (
-
-            <Row className="show-grid fp-panel">
-                <Col xs={12}>
-                    <Button bsStyle="primary" bsSize="large" onClick={this.open} block>Add Manual Record</Button>
-                </Col>
-
-                <Col xs={12}>
-                    <PanelGroup defaultActiveKey='' accordion>
-                        {_subTaskListHtml}
-                    </PanelGroup>
-                </Col>
-
-                <Modal show={this.state.showModal} onHide={this.close}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Add New Manual Record</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Input
-                            type="text"
-                            value={this.state.currentValue}
-                            placeholder="LPS-12345 or 12345.."
-                            label="LPS Number"
-                            help="some help information"
-                            bsStyle={this.validateLPSInput()?'success':'error'}
-                            hasFeedback
-                            ref="lps"
-                            groupClassName="group-class"
-                            labelClassName="label-class"
-                            onChange={this.handleChange}/>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button onClick={this.save} bsStyle='primary'>Add</Button>
-                        <Button onClick={this.close}>Close</Button>
-                    </Modal.Footer>
-                </Modal>
-            </Row>
-        );
     }
-})
 
-module.exports = ManualBox;
+    getFormList() {
+        return (
+            <Input
+                type="text"
+                value={this.state.currentValue}
+                placeholder="LPS-12345 or 12345.."
+                label="LPS Number"
+                help="some help information"
+                bsStyle={this.validate()?'success':'error'}
+                hasFeedback
+                ref="lps"
+                groupClassName="group-class"
+                labelClassName="label-class"
+                onChange={this.handleChange.bind(this)}/>
+        )
+    }
+
+    render() {
+        let panelList = this.getPanelList(this.props.subTaskList);
+        let formList = this.getFormList()
+
+        return super.getRenderTemplate(panelList, formList)
+    }
+}
+

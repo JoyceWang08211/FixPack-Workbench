@@ -3,7 +3,7 @@ const $ = require('jquery'), React = require('react'), ReactDOM = require('react
 require('babel-polyfill');
 
 import { Provider } from 'react-redux';
-import App from './containers/App';
+import Root from './containers/Root.js';
 import configureStore from './store/configureStore';
 import {fetchLists} from './actions/plannerAction.js'
 
@@ -16,9 +16,7 @@ const store = configureStore();
 require('./ui/css/recorder.css')
 
 ReactDOM.render(
-    <Provider store={store}>
-        <App dispatch={store.dispatch}/>
-    </Provider>
+    <Root store={store}/>
     , document.querySelector('#app'));
 
 if (module.hot) {
