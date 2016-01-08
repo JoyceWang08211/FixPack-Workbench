@@ -37,12 +37,12 @@ export default class BaseTask extends React.Component {
         this.bindPressKeyEvent();
     }
 
-    getRenderTemplate(panelList, formList) {
+    getRenderTemplate(title, panelList, formList) {
         return (
             <Row className="show-grid fp-panel">
                 <Col xs={12}>
-                    <Button bsStyle="primary" bsSize="large" onClick={this.open.bind(this)} block>Add Manual
-                        Record</Button>
+                    <Button bsStyle="primary" bsSize="large" onClick={this.open.bind(this)} block>
+                        {title}</Button>
                 </Col>
 
                 <Col xs={12}>

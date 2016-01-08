@@ -12,6 +12,9 @@ var recorder = require('./routes/recorder');
 var kb = require('./routes/kb');
 
 var app = express();
+
+app.set('MonthSet',['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');

@@ -2,21 +2,16 @@ const $ = require('jquery'), React = require('react'), ReactDOM = require('react
 
 import BaseTask from './baseTask.js'
 import createFragment from 'react-addons-create-fragment';
-import {Input, Panel, Row, Col} from 'react-bootstrap'
+import {Input} from 'react-bootstrap'
 
 
-export default class ManualBox extends BaseTask {
+export default class AutomationBox extends BaseTask {
     validate() {
         let str = this.state.currentValue ? this.state.currentValue : '';
         let reg = /^(LPS-)?\d+$/i;
 
         return str.match(reg)
     }
-
-    //todo auto focus
-    //focus() {
-    //    this.refs.lps.getInputDOMNode().focus();
-    //}
 
     save() {
         let {action}=this.props;
@@ -38,19 +33,12 @@ export default class ManualBox extends BaseTask {
     }
 
     getPanelList(list) {
-        let {action}=this.props,children = [];
+        let children = [];
 
         for (let st of list) {
             children.push(createFragment({
-                st: (
-                    <Panel header={<a>{st.name}-{st.id}</a>} eventKey={st.id}>
-                        <Row className="show-grid">
-                            <Col xs={3}><a>Edit</a></Col>
-                            <Col xs={3}>
-                                <a onClick={()=>{action.deleteSubTask(st.id)}}>Remove</a>
-                            </Col>
-                        </Row>
-                    </Panel>)
+                st: (<Panel header={`${st.name}-${st.id}`} eventKey={st.id}>
+                    This is {`${st.name}-${st.id}`}</Panel>)
             }))
         }
 
@@ -67,8 +55,8 @@ export default class ManualBox extends BaseTask {
                 placeholder="LPS-12345 or 12345.."
                 label="LPS Number"
                 help="some help information"
-                bsStyle={this.validate()?'success':'error'}
                 hasFeedback
+                bsStyle={this.validate()?'success':'error'}
                 ref="lps"
                 groupClassName="group-class"
                 labelClassName="label-class"
@@ -77,11 +65,10 @@ export default class ManualBox extends BaseTask {
     }
 
     render() {
-        let title = 'Add Manual Record';
-        let panelList = this.getPanelList(this.props.subTaskList);
+        let title = 'Add AA Record';
+        let panelList = this.getPanelList([]);
         let formList = this.getFormList()
 
-        return super.getRenderTemplate(title, panelList, formList)
+        return super.getRenderTemplate(title,panelList, formList)
     }
 }
-

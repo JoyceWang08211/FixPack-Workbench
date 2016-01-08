@@ -1,5 +1,18 @@
 import * as types from '../constants/subTasksActionType.js'
 
+function updateSubTaskList(target, payload, callback) {
+    return fetch(target, {
+        method: "POST",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    }).then(res=> {
+        return res.json();
+    }).then(callback)
+}
+
 function getSubTaskList(list) {
     return {
         type: types.GET,
@@ -9,26 +22,22 @@ function getSubTaskList(list) {
 
 export function addSubTask(name) {
     return dispatch => {
-        return fetch('/recorder/subTask/add', {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({name})
-        }).then(res=> {
-            return res.json();
-        }).then(json=> {
-            dispatch(getSubTaskList(json.subTaskList))
-        })
+        return updateSubTaskList('/recorder/subTask/add',
+            {name},
+            (json)=> {
+                dispatch(setList(json.subTaskList))
+            })
     };
 }
 
 export function deleteSubTask(id) {
-    return {
-        type: types.DELETE,
-        id
-    }
+    return dispatch => {
+        return updateSubTaskList('/recorder/subTask/delete',
+            {id},
+            (json)=> {
+                dispatch(setList(json.subTaskList))
+            })
+    };
 }
 
 export function editSubTask(id, name) {

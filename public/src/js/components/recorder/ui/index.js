@@ -3,6 +3,9 @@ const $ = require('jquery'), React = require('react'), ReactDOM = require('react
 import {Tabs, Tab, Row, Col} from 'react-bootstrap'
 import PlanerBox from '../ui/planer.js'
 import ManualBox from '../ui/manual.js'
+import AutomationBox from '../ui/automation.js'
+import VerifiedBox from '../ui/verified.js'
+import OthersBox from '../ui/other.js'
 
 const App = React.createClass({
     render() {
@@ -14,13 +17,19 @@ const App = React.createClass({
                             <PlanerBox planner={this.props.planner}
                                        action={this.props.plannerAction}/>
                         </Col>
-                        <Col xs={3}><ManualBox
-                            subTaskList={this.props.subTaskList}
-                            action={this.props.subTasksAction}/>
+                        <Col xs={3}>
+                            <ManualBox subTaskList={this.props.subTaskList}
+                                       action={this.props.subTasksAction}/>
                         </Col>
-                        <Col xs={3}>Automation Testing</Col>
-                        <Col xs={3}>Verify Tickets</Col>
-                        <Col xs={3}>Others</Col>
+                        <Col xs={3}>
+                            <AutomationBox/>
+                        </Col>
+                        <Col xs={3}>
+                            <VerifiedBox/>
+                        </Col>
+                        <Col xs={3}>
+                            <OthersBox/>
+                        </Col>
                     </Row>
                 </Tab>
                 <Tab eventKey={2} title="Summary">Tab 3 content</Tab>

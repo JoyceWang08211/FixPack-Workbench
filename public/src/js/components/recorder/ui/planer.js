@@ -10,12 +10,6 @@ let options = [
     {value: '2', label: 'Mar'}
 ];
 
-let options1 = [
-    {id: '1', name: 'LPS-12345'},
-    {id: '2', name: 'LPS-12345'},
-    {id: '3', name: 'LPS-12345'}
-];
-
 let Planer = React.createClass({
     getDefaultProps(){
       return {
