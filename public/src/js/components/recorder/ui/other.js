@@ -65,7 +65,7 @@ export default class AutomationBox extends BaseTask {
     }
 
     render() {
-        let title = 'Add Others Record';
+        let title = 'Add Other Metric Record';
         let panelList = this.getPanelList([]);
         let formList = this.getFormList()
 

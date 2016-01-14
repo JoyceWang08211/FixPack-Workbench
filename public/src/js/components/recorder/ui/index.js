@@ -4,7 +4,6 @@ import {Tabs, Tab, Row, Col} from 'react-bootstrap'
 import PlanerBox from '../ui/planer.js'
 import ManualBox from '../ui/manual.js'
 import AutomationBox from '../ui/automation.js'
-import VerifiedBox from '../ui/verified.js'
 import OthersBox from '../ui/other.js'
 
 const App = React.createClass({
@@ -17,17 +16,14 @@ const App = React.createClass({
                             <PlanerBox planner={this.props.planner}
                                        action={this.props.plannerAction}/>
                         </Col>
-                        <Col xs={3}>
+                        <Col xs={4}>
                             <ManualBox subTaskList={this.props.subTaskList}
                                        action={this.props.subTasksAction}/>
                         </Col>
-                        <Col xs={3}>
+                        <Col xs={4}>
                             <AutomationBox/>
                         </Col>
-                        <Col xs={3}>
-                            <VerifiedBox/>
-                        </Col>
-                        <Col xs={3}>
+                        <Col xs={4}>
                             <OthersBox/>
                         </Col>
                     </Row>

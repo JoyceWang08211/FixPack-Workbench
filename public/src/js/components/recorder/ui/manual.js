@@ -8,7 +8,7 @@ import {Input, Panel, Row, Col} from 'react-bootstrap'
 export default class ManualBox extends BaseTask {
     validate() {
         let str = this.state.currentValue ? this.state.currentValue : '';
-        let reg = /^(LPS-)?\d+$/i;
+        let reg = /^(LPS-|LPP-)?\d+$/i;
 
         return str.match(reg)
     }
@@ -64,7 +64,7 @@ export default class ManualBox extends BaseTask {
             <Input
                 type="text"
                 value={this.state.currentValue}
-                placeholder="LPS-12345 or 12345.."
+                placeholder="LPS-12345, LPP-12345 or 12345.."
                 label="LPS Number"
                 help="some help information"
                 bsStyle={this.validate()?'success':'error'}
@@ -77,9 +77,9 @@ export default class ManualBox extends BaseTask {
     }
 
     render() {
-        let title = 'Add Manual Record';
+        let title = 'Add Manual Verified Record';
         let panelList = this.getPanelList(this.props.subTaskList);
-        let formList = this.getFormList()
+        let formList = this.getFormList();
 
         return super.getRenderTemplate(title, panelList, formList)
     }

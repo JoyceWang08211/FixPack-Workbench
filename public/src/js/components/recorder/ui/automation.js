@@ -65,7 +65,7 @@ export default class AutomationBox extends BaseTask {
     }
 
     render() {
-        let title = 'Add AA Record';
+        let title = 'Add Automation Analysed Record';
         let panelList = this.getPanelList([]);
         let formList = this.getFormList()
 
