@@ -33,11 +33,10 @@ module.exports = {
         filename: '[name].build.js',
         chunkFilename: '[chunkhash:8].[name].chunk.js',
         publicPath: '/',
-        path: '/public/build'
+        path: path.join(__dirname, '/public/build')
     },
 
     externals: {
-        //'react': 'React',
         'jquery': 'jQuery',
         'react': 'React',
         'react-dom': 'ReactDOM',
@@ -52,6 +51,7 @@ module.exports = {
             },
             {
                 test: /\.js[x]?$/,
+              //todo 排除node_modules
                 loaders: ['babel?presets[]=react,presets[]=es2015']
             }
         ]

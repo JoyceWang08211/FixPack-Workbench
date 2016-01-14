@@ -20,21 +20,20 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 //webpack
-(function() {
+if (app.get('env') === 'development') {
+  // Step 1: Create & configure a webpack compiler
+  var webpack = require('webpack');
+  var webpackConfig = require(process.env.WEBPACK_CONFIG ? process.env.WEBPACK_CONFIG : './webpack.config');
+  var compiler = webpack(webpackConfig);
 
-    // Step 1: Create & configure a webpack compiler
-    var webpack = require('webpack');
-    var webpackConfig = require(process.env.WEBPACK_CONFIG ? process.env.WEBPACK_CONFIG : './webpack.config');
-    var compiler = webpack(webpackConfig);
+  // Step 2: Attach the dev middleware to the compiler & the server
+  app.use(require("webpack-dev-middleware")(compiler, {
+    noInfo: true, publicPath: webpackConfig.output.publicPath
+  }));
 
-    // Step 2: Attach the dev middleware to the compiler & the server
-    app.use(require("webpack-dev-middleware")(compiler, {
-        noInfo: true, publicPath: webpackConfig.output.publicPath
-    }));
-
-    // Step 3: Attach the hot middleware to the compiler & the server
-    app.use(require("webpack-hot-middleware")(compiler));
-})();
+  // Step 3: Attach the hot middleware to the compiler & the server
+  app.use(require("webpack-hot-middleware")(compiler));
+}
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', '/src/img/favicon.ico')));

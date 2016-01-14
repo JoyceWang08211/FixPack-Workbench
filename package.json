@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "webpack",
     "start": "node bin/www",
-    "deploy": "npm run build && npm start --production"
+    "deploy": "webpack && npm start --production"
   },
   "dependencies": {
     "app-root-path": "^1.0.0",
