@@ -4,7 +4,10 @@
   "private": true,
   "scripts": {
     "start": "node bin/www",
-    "deploy": "webpack && npm start --production"
+    "deploy": "webpack && npm start --production",
+    "build st":"node .bin/wdio ./private/fixpack/sub_task/wdio.conf.js",
+    "compare":"node ./private/comparator/main.js",
+    "evaluate":"node ./private/evaluator/evaluator.js"
   },
   "dependencies": {
     "app-root-path": "^1.0.0",
