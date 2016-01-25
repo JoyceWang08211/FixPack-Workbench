@@ -3,8 +3,8 @@ var webpack = require('webpack');
 var CommonsChunkPlugin = new require("webpack/lib/optimize/CommonsChunkPlugin");
 
 var entries = {
-    index: './js/index.js',
-    editor: './js/components/editor/index.js',
+    //index: './js/index.js',
+    //editor: './js/components/editor/index.js',
     crawler: ['./js/components/crawler/index.js',
         'webpack-hot-middleware/client'],
     recorder: ['./js/components/recorder/index.js',

@@ -39,7 +39,7 @@ Promise.all([p1, p2])
                 <Tab eventKey={2} title="Comparator">
                     <ComparatorBox/>
                 </Tab>
-                <Tab eventKey={3} title="Evaluator">Tab 3 content</Tab>
+                <Tab eventKey={3} title="Evaluator">Evaluator</Tab>
             </Tabs>
         );
 
