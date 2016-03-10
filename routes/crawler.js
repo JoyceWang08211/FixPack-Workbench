@@ -81,7 +81,6 @@ router.post('/start_job', (req, res)=> {
   else {
     res.json({status: 0, message: 'The current crawler is running..'})
   }
-
 });
 
 router.post('/progress_query', (req, res)=> {
