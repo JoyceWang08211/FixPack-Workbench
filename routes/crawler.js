@@ -11,6 +11,7 @@ const fs = require('fs');
 //crawler
 const appRoot = require('app-root-path');
 const crawler = require(appRoot + '/private/crawler/crawler');
+const comparator = require(appRoot + '/private/comparator/comparator');
 
 let locked = false;
 
@@ -81,6 +82,11 @@ router.post('/start_job', (req, res)=> {
   else {
     res.json({status: 0, message: 'The current crawler is running..'})
   }
+});
+
+router.post('/get_compare', (req, res)=> {
+  //TODO check if could start compare
+  res.json(comparator.compare());
 });
 
 router.post('/progress_query', (req, res)=> {
