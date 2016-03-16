@@ -2,4 +2,4 @@
 
 const comparator = require('./comparator.js');
 
-comparator.compare();
+console.log(comparator.compare());

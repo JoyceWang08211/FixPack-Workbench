@@ -6,6 +6,7 @@ var router = express.Router();
 const properties = require('../private/util/propertiesUtil');
 const barUtil = require('../private/util/processBarUtil');
 const logUtil = require('../private/util/logsUtil');
+const timeUtil = require('../private/util/timeUtil');
 const fs = require('fs');
 
 //crawler
@@ -86,7 +87,16 @@ router.post('/start_job', (req, res)=> {
 
 router.post('/get_compare', (req, res)=> {
   //TODO check if could start compare
-  res.json(comparator.compare());
+  let payload = {
+    rows: comparator.compare(),
+    metadata:{
+      folderName: '6.2 Fix Pack AA 2015',
+      fileName: ` 62 Fixpack AA - ${timeUtil.getMonthName()} 2016`,
+      sheetName: properties.getFixPackInfo().name
+    }
+  };
+
+  res.json(payload);
 });
 
 router.post('/progress_query', (req, res)=> {

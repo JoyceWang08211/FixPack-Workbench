@@ -41,6 +41,7 @@ export default class Comparator extends Component {
   constructor(props) {
     super(props)
     this.rows = [];
+    this.metadata = {};
   }
 
   handleClick() {
@@ -53,7 +54,8 @@ export default class Comparator extends Component {
     }).then((res)=> {
       return res.json();
     }).then((json)=> {
-      this.rows = json
+      this.rows = json.rows;
+      this.metadata= json.metadata;
     });
   }
 
@@ -63,7 +65,8 @@ export default class Comparator extends Component {
       let scriptRequest = {
         'function': 'main',
         'parameters': [
-          this.rows
+          this.rows,
+          this.metadata
         ],
         'devMode': true
       };

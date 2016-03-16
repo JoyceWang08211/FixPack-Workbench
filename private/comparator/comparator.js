@@ -5,6 +5,7 @@ const xlsx = require('node-xlsx');
 const appRoot = require('app-root-path');
 
 const properties = require('../util/propertiesUtil');
+const tplUtil = require('../util/tplUtil');
 
 let patch = {};
 let baseline = {};
@@ -78,5 +79,21 @@ exports.compare = function () {
 };
 
 function resultFilter(oldData) {
-  return oldData
+  //['Component', 'Test Name', 'Link', 'Baseline', 'Local Drive Results', 'Fixpack Approved', 'Tester1', 'Tester2', 'Console Output', 'Error Type', 'Tester1 Comment', 'Tester2 Comment'],
+  const fixpackInfo = properties.getFixPackInfo();
+
+  let tpl = tplUtil.aa_fixpack_sheet;
+
+  //fixpack component
+  tpl[0][1] = fixpackInfo.name;
+  //Task Ticket
+  tpl[1][1] = `https://issues.liferay.com/browse/${fixpackInfo.ticket}`;
+  //Portal Version
+  tpl[2][1] = '6.2.10 EE SP14';
+
+  oldData.forEach((e, i)=> {
+    tpl = tpl.concat([[e[0], e[1], e[2], e[4], '', `=if(D${i + 9}="Y","Pass", "")`, '', '', e[3], '', '', '']])
+  });
+
+  return tpl
 }
