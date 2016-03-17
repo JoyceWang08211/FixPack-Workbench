@@ -39,23 +39,29 @@ function checkAuth() {
 
 export default class Comparator extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.rows = [];
     this.metadata = {};
+    this.state = {
+      isDisabledCompare: false,
+      isDisabledSync: false
+    }
   }
 
-  handleClick() {
+  handleAuth() {
     gapi.auth.authorize(
       {client_id: CLIENT_ID, scope: SCOPES, immediate: false},
       handleAuthResult);
+  }
 
+  handleCompare() {
     fetch('/crawler/get_compare', {
       method: 'post'
     }).then((res)=> {
       return res.json();
     }).then((json)=> {
       this.rows = json.rows;
-      this.metadata= json.metadata;
+      this.metadata = json.metadata;
     });
   }
 
@@ -126,19 +132,26 @@ export default class Comparator extends Component {
   render() {
     return (
       <Row className="show-grid">
-        <Col xs={4}>
+        <Col xs={3}>
         </Col>
         <Col xs={2}>
           <Row>
-            <Button bsStyle="primary" bsSize="large" onClick={this.handleClick.bind(this)} block>Start</Button>
+            <Button bsStyle="primary" bsSize="large" onClick={this.handleAuth.bind(this)} block>Authorize</Button>
           </Row>
         </Col>
         <Col xs={2}>
           <Row>
-            <Button bsStyle="primary" bsSize="large" onClick={this.handleSync.bind(this)} block>Sync</Button>
+            <Button bsStyle="primary" bsSize="large" onClick={this.handleCompare.bind(this)} block
+                    disabled={this.state.isDisabledCompare}>Compare</Button>
           </Row>
         </Col>
-        <Col xs={4}>3</Col>
+        <Col xs={2}>
+          <Row>
+            <Button bsStyle="primary" bsSize="large" onClick={this.handleSync.bind(this)} block
+                    disabled={this.state.isDisabledSync}>Sync</Button>
+          </Row>
+        </Col>
+        <Col xs={3}>3</Col>
       </Row>
     )
   }

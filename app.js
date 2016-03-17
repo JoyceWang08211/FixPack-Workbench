@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
@@ -37,7 +38,9 @@ if (app.get('env') === 'development') {
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', '/src/img/favicon.ico')));
-app.use(logger('dev'));
+app.use(logger('combined', {
+  skip: function (req, res) { return res.statusCode < 400 }
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
