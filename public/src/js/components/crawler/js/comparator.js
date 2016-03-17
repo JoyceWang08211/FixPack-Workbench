@@ -73,8 +73,8 @@ export default class Comparator extends Component {
         'parameters': [
           this.rows,
           this.metadata
-        ],
-        'devMode': true
+        ]
+        //,'devMode': true
       };
 
       let op = gapi.client.request({
