@@ -20,7 +20,7 @@ describe('Fix Pack Build Sub Tasks Script', function () {
         yield browser.url(`https://issues.liferay.com/browse/${fixPackInfo.ticket}`)
             .setValue('#login-form-username', user.username)
             .setValue('#login-form-password', user.password);
-        let title = yield browser.click('#login-form-submit').getTitle();
+        let title = yield browser.submitForm('#login-form-submit').getTitle();
 
         return assert.eventually.equal(Promise.resolve(title), `[${fixPackInfo.ticket}] Fix Pack Testing: ${fixPackInfo.name} - Liferay Issues`);
     });
@@ -77,13 +77,10 @@ describe('Fix Pack Build Sub Tasks Script', function () {
                                     if ($(e).text().match(/^LPS-\d+$/) || $(e).text().match(/^PT-\d+$/)) {
                                         resolve([c, $(e).text()]);
                                     }
-                                    else {
-                                        reject([c, $(e).text()]);
-                                    }
                                 });
                         })
                         .catch((err)=> {
-                            console.log(err);
+                        reject(err);
                         });
                 });
             })
