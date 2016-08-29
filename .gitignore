@@ -1,7 +1,7 @@
 .idea
 node_modules
 private/properties.json
-private/*/result
-private/*/logs
+private/**/result
+private/**/logs
 */build
 */data
