@@ -1,4 +1,5 @@
 .idea
+errorShots
 node_modules
 private/properties.json
 private/**/result

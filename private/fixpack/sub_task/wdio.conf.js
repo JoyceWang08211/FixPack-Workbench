@@ -125,7 +125,7 @@ exports.config = {
     // the test.
     after: function () {
         // do something
-        browser.end();
+        // browser.end();
     },
     //
     // Gets executed after all workers got shut down and the process is about to exit. It is not
