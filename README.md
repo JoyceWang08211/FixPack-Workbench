@@ -1,4 +1,4 @@
-# Despretaed
+# Desprecated
 不再维护这个平台了。
 
 # Introduce
