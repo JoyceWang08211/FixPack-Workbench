@@ -1,3 +1,6 @@
+# Despretaed
+不再维护这个平台了。
+
 # Introduce
 这个工作台是为了辅助CNQA FixPack Team更好、更快地完成日常工作的，同时提供一些关于CNQA Team整体的资源库，如KB。
 >　主要功能包括：
