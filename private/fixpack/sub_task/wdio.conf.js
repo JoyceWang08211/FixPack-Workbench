@@ -8,7 +8,7 @@ exports.config = {
     // file.
     //
     specs: [
-        './start/*.js'
+        './private/fixpack/sub_task/start/*.js'
     ],
     // Patterns to exclude.
     exclude: [
